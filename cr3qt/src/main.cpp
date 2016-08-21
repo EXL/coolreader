@@ -372,7 +372,8 @@ bool InitCREngine( const char * exename, lString16Collection & fontDirs )
     lString16 fontdir( sysdir );
     fontdir << "\\Fonts\\";
     lString8 fontdir8( UnicodeToUtf8(fontdir) );
-    const char * fontnames[] = {
+#ifndef _USE_ALL_SYSTEM_FONTS
+    const char *fontnames[] = {
         "arial.ttf",
         "ariali.ttf",
         "arialb.ttf",
@@ -413,9 +414,28 @@ bool InitCREngine( const char * exename, lString16Collection & fontDirs )
         "georgiaz.ttf",
         NULL
     };
+#else
+    QDir qFontDir(fontdir8.c_str());
+    QStringList qFontFilter;
+    qFontFilter << "*.ttf" << "*.otf" << "*.pfa" << "*.pfb";
+    QStringList qFiles = qFontDir.entryList(qFontFilter);
+
+    // Copy QStringList to char **
+    // (c) http://www.dzone.com/snippets/copy-qstringlist-char-and
+    char **fontnames;
+    fontnames = new char*[qFiles.size() + 1];
+    for (int i = 0; i < qFiles.size(); i++) {
+        fontnames[i] = new char[strlen(qFiles.at(i).toStdString().c_str())+1];
+        memcpy(fontnames[i], qFiles.at(i).toStdString().c_str(), strlen(qFiles.at(i).toStdString().c_str())+1);
+    }
+    fontnames[qFiles.size()] = ((char*) NULL);
+#endif
     for ( int fi = 0; fontnames[fi]; fi++ ) {
         fontMan->RegisterFont( fontdir8 + fontnames[fi] );
     }
+#ifdef _USE_ALL_SYSTEM_FONTS
+    delete[] fontnames;
+#endif
 #endif
     // Load font definitions into font manager
     // fonts are in files font1.lbf, font2.lbf, ... font32.lbf
