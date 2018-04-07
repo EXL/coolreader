@@ -122,6 +122,8 @@ class CR3View : public QWidget, public LVDocViewCallback
         /// format progress, called with values 0..100
         virtual void OnFormatProgress( int percent );
 
+        void setUseClickForNextPage(bool value);
+
     public slots:
         void contextMenu( QPoint pos );
         void setScrollBar( QScrollBar * scroll );
@@ -186,7 +188,8 @@ class CR3View : public QWidget, public LVDocViewCallback
         QString _cssDir;
         QString _bookmarkDir;
         bool _editMode;
-		int _lastBatteryState;
+        int _lastBatteryState;
+        bool _useClickForNextPage;
 };
 
 #endif // CR3WIDGET_H

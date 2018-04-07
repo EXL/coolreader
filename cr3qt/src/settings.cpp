@@ -129,6 +129,7 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView ) :
     optionToUi( PROP_WINDOW_TOOLBAR_SIZE, m_ui->cbWindowShowToolbar );
     optionToUi( PROP_WINDOW_SHOW_STATUSBAR, m_ui->cbWindowShowStatusBar );
 
+    optionToUi( PROP_PAGE_TURN_CLICK, m_ui->cbTurnPageMouse );
     optionToUi( PROP_FOOTNOTES, m_ui->cbShowFootNotes );
     optionToUi( PROP_SHOW_BATTERY, m_ui->cbShowBattery );
     optionToUi( PROP_SHOW_TIME, m_ui->cbShowClock );
@@ -324,6 +325,13 @@ void SettingsDlg::on_buttonBox_accepted()
 {
     m_docview->setOptions( m_props );
     close();
+}
+
+void SettingsDlg::on_buttonBox_clicked(QAbstractButton * button)
+{
+    if (m_ui->buttonBox->buttonRole( button ) == QDialogButtonBox::ApplyRole) {
+        m_docview->setOptions( m_props );
+    }
 }
 
 void SettingsDlg::optionToUi( const char * optionName, QCheckBox * cb )
@@ -683,6 +691,11 @@ void SettingsDlg::setCheckInversed( const char * optionName, int checkState )
     m_props->setInt( optionName, value );
 }
 
+void SettingsDlg::on_cbTurnPageMouse_stateChanged(int s)
+{
+    setCheck( PROP_PAGE_TURN_CLICK, s );
+}
+
 void SettingsDlg::on_cbWindowFullscreen_stateChanged(int s)
 {
     setCheck( PROP_WINDOW_FULLSCREEN, s );
@@ -923,7 +936,6 @@ void SettingsDlg::on_cbPageSkin_currentIndexChanged(int index)
     if ( index>=0 && index<m_backgroundFiles.length() )
         m_props->setString( PROP_BACKGROUND_IMAGE, m_backgroundFiles[index] );
 }
-
 
 void SettingsDlg::on_cbFloatingPunctuation_stateChanged(int s)
 {

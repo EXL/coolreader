@@ -1381,6 +1381,10 @@ http://sourceforge.net/projects/crengine/
         <translation>10</translation>
     </message>
     <message>
+        <source>Turn pages by mouse click</source>
+        <translation>Переворачивать страницы кликом мышки</translation>
+    </message>
+    <message>
         <source>15</source>
         <translation>15</translation>
     </message>

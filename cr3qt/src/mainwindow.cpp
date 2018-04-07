@@ -381,6 +381,9 @@ void MainWindow::onPropsChange( PropsRef props )
             if ( state != vv )
                 setWindowState( windowState() ^ Qt::WindowFullScreen );
         }
+        if ( name == PROP_PAGE_TURN_CLICK ) {
+            ui->view->setUseClickForNextPage( v );
+        }
         if ( name == PROP_WINDOW_SHOW_MENU ) {
             ui->menuBar->setVisible( v );
         }
@@ -416,6 +419,9 @@ void MainWindow::onPropsChange( PropsRef props )
 void MainWindow::contextMenu( QPoint pos )
 {
     QMenu *menu = new QMenu;
+    menu->addAction(ui->actionNextPage);
+    menu->addAction(ui->actionPrevPage);
+    menu->addSeparator();
     menu->addAction(ui->actionOpen);
     menu->addAction(ui->actionRecentBooks);
     menu->addAction(ui->actionTOC);

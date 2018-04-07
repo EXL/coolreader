@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>433</width>
-    <height>651</height>
+    <width>454</width>
+    <height>809</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -504,6 +504,13 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbTurnPageMouse">
+           <property name="text">
+            <string>Turn pages by mouse click</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="cbShowFootNotes">
@@ -1610,8 +1617,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>401</width>
-              <height>540</height>
+              <width>416</width>
+              <height>672</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1791,7 +1798,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>

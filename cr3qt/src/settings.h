@@ -30,9 +30,11 @@ namespace Ui {
 #define PROP_WINDOW_SHOW_STATUSBAR  "window.statusbar.show"
 #define PROP_WINDOW_SHOW_SCROLLBAR  "window.scrollbar.show"
 #define PROP_WINDOW_STYLE           "window.style"
+#define PROP_PAGE_TURN_CLICK        "page.turn.click"
 #define PROP_APP_START_ACTION       "cr3.app.start.action"
 
-#define DECL_DEF_CR_FONT_SIZES static int cr_font_sizes[] = { 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 32, 38, 42, 48, 56, 64, 72 }
+#define DECL_DEF_CR_FONT_SIZES static int cr_font_sizes[] = { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, \
+    32, 33, 34, 35, 36, 37, 38, 42, 48, 56, 64, 72, 80, 96 }
 
 
 struct StyleItem {
@@ -191,8 +193,10 @@ private slots:
     void on_cbWindowShowMenu_stateChanged(int );
     void on_cbWindowShowToolbar_stateChanged(int );
     void on_cbWindowFullscreen_stateChanged(int );
+    void on_cbTurnPageMouse_stateChanged(int );
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
+    void on_buttonBox_clicked(QAbstractButton * button);
     void on_cbFloatingPunctuation_stateChanged(int );
     void on_cbFontGamma_currentIndexChanged(QString );
     void on_cbStyleName_currentIndexChanged(int index);

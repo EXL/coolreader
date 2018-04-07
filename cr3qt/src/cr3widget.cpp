@@ -342,6 +342,7 @@ CR3View::CR3View( QWidget *parent)
 void CR3View::updateDefProps()
 {
     _data->_props->setStringDef( PROP_WINDOW_FULLSCREEN, "0" );
+    _data->_props->setStringDef( PROP_PAGE_TURN_CLICK, "0" );
     _data->_props->setStringDef( PROP_WINDOW_SHOW_MENU, "1" );
     _data->_props->setStringDef( PROP_WINDOW_SHOW_SCROLLBAR, "1" );
     _data->_props->setStringDef( PROP_WINDOW_TOOLBAR_SIZE, "1" );
@@ -491,7 +492,6 @@ void CR3View::wheelEvent( QWheelEvent * event )
 
 void CR3View::resizeEvent ( QResizeEvent * event )
 {
-
     QSize sz = event->size();
     _docview->Resize( sz.width(), sz.height() );
 }
@@ -937,6 +937,11 @@ bool CR3View::saveHistory( QString fn )
     return _docview->getHistory()->saveToStream( stream.get() );
 }
 
+void CR3View::setUseClickForNextPage(bool value)
+{
+    _useClickForNextPage = value;
+}
+
 void CR3View::contextMenu( QPoint pos )
 {
 }
@@ -1058,6 +1063,12 @@ bool CR3View::updateSelection( ldomXPointer p )
 void CR3View::mousePressEvent ( QMouseEvent * event )
 {
     bool left = event->button() == Qt::LeftButton;
+
+    if (left && _useClickForNextPage) {
+        (event->x() < (size().width() / 2)) ? prevPage() : nextPage();
+        return;
+    }
+
     //bool right = event->button() == Qt::RightButton;
     bool mid = event->button() == Qt::MidButton;
     lvPoint pt (event->x(), event->y());
@@ -1102,6 +1113,11 @@ void CR3View::mousePressEvent ( QMouseEvent * event )
 void CR3View::mouseReleaseEvent ( QMouseEvent * event )
 {
     bool left = event->button() == Qt::LeftButton;
+
+    if (left && _useClickForNextPage) {
+        return;
+    }
+
     //bool right = event->button() == Qt::RightButton;
     //bool mid = event->button() == Qt::MidButton;
     lvPoint pt (event->x(), event->y());
