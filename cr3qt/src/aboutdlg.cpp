@@ -31,7 +31,7 @@ void AboutDialog::changeEvent(QEvent *e)
 bool AboutDialog::showDlg( QWidget * parent )
 {
     AboutDialog * dlg = new AboutDialog( parent );
-    //dlg->setModal( true );
+    dlg->setModal( true );
     dlg->setWindowTitle(tr("About CoolReader"));
     dlg->show();
     dlg->raise();
@@ -47,6 +47,6 @@ void AboutDialog::on_buttonBox_accepted()
 
 void AboutDialog::on_btnSite_clicked()
 {
-    QUrl qturl( "http://coolreader.org/" );
+    QUrl qturl( "http://sourceforge.net/projects/crengine" );
     QDesktopServices::openUrl( qturl );
 }

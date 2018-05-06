@@ -123,6 +123,7 @@ class CR3View : public QWidget, public LVDocViewCallback
         virtual void OnFormatProgress( int percent );
 
         void setUseClickForNextPage(bool value);
+        void setPercendPd(int value);
 
     public slots:
         void contextMenu( QPoint pos );
@@ -148,6 +149,8 @@ class CR3View : public QWidget, public LVDocViewCallback
 
     signals:
         //void fileNameChanged( const QString & );
+        void setStatusInfo(const QString &, const QString &);
+        void setWindowTitleInfo(const QString &);
 
     protected:
         virtual void keyPressEvent ( QKeyEvent * event );
@@ -169,6 +172,8 @@ class CR3View : public QWidget, public LVDocViewCallback
         void startSelection( ldomXPointer p );
         bool endSelection( ldomXPointer p );
         bool updateSelection( ldomXPointer p );
+        QString getLeftInfo();
+        QString getRightInfo() const;
 
         DocViewData * _data; // to hide non-qt implementation
         LVDocView * _docview;
@@ -190,6 +195,7 @@ class CR3View : public QWidget, public LVDocViewCallback
         bool _editMode;
         int _lastBatteryState;
         bool _useClickForNextPage;
+        int _pagePercentDp;
 };
 
 #endif // CR3WIDGET_H

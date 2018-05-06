@@ -10,6 +10,8 @@
 #include "settings.h"
 #include "cr3widget.h"
 
+#include <QLabel>
+
 namespace Ui
 {
     class MainWindowClass;
@@ -18,6 +20,9 @@ namespace Ui
 class MainWindow : public QMainWindow, public PropsChangeCallback
 {
     Q_OBJECT
+
+    QLabel *labelTitle;
+    QLabel *labelProgress;
 
 public:
     virtual void onPropsChange( PropsRef props );
@@ -34,8 +39,10 @@ protected:
     virtual void closeEvent ( QCloseEvent * event );
 public slots:
     void contextMenu( QPoint pos );
-void on_actionFindText_triggered();
-    private slots:
+    void on_actionFindText_triggered();
+    void setStatusBarInfo(const QString &left, const QString &right);
+    void setWinTitInfo(const QString &info);
+private slots:
     void on_actionNextPage3_triggered();
     void on_actionToggleEditMode_triggered();
     void on_actionRotate_triggered();

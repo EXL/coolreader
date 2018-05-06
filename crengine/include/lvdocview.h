@@ -23,7 +23,6 @@
 #include "lvdocviewcmd.h"
 #include "lvdocviewprops.h"
 
-
 const lChar16 * getDocFormatName( doc_format_t fmt );
 
 /// text format import options
@@ -334,9 +333,8 @@ private:
     LVDocViewImageCache m_imageCache;
 #endif
 
-
     lString8 m_defaultFontFace;
-	lString8 m_statusFontFace;
+    lString8 m_statusFontFace;
     ldomNavigationHistory _navigationHistory;
 
     doc_format_t m_doc_format;
@@ -401,7 +399,7 @@ public:
     /// get screen rectangle for specified cursor position, returns false if not visible
     bool getCursorRect( ldomXPointer ptr, lvRect & rc, bool scrollToCursor = false );
     /// set status bar and clock mode
-    void setStatusMode( int newMode, bool showClock, bool showTitle, bool showBattery, bool showChapterMarks, bool showPercent, bool showPageNumber, bool showPageCount );
+    void setStatusMode(int newMode, bool showClock, bool showTitle, bool showBattery, bool showChapterMarks, bool showPercent, bool showPageNumber, bool showPageCount, int pd);
     /// draw to specified buffer by either Y pos or page number (unused param should be -1)
     void Draw( LVDrawBuf & drawbuf, int pageTopPosition, int pageNumber, bool rotate, bool autoresize = true);
     /// ensure current position is set to current bookmark value
@@ -458,6 +456,7 @@ public:
 	/// -1 moveto previous page, 1 to next page
 	bool moveByPage( int delta );
 	/// saves new bookmark
+	lString16 getChapterName();
     CRBookmark * saveRangeBookmark( ldomXRange & range, bmk_type type, lString16 comment );
 	/// export bookmarks to text file
 	bool exportBookmarks( lString16 filename );
@@ -557,6 +556,9 @@ public:
     /// check if navigation back is possible
     virtual bool canGoForward();
 
+    lString16 getFileName() const;
+    int getBattPercent() const;
+    int getPercentDp(int pp, int dp) const;
 
     /// create empty document with specified message (e.g. to show errors)
     virtual void createDefaultDocument( lString16 title, lString16 message );
@@ -666,7 +668,7 @@ public:
     /// get page header info mask
     int getPageHeaderInfo() { return m_pageHeaderInfo; }
     /// set page header info mask
-    void setPageHeaderInfo( int hdrFlags );
+    void setPageHeaderInfo(int hdrFlags, int pd);
     /// get info line font
     font_ref_t getInfoFont() { return m_infoFont; }
     /// set info line font
@@ -798,6 +800,7 @@ public:
     int scrollPosToDocPos( int scrollpos );
     /// returns position in 1/100 of percents (0..10000)
     int getPosPercent();
+    int getMaxHeight();
     /// returns position in 1/100 of percents (0..10000)
     int getPosEndPagePercent();
 

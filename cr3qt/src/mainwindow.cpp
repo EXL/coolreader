@@ -125,6 +125,22 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    labelTitle = new QLabel(this);
+    labelTitle->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    labelProgress = new QLabel(this);
+
+    labelTitle->setStyleSheet("QLabel { padding: 0px 0px 0px 5px; }");
+    labelProgress->setStyleSheet("QLabel { padding: 0px 5px 0px 0px; }");
+    labelProgress->setAlignment(Qt::AlignRight);
+
+    ui->statusBar->addWidget(labelTitle, 1);
+    ui->statusBar->addWidget(labelProgress);
+
+    connect(ui->view, SIGNAL(setStatusInfo(QString,QString)),
+            this, SLOT(setStatusBarInfo(QString, QString)));
+    connect(ui->view, SIGNAL(setWindowTitleInfo(QString)),
+            this, SLOT(setWinTitInfo(QString)));
+
 //     QTranslator qtTranslator;
 //     if (qtTranslator.load("qt_" + QLocale::system().name(),
 //             QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
@@ -384,6 +400,9 @@ void MainWindow::onPropsChange( PropsRef props )
         if ( name == PROP_PAGE_TURN_CLICK ) {
             ui->view->setUseClickForNextPage( v );
         }
+        if ( name == PROP_PAGE_PERCENT_PD ) {
+            ui->view->setPercendPd( v );
+        }
         if ( name == PROP_WINDOW_SHOW_MENU ) {
             ui->menuBar->setVisible( v );
         }
@@ -414,6 +433,18 @@ void MainWindow::onPropsChange( PropsRef props )
             QApplication::setStyle( value );
         }
     }
+}
+
+void MainWindow::setStatusBarInfo(const QString &left, const QString &right)
+{
+    labelTitle->setText(left);
+    labelProgress->setText(right);
+}
+
+void MainWindow::setWinTitInfo(const QString &info)
+{
+    if (!info.isEmpty())
+        setWindowTitle(QString("Cool Reader - ") + info);
 }
 
 void MainWindow::contextMenu( QPoint pos )

@@ -134,12 +134,14 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView ) :
     optionToUi( PROP_SHOW_BATTERY, m_ui->cbShowBattery );
     optionToUi( PROP_SHOW_TIME, m_ui->cbShowClock );
     optionToUi( PROP_SHOW_TITLE, m_ui->cbShowBookName );
+    optionToUi( PROP_SHOW_POS_PERCENT, m_ui->cbShowPercentP );
     optionToUi( PROP_TXT_OPTION_PREFORMATTED, m_ui->cbTxtPreFormatted );
     optionToUi( PROP_EMBEDDED_STYLES, m_ui->cbEnableDocumentStyles );
     optionToUi( PROP_EMBEDDED_FONTS, m_ui->cbEnableEmbeddedFonts );
     m_ui->cbEnableEmbeddedFonts->setEnabled(m_props->getBoolDef(PROP_EMBEDDED_STYLES, true) ? Qt::Checked : Qt::Unchecked);
     optionToUi( PROP_TXT_OPTION_PREFORMATTED, m_ui->cbTxtPreFormatted );
     optionToUi( PROP_FLOATING_PUNCTUATION, m_ui->cbFloatingPunctuation );
+    optionToUiIndex( PROP_PAGE_PERCENT_PD, m_ui->cbPercentPd );
     optionToUiIndex( PROP_IMG_SCALING_ZOOMIN_INLINE_MODE, m_ui->cbImageInlineZoominMode );
     optionToUiIndex( PROP_IMG_SCALING_ZOOMIN_INLINE_SCALE, m_ui->cbImageInlineZoominScale );
     optionToUiIndex( PROP_IMG_SCALING_ZOOMOUT_INLINE_MODE, m_ui->cbImageInlineZoomoutMode );
@@ -757,6 +759,12 @@ void SettingsDlg::on_cbShowClock_stateChanged(int s)
     setCheck( PROP_SHOW_TIME, s );
 }
 
+void SettingsDlg::on_cbShowPercentP_stateChanged(int s)
+{
+    m_ui->cbPercentPd->setEnabled(s);
+    setCheck( PROP_SHOW_POS_PERCENT, s );
+}
+
 void SettingsDlg::on_cbShowBattery_stateChanged(int s)
 {
     setCheck( PROP_SHOW_BATTERY, s );
@@ -940,6 +948,11 @@ void SettingsDlg::on_cbPageSkin_currentIndexChanged(int index)
 void SettingsDlg::on_cbFloatingPunctuation_stateChanged(int s)
 {
     setCheck( PROP_FLOATING_PUNCTUATION, s );
+}
+
+void SettingsDlg::on_cbPercentPd_currentIndexChanged(int index)
+{
+    m_props->setInt(PROP_PAGE_PERCENT_PD, index);
 }
 
 void SettingsDlg::on_cbFontGamma_currentIndexChanged(QString s)

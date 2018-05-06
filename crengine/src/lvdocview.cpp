@@ -57,6 +57,8 @@
 /// to avoid showing title/author if coverpage image present
 #define NO_TEXT_IN_COVERPAGE
 
+#define PROP_PAGE_PERCENT_PD        "page.percent.pd"
+
 const char
 		* def_stylesheet =
 				"image { text-align: center; text-indent: 0px } \n"
@@ -436,8 +438,8 @@ void LVDocView::setPageMargins(lvRect rc) {
     }
 }
 
-void LVDocView::setPageHeaderInfo(int hdrFlags) {
-	if (m_pageHeaderInfo == hdrFlags)
+void LVDocView::setPageHeaderInfo(int hdrFlags, int pd) {
+	if (m_pageHeaderInfo == hdrFlags && !pd)
 		return;
 	LVLock lock(getMutex());
 	int oldH = getPageHeaderHeight();
@@ -1502,27 +1504,41 @@ int LVDocView::getPosEndPagePercent() {
     }
 }
 
+int LVDocView::getMaxHeight() {
+    int max = 0;
+    for (int i = 0; i < getPageCount(); ++i) {
+        int h = m_pages[i]->height;
+        if (h > max) max = h;
+    }
+    return max;
+}
+
 int LVDocView::getPosPercent() {
-	LVLock lock(getMutex());
-	checkPos();
-	if (getViewMode() == DVM_SCROLL) {
-		int fh = GetFullHeight();
-		int p = GetPos();
-		if (fh > 0)
-			return (int) (((lInt64) p * 10000) / fh);
-		else
-			return 0;
-	} else {
+    LVLock lock(getMutex());
+    checkPos();
+    int zper = 0;
+    if (getViewMode() == DVM_SCROLL) {
+        int fh = GetFullHeight();
+        int p = GetPos() + getMaxHeight() + 50; // TODO: Why 50??
+        if (fh > 0) {
+            zper = (int) (((lInt64) p * 10000) / fh);
+            return (zper > 10000) ? 10000:zper;
+        } else {
+            return 0;
+        }
+    } else {
         int fh = m_pages.length();
         if ( (getVisiblePageCount()==2 && (fh&1)) )
             fh++;
-        int p = getCurPage();// + 1;
-//        if ( getVisiblePageCount()>1 )
-//            p++;
-		if (fh > 0)
-			return (int) (((lInt64) p * 10000) / fh);
-		else
-			return 0;
+        int p = getCurPage() + 1;
+        if ( getVisiblePageCount()>1 )
+            p++;
+        if (fh > 0) {
+            zper = (int) (((lInt64) p * 10000) / fh);
+            return (zper > 10000) ? 10000:zper;
+        } else {
+            return 0;
+        }
 	}
 }
 
@@ -1757,12 +1773,30 @@ void LVDocView::drawPageHeader(LVDrawBuf * drawbuf, const lvRect & headerRc,
                 if ( !pageinfo.empty() )
                     pageinfo += "  ";
                 //pageinfo += lString16::itoa(percent/100)+L"%"; //+L"."+lString16::itoa(percent/10%10)+L"%";
-                pageinfo += fmt::decimal(percent/100);
-                pageinfo += ",";
                 int pp = percent%100;
-                if ( pp<10 )
-                    pageinfo << "0";
-                pageinfo << fmt::decimal(pp) << "%";
+                int dp = m_props->getIntDef(PROP_PAGE_PERCENT_PD, 2);
+                switch (dp) {
+                case 2:
+                default:
+                    pageinfo += fmt::decimal(percent/100);
+                    pageinfo += ",";
+                    pp = getPercentDp(pp, 2);
+                    if ( pp<10 )
+                        pageinfo << "0";
+                    pageinfo << fmt::decimal(pp) << "%";
+                    break;
+                case 1:
+                    pp = getPercentDp(pp, 1);
+                    pageinfo += (pp >= 10) ? fmt::decimal((percent/100) + 1) : fmt::decimal(percent/100);
+                    pageinfo += ",";
+                    if (pp >= 10) pp = 0;
+                    pageinfo << fmt::decimal(pp) << "%";
+                    break;
+                case 0:
+                    pageinfo += (getPercentDp(pp, 0)) ? fmt::decimal((percent/100) + 1) : fmt::decimal(percent/100);
+                    pageinfo << "%";
+                    break;
+                }
             }
             if ( batteryPercentNormalFont && m_battery_state>=0 ) {
                 pageinfo << "  [" << fmt::decimal(m_battery_state) << "%]";
@@ -1794,8 +1828,7 @@ void LVDocView::drawPageHeader(LVDrawBuf * drawbuf, const lvRect & headerRc,
 			if (title.empty() && authors.empty())
 				title = m_doc_props->getStringDef(DOC_PROP_FILE_NAME);
 			if (!title.empty())
-				titlew
-						= m_infoFont->getTextWidth(title.c_str(),
+				titlew = m_infoFont->getTextWidth(title.c_str(),
 								title.length());
 		}
 		if (phi & PGHDR_AUTHOR && !authors.empty()) {
@@ -1828,6 +1861,31 @@ void LVDocView::drawPageHeader(LVDrawBuf * drawbuf, const lvRect & headerRc,
 	drawbuf->SetClipRect(&oldcr);
 	//--------------
 	drawbuf->SetTextColor(getTextColor());
+}
+
+lString16 LVDocView::getFileName() const {
+    return m_doc_props->getStringDef(DOC_PROP_FILE_NAME);
+}
+
+int LVDocView::getBattPercent() const {
+    return m_battery_state;
+}
+
+int LVDocView::getPercentDp(int pp, int dp) const {
+    int y;
+    int z;
+    switch (dp) {
+    case 2:
+    default:
+        return pp;
+    case 1:
+        y = pp % 10;
+        z = pp / 10;
+        return (y >= 5) ? z + 1 : z;
+    case 0:
+        z = pp / 10;
+        return (z >= 5) ? 1 : 0;
+    }
 }
 
 void LVDocView::drawPageTo(LVDrawBuf * drawbuf, LVRendPageInfo & page,
@@ -1955,7 +2013,16 @@ void LVDocView::drawPageTo(LVDrawBuf * drawbuf, LVRendPageInfo & page,
 
 /// returns page count
 int LVDocView::getPageCount() {
-	return m_pages.length();
+    if (m_view_mode == DVM_SCROLL) {
+        int cnt = m_pages.FindNearestPage(GetFullHeight() - 50, 0); // TODO: Why 50??
+        if (cnt <= 0) {
+            return 1;
+        } else {
+            return cnt;
+        }
+    } else {
+        return m_pages.length();
+    }
 }
 
 //============================================================================
@@ -2037,11 +2104,24 @@ int LVDocView::SetPos(int pos, bool savePos, bool allowScrollAfterEnd) {
 }
 
 int LVDocView::getCurPage() {
-	LVLock lock(getMutex());
-	checkPos();
-	if (isPageMode() && _page >= 0)
-		return _page;
-	return m_pages.FindNearestPage(_pos, 0);
+    LVLock lock(getMutex());
+    checkPos();
+    if (isPageMode() && _page >= 0) {
+        if (getPageCount() < 2) {
+            return _page;
+        } else {
+            if (getVisiblePageCount() == 2) {
+                if (getPageCount() < _page + 2) {
+                    return _page;
+                } else {
+                    return _page + 1;
+                }
+            } else {
+                return _page;
+            }
+        }
+    }
+    return m_pages.FindNearestPage(_pos, 0);
 }
 
 bool LVDocView::goToPage(int page, bool updatePosBookmark) {
@@ -4102,8 +4182,8 @@ const lChar16 * getDocFormatName(doc_format_t fmt) {
 
 /// sets current document format
 void LVDocView::setDocFormat(doc_format_t fmt) {
-	m_doc_format = fmt;
-	lString16 desc(getDocFormatName(fmt));
+    m_doc_format = fmt;
+    lString16 desc(getDocFormatName(fmt));
 	m_doc_props->setString(DOC_PROP_FILE_FORMAT, desc);
 	m_doc_props->setInt(DOC_PROP_FILE_FORMAT_ID, (int) fmt);
 }
@@ -4641,7 +4721,7 @@ void LVDocView::updateScroll() {
 		int vpc = getVisiblePageCount();
 		m_scrollinfo.pos = page / vpc;
 		m_scrollinfo.maxpos = (m_pages.length() + vpc - 1) / vpc - 1;
-        m_scrollinfo.pagesize = 1; //getVisiblePageCount();
+		m_scrollinfo.pagesize = 1; //getVisiblePageCount();
 		m_scrollinfo.scale = 0;
 		char str[32] = { 0 };
 		if (m_pages.length() > 1) {
@@ -4831,6 +4911,17 @@ bool LVDocView::moveByChapter(int delta) {
         goToPage(page);
 	}
 	return true;
+}
+
+lString16 LVDocView::getChapterName() {
+    ldomXPointer p = getBookmark();
+    lString16 titleText;
+    lString16 posText;
+    if (getBookmarkPosText(p, titleText, posText)) {
+        return titleText;
+    } else {
+        return L"";
+    }
 }
 
 /// saves new bookmark
@@ -5714,6 +5805,7 @@ void LVDocView::propsUpdateDefaults(CRPropRef props) {
 	props->setIntDef(PROP_SHOW_TIME, 1);
 	props->setIntDef(PROP_SHOW_BATTERY, 1);
     props->setIntDef(PROP_SHOW_BATTERY_PERCENT, 0);
+    props->setIntDef(PROP_PAGE_PERCENT_PD, 2);
     props->setIntDef(PROP_SHOW_PAGE_COUNT, 1);
     props->setIntDef(PROP_SHOW_PAGE_NUMBER, 1);
     props->setIntDef(PROP_SHOW_POS_PERCENT, 0);
@@ -5757,7 +5849,7 @@ void LVDocView::propsUpdateDefaults(CRPropRef props) {
 #define V_MARGIN 8
 #define ALLOW_BOTTOM_STATUSBAR 0
 void LVDocView::setStatusMode(int newMode, bool showClock, bool showTitle,
-        bool showBattery, bool showChapterMarks, bool showPercent, bool showPageNumber, bool showPageCount) {
+        bool showBattery, bool showChapterMarks, bool showPercent, bool showPageNumber, bool showPageCount, int pd) {
 	CRLog::debug("LVDocView::setStatusMode(%d, %s %s %s %s)", newMode,
 			showClock ? "clock" : "", showTitle ? "title" : "",
 			showBattery ? "battery" : "", showChapterMarks ? "marks" : "");
@@ -5776,11 +5868,11 @@ void LVDocView::setStatusMode(int newMode, bool showClock, bool showTitle,
 				| (showTitle ? PGHDR_AUTHOR : 0)
 				| (showTitle ? PGHDR_TITLE : 0)
 				| (showChapterMarks ? PGHDR_CHAPTER_MARKS : 0)
-                | (showPercent ? PGHDR_PERCENT : 0)
+                | (showPercent ? PGHDR_PERCENT : 0), pd
         //| PGHDR_CLOCK
 		);
 	else
-		setPageHeaderInfo(0);
+		setPageHeaderInfo(0, pd);
 #if ALLOW_BOTTOM_STATUSBAR==1
 	setPageMargins( margins );
 #endif
@@ -5801,7 +5893,17 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
         lString8 name(props->getName(i));
         lString16 value = props->getValue(i);
         //bool isUnknown = false;
-        if (name == PROP_FONT_ANTIALIASING) {
+        if (name == PROP_PAGE_PERCENT_PD) {
+            setStatusMode(m_props->getIntDef(PROP_STATUS_LINE, 0),
+                          m_props->getBoolDef(PROP_SHOW_TIME, false),
+                          m_props->getBoolDef(PROP_SHOW_TITLE, true),
+                          m_props->getBoolDef(PROP_SHOW_BATTERY, true),
+                          m_props->getBoolDef(PROP_STATUS_CHAPTER_MARKS, true),
+                          m_props->getBoolDef(PROP_SHOW_POS_PERCENT, false),
+                          m_props->getBoolDef(PROP_SHOW_PAGE_NUMBER, true),
+                          m_props->getBoolDef(PROP_SHOW_PAGE_COUNT, true), 1
+                          );
+        } else if (name == PROP_FONT_ANTIALIASING) {
             int antialiasingMode = props->getIntDef(PROP_FONT_ANTIALIASING, 2);
             fontMan->SetAntialiasMode(antialiasingMode);
             REQUEST_RENDER("propsApply - font antialiasing")
@@ -5912,7 +6014,7 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
                           m_props->getBoolDef(PROP_STATUS_CHAPTER_MARKS, true),
                           m_props->getBoolDef(PROP_SHOW_POS_PERCENT, false),
                           m_props->getBoolDef(PROP_SHOW_PAGE_NUMBER, true),
-                          m_props->getBoolDef(PROP_SHOW_PAGE_COUNT, true)
+                          m_props->getBoolDef(PROP_SHOW_PAGE_COUNT, true), 0
                           );
             //} else if ( name==PROP_BOOKMARK_ICONS ) {
             //    enableBookmarkIcons( value==L"1" );

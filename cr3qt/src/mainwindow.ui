@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>CoolReader</string>
+   <string>Cool Reader</string>
   </property>
   <property name="windowIcon">
    <iconset resource="cr3res.qrc">
@@ -72,12 +72,12 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Fi&amp;le</string>
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionRecentBooks"/>
@@ -90,7 +90,7 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <addaction name="actionFindText"/>
     <addaction name="actionToggle_Pages_Scroll"/>
@@ -106,7 +106,7 @@
    </widget>
    <widget class="QMenu" name="menuNavigation">
     <property name="title">
-     <string>Navigation</string>
+     <string>&amp;Navigation</string>
     </property>
     <addaction name="actionNextPage"/>
     <addaction name="actionPrevPage"/>
@@ -163,7 +163,7 @@
      <normaloff>:/icons/action/icons/fileopen.png</normaloff>:/icons/action/icons/fileopen.png</iconset>
    </property>
    <property name="text">
-    <string>Open...</string>
+    <string>&amp;Open...</string>
    </property>
    <property name="toolTip">
     <string>Open file</string>
@@ -174,7 +174,7 @@
   </action>
   <action name="actionToggle_Pages_Scroll">
    <property name="text">
-    <string>Toggle Pages/Scroll</string>
+    <string>&amp;Toggle Pages/Scroll</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
@@ -186,7 +186,7 @@
      <normaloff>:/icons/action/icons/exit.png</normaloff>:/icons/action/icons/exit.png</iconset>
    </property>
    <property name="text">
-    <string>Close</string>
+    <string>&amp;Close</string>
    </property>
    <property name="shortcut">
     <string>F12</string>
@@ -194,7 +194,7 @@
   </action>
   <action name="actionMinimize">
    <property name="text">
-    <string>Minimize</string>
+    <string>&amp;Minimize</string>
    </property>
    <property name="shortcut">
     <string>Esc</string>
@@ -209,7 +209,7 @@
      <normaloff>:/icons/action/icons/forward.png</normaloff>:/icons/action/icons/forward.png</iconset>
    </property>
    <property name="text">
-    <string>Page Down</string>
+    <string>&amp;Page Down</string>
    </property>
    <property name="toolTip">
     <string>Go to next page</string>
@@ -224,7 +224,7 @@
      <normaloff>:/icons/action/icons/back.png</normaloff>:/icons/action/icons/back.png</iconset>
    </property>
    <property name="text">
-    <string>Page Up</string>
+    <string>Page &amp;Up</string>
    </property>
    <property name="toolTip">
     <string>Back by page</string>
@@ -235,7 +235,7 @@
   </action>
   <action name="actionNextLine">
    <property name="text">
-    <string>Line Down</string>
+    <string>&amp;Line Down</string>
    </property>
    <property name="toolTip">
     <string>Forward by one line</string>
@@ -246,7 +246,7 @@
   </action>
   <action name="actionPrevLine">
    <property name="text">
-    <string>Line Up</string>
+    <string>L&amp;ine Up</string>
    </property>
    <property name="toolTip">
     <string>Back by line</string>
@@ -257,7 +257,7 @@
   </action>
   <action name="actionFirstPage">
    <property name="text">
-    <string>First Page</string>
+    <string>&amp;First Page</string>
    </property>
    <property name="toolTip">
     <string>Go to first page</string>
@@ -268,7 +268,7 @@
   </action>
   <action name="actionLastPage">
    <property name="text">
-    <string>Last Page</string>
+    <string>La&amp;st Page</string>
    </property>
    <property name="toolTip">
     <string>Go to last page</string>
@@ -279,7 +279,7 @@
   </action>
   <action name="actionBack">
    <property name="text">
-    <string>Back</string>
+    <string>&amp;Back</string>
    </property>
    <property name="toolTip">
     <string>Back in navigation history</string>
@@ -290,7 +290,7 @@
   </action>
   <action name="actionForward">
    <property name="text">
-    <string>Forward</string>
+    <string>F&amp;orward</string>
    </property>
    <property name="toolTip">
     <string>Go to the next position in navigation history</string>
@@ -301,7 +301,7 @@
   </action>
   <action name="actionNextChapter">
    <property name="text">
-    <string>Next Chapter</string>
+    <string>&amp;Next Chapter</string>
    </property>
    <property name="toolTip">
     <string>Go to next chapter</string>
@@ -312,7 +312,7 @@
   </action>
   <action name="actionPrevChapter">
    <property name="text">
-    <string>Previous Chapter</string>
+    <string>Previous &amp;Chapter</string>
    </property>
    <property name="toolTip">
     <string>Go to previous chapter</string>
@@ -330,7 +330,7 @@
      <normaloff>:/icons/action/icons/window_fullscreen.png</normaloff>:/icons/action/icons/window_fullscreen.png</iconset>
    </property>
    <property name="text">
-    <string>Toggle Full Screen</string>
+    <string>To&amp;ggle Full Screen</string>
    </property>
    <property name="toolTip">
     <string>Toggle Full Screen mode</string>
@@ -345,7 +345,7 @@
      <normaloff>:/icons/action/icons/viewmag+.png</normaloff>:/icons/action/icons/viewmag+.png</iconset>
    </property>
    <property name="text">
-    <string>Zoom In</string>
+    <string>&amp;Zoom In</string>
    </property>
    <property name="toolTip">
     <string>Increase font size</string>
@@ -360,7 +360,7 @@
      <normaloff>:/icons/action/icons/viewmag-.png</normaloff>:/icons/action/icons/viewmag-.png</iconset>
    </property>
    <property name="text">
-    <string>Zoom Out</string>
+    <string>Zoom &amp;Out</string>
    </property>
    <property name="toolTip">
     <string>Decrease font size</string>
@@ -375,7 +375,7 @@
      <normaloff>:/icons/action/icons/view-table-of-contents-ltr.png</normaloff>:/icons/action/icons/view-table-of-contents-ltr.png</iconset>
    </property>
    <property name="text">
-    <string>Table of Contents...</string>
+    <string>Table of &amp;Contents...</string>
    </property>
    <property name="toolTip">
     <string>Show table of contents</string>
@@ -390,7 +390,7 @@
      <normaloff>:/icons/action/icons/folder_favorite.png</normaloff>:/icons/action/icons/folder_favorite.png</iconset>
    </property>
    <property name="text">
-    <string>Recent Books</string>
+    <string>&amp;Recent Books</string>
    </property>
    <property name="toolTip">
     <string>Show recent books list</string>
@@ -405,7 +405,7 @@
      <normaloff>:/icons/action/icons/configure.png</normaloff>:/icons/action/icons/configure.png</iconset>
    </property>
    <property name="text">
-    <string>Settings...</string>
+    <string>&amp;Settings...</string>
    </property>
    <property name="toolTip">
     <string>Settings dialog</string>
@@ -442,7 +442,7 @@
   </action>
   <action name="actionAboutQT">
    <property name="text">
-    <string>About Qt</string>
+    <string>&amp;About Qt</string>
    </property>
    <property name="toolTip">
     <string>About Qt</string>
@@ -450,7 +450,7 @@
   </action>
   <action name="actionAboutCoolReader">
    <property name="text">
-    <string>About CoolReader</string>
+    <string>About &amp;Cool Reader</string>
    </property>
    <property name="toolTip">
     <string>About CoolReader</string>
@@ -465,7 +465,7 @@
      <normaloff>:/icons/action/icons/bookmark.png</normaloff>:/icons/action/icons/bookmark.png</iconset>
    </property>
    <property name="text">
-    <string>Add Bookmark</string>
+    <string>&amp;Add Bookmark</string>
    </property>
    <property name="toolTip">
     <string>Add bookmark</string>
@@ -480,7 +480,7 @@
      <normaloff>:/icons/action/icons/bookmark_folder.png</normaloff>:/icons/action/icons/bookmark_folder.png</iconset>
    </property>
    <property name="text">
-    <string>Bookmark List...</string>
+    <string>&amp;Bookmark List...</string>
    </property>
    <property name="toolTip">
     <string>Show bookmarks list</string>
@@ -495,7 +495,7 @@
      <normaloff>:/icons/action/icons/player_playlist.png</normaloff>:/icons/action/icons/player_playlist.png</iconset>
    </property>
    <property name="text">
-    <string>File Properties...</string>
+    <string>&amp;File Properties...</string>
    </property>
    <property name="toolTip">
     <string>Show file properties</string>
@@ -510,7 +510,7 @@
      <normaloff>:/icons/action/icons/rotate_cw.png</normaloff>:/icons/action/icons/rotate_cw.png</iconset>
    </property>
    <property name="text">
-    <string>Rotate</string>
+    <string>&amp;Rotate</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
@@ -522,7 +522,7 @@
      <normaloff>:/icons/action/icons/find.png</normaloff>:/icons/action/icons/find.png</iconset>
    </property>
    <property name="text">
-    <string>Find text...</string>
+    <string>&amp;Find text...</string>
    </property>
    <property name="toolTip">
     <string>Find text</string>
@@ -544,7 +544,7 @@
   </action>
   <action name="actionExport">
    <property name="text">
-    <string>Export</string>
+    <string>&amp;Export</string>
    </property>
    <property name="toolTip">
     <string>Export document</string>

@@ -343,6 +343,7 @@ void CR3View::updateDefProps()
 {
     _data->_props->setStringDef( PROP_WINDOW_FULLSCREEN, "0" );
     _data->_props->setStringDef( PROP_PAGE_TURN_CLICK, "0" );
+    _data->_props->setStringDef( PROP_PAGE_PERCENT_PD, "2" );
     _data->_props->setStringDef( PROP_WINDOW_SHOW_MENU, "1" );
     _data->_props->setStringDef( PROP_WINDOW_SHOW_SCROLLBAR, "1" );
     _data->_props->setStringDef( PROP_WINDOW_TOOLBAR_SIZE, "1" );
@@ -518,6 +519,7 @@ void CR3View::paintEvent ( QPaintEvent * event )
 {
     QPainter painter(this);
     QRect rc = rect();
+    emit setStatusInfo(getLeftInfo(), getRightInfo());
 	int newBatteryState = getBatteryState();
 	if (_lastBatteryState != newBatteryState) {
 		_docview->setBatteryState( newBatteryState );
@@ -942,6 +944,11 @@ void CR3View::setUseClickForNextPage(bool value)
     _useClickForNextPage = value;
 }
 
+void CR3View::setPercendPd(int value)
+{
+    _pagePercentDp = value;
+}
+
 void CR3View::contextMenu( QPoint pos )
 {
 }
@@ -1058,6 +1065,77 @@ bool CR3View::updateSelection( ldomXPointer p )
     _selRange = r;
     update();
     return true;
+}
+
+QString CR3View::getRightInfo() const
+{
+    int dp = _data->_props->getIntDef( PROP_PAGE_PERCENT_PD, 2 );
+    int raw_per = _docview->getPosPercent();
+    int off_per = raw_per % 100;
+    int per_per = raw_per / 100;
+    int off_per_a = off_per / 10;
+    int off_per_b = off_per % 10;
+    QString percent;
+
+    switch (dp) {
+    case 2:
+    default:
+        percent = QString::number(per_per) + "," +
+                ((off_per < 10) ? QString("0") : QString("")) + QString::number(off_per);
+        break;
+    case 1:
+        if (off_per_b >= 5) off_per_a++;
+        if (off_per_a >= 10) { off_per_a = 0; per_per++; }
+        percent = QString::number(per_per) + "," + QString::number(off_per_a);
+        break;
+    case 0:
+        if (off_per_a >= 5) per_per++;
+        percent = QString::number(per_per);
+        break;
+    }
+
+    QString time = cr2qt(_docview->getTimeString());
+    QString pg_cur = QString::number(_docview->getCurPage() + 1);
+    QString pg_cnt = QString::number(_docview->getPageCount());
+    QString batt;
+    int battState = _docview->getBatteryState();
+    if (battState == CR_BATTERY_STATE_NO_BATTERY) {
+        batt = tr("No battery");
+    } else if (battState == CR_BATTERY_STATE_CHARGING) {
+        batt = tr("Charging");
+    } else {
+        batt = QString::number(battState);
+    }
+
+    return tr("Time: ") + time + " | " +
+           tr("Pages: ") + pg_cur + "/" + pg_cnt + " | " +
+           tr("Progress: ") + percent + "% | " +
+           tr("Batt: ") + batt + ((battState >= 0) ? "%" : "");
+}
+
+QString CR3View::getLeftInfo()
+{
+    QString title = cr2qt(_docview->getTitle());
+    QString authors = cr2qt(_docview->getAuthors());
+    QString chapter;
+    bool showCh = false;
+    chapter = cr2qt(_docview->getChapterName());
+    if (!chapter.isEmpty()) {
+        chapter = " | " + chapter;
+        showCh = true;
+    }
+
+    if (title.isEmpty()) {
+        title = cr2qt(_docview->getFileName());
+    }
+
+    if (!authors.isEmpty()) {
+        authors += " - ";
+    }
+
+    emit setWindowTitleInfo(title);
+
+    return authors + title + ((showCh) ? chapter : QString(" "));
 }
 
 void CR3View::mousePressEvent ( QMouseEvent * event )

@@ -31,6 +31,7 @@ namespace Ui {
 #define PROP_WINDOW_SHOW_SCROLLBAR  "window.scrollbar.show"
 #define PROP_WINDOW_STYLE           "window.style"
 #define PROP_PAGE_TURN_CLICK        "page.turn.click"
+#define PROP_PAGE_PERCENT_PD        "page.percent.pd"
 #define PROP_APP_START_ACTION       "cr3.app.start.action"
 
 #define DECL_DEF_CR_FONT_SIZES static int cr_font_sizes[] = { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, \
@@ -185,6 +186,7 @@ private slots:
     void on_cbShowFootNotes_stateChanged(int s);
     void on_cbShowBattery_stateChanged(int s);
     void on_cbShowClock_stateChanged(int s);
+    void on_cbShowPercentP_stateChanged(int s);
     void on_cbShowBookName_stateChanged(int s);
     void on_cbShowPageHeader_stateChanged(int s);
     void on_cbViewMode_currentIndexChanged(int index);
@@ -198,6 +200,7 @@ private slots:
     void on_buttonBox_rejected();
     void on_buttonBox_clicked(QAbstractButton * button);
     void on_cbFloatingPunctuation_stateChanged(int );
+    void on_cbPercentPd_currentIndexChanged(int index);
     void on_cbFontGamma_currentIndexChanged(QString );
     void on_cbStyleName_currentIndexChanged(int index);
     void on_cbDefAlignment_currentIndexChanged(int index);
