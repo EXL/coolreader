@@ -4,8 +4,12 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About CoolReader</source>
-        <translation>CoolReader - О программе</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(c) 1998-2010 Vadim Lopatin. Slightly patched by EXL, see: &lt;a href=&quot;http://exlmoto.ru/cool-reader-system-fonts&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://exlmoto.ru/cool-reader-system-fonts&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(c) 1998-2010 Вадим Лопатин. Использованы патчи от EXL, см.: &lt;a href=&quot;http://exlmoto.ru/cool-reader-system-fonts&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://exlmoto.ru/cool-reader-system-fonts&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Build time: </source>
+        <translation>Время сборки: </translation>
     </message>
     <message>
         <source>License</source>
@@ -21,7 +25,7 @@
     </message>
     <message>
         <source>About Cool Reader</source>
-        <translation>О программе CoolReader</translation>
+        <translation>О программе Cool Reader</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -319,52 +323,41 @@ POSSIBILITY OF SUCH DAMAGES.
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;CoolReader is free open source e-book viewer based on CoolReader engine.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;Source code is available at SourceForge &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; text-decoration: underline;&quot;&gt;http://sourceforge.net/projects/crengine &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;under the terms of GNU GPL2 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; text-decoration: underline;&quot;&gt;Third party components used:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;Qt4.5 - as GUI library&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;FreeType - font engine&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;ZLib - ompressing library&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;libpng - PNG image format support&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;libjpeg - JPEG image format support&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;Hyphenation dictionaries - from AlReader&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Monospace&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CoolReader is free open source e-book viewer based on CRengine. &lt;br /&gt;Source code is available at SourceForge &lt;a href=&quot;http://sourceforge.net/projects/crengine&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://sourceforge.net/projects/crengine&lt;br /&gt;&lt;/span&gt;&lt;/a&gt;under the terms of GNU GPLv2 license.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Third party components used:&lt;br /&gt;&lt;/span&gt;Qt - as GUI library &lt;br /&gt;FreeType - font engine &lt;br /&gt;ZLib - compressing library &lt;br /&gt;libpng - PNG image format support &lt;br /&gt;libjpeg - JPEG image format support &lt;br /&gt;Hyphenation dictionaries - from AlReader&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;CoolReader это свободная программа с открытым исходным кодом для просмотра електронных книг основана на движке CoolReader.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;Исходный код доступен на SourceForge &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; text-decoration: underline;&quot;&gt;http://sourceforge.net/projects/crengine &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;под лицензией GNU GPL2.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; text-decoration: underline;&quot;&gt;Использованы следующие компоненты:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;Qt4.5 - библиотека ГПИ&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;FreeType - шрифтовой движок&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;ZLib - библиотека сжатия&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;libpng - библиотека поддержки изображений формата PNG&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;libjpeg - библиотека поддержки изображений формата JPEG&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;Словари переносов - из AlReader&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; font-size:9pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Monospace&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CoolReader это свободная программа с открытым исходным кодом для просмотра электронных книг, которая основана на движке CRengine. &lt;br /&gt;Исходный код доступен на SourceForge &lt;a href=&quot;http://sourceforge.net/projects/crengine&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://sourceforge.net/projects/crengine&lt;br /&gt;&lt;/span&gt;&lt;/a&gt;под лицензей GNU GPLv2.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Использованы следующие компоненты:&lt;br /&gt;&lt;/span&gt;Qt - библиотека GUI &lt;br /&gt;FreeType - шрифтовой движок &lt;br /&gt;ZLib - библиотека алгоритмов сжатия &lt;br /&gt;libpng - поддержка PNG-изображений &lt;br /&gt;libjpeg - поддержка JPEG-изображений &lt;br /&gt;Словари переносов из AlReader&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Source code may be downloaded from sourceforge crengine project page:
+        <source>Source code may be downloaded from SourceForge and GitHub CRengine project pages:
 http://sourceforge.net/projects/crengine/
+https://github.com/buggins/coolreader
 
-Latest source code is available from GIT repository:
+Latest source code is available from GIT repositories:
 &gt; git clone git://crengine.git.sourceforge.net/gitroot/crengine/crengine
+&gt; git clone https://github.com/buggins/coolreader
 
 See README.TXT at root directory of project for build instructions.
-</source>
-        <translation>Исходный код доступен на странице проекта crengine:
+
+Source Code of EXL&apos;s fork:
+&gt; git clone https://github.com/EXL/coolreader</source>
+        <translation>Исходный код доступен на страницах проекта СRengine:
 http://sourceforge.net/projects/crengine/
+https://github.com/buggins/coolreader
 
-Исходный код доступен из GIT репозитория:
+Актуальный исходный код доступен из GIT-репозиториев:
 &gt; git clone git://crengine.git.sourceforge.net/gitroot/crengine/crengine
+&gt; git clone https://github.com/buggins/coolreader
 
-Инструкция по сборке находится в файле README.TXT корневого каталога.</translation>
+Инструкция по сборке находится в файле README.TXT корневого каталога.
+
+Исходный код форка от EXL:
+&gt; git clone https://github.com/EXL/coolreader</translation>
     </message>
 </context>
 <context>
@@ -494,6 +487,30 @@ http://sourceforge.net/projects/crengine/
     <message>
         <source>Error while opening document </source>
         <translation>Ошибка открытия документа </translation>
+    </message>
+    <message>
+        <source>Time: </source>
+        <translation>Время: </translation>
+    </message>
+    <message>
+        <source>Pages: </source>
+        <translation>Страницы: </translation>
+    </message>
+    <message>
+        <source>Progress: </source>
+        <translation>Прогресс: </translation>
+    </message>
+    <message>
+        <source>Batt: </source>
+        <translation>Батарея: </translation>
+    </message>
+    <message>
+        <source>No battery</source>
+        <translation>Отсутствует</translation>
+    </message>
+    <message>
+        <source>Charging</source>
+        <translation>Зарядка</translation>
     </message>
     <message>
         <source>Loading: please wait...</source>
@@ -876,12 +893,12 @@ http://sourceforge.net/projects/crengine/
         <translation>Копировать выделение</translation>
     </message>
     <message>
-        <source>About Qt</source>
-        <translation>О Qt</translation>
+        <source>About Qt...</source>
+        <translation>О Qt...</translation>
     </message>
     <message>
-        <source>About CoolReader</source>
-        <translation>О программе CoolReader</translation>
+        <source>About Cool Reader...</source>
+        <translation>О программе Cool Reader...</translation>
     </message>
     <message>
         <source>Add Bookmark</source>
@@ -920,8 +937,8 @@ http://sourceforge.net/projects/crengine/
         <translation>Найти текст</translation>
     </message>
     <message>
-        <source>CoolReader</source>
-        <translation>CoolReader</translation>
+        <source>Cool Reader</source>
+        <translation>Cool Reader</translation>
     </message>
     <message>
         <source>F3</source>
@@ -1111,6 +1128,10 @@ http://sourceforge.net/projects/crengine/
         <source>Space</source>
         <translation>Пробел</translation>
     </message>
+    <message>
+        <source>Cool Reader ToolBar</source>
+        <translation>Панель инструментов</translation>
+    </message>
 </context>
 <context>
     <name>RecentBooksDlg</name>
@@ -1168,6 +1189,14 @@ http://sourceforge.net/projects/crengine/
     <message>
         <source>Search</source>
         <translation>Поиск</translation>
+    </message>
+    <message>
+        <source>Search:</source>
+        <translation>Поиск:</translation>
+    </message>
+    <message>
+        <source>Clear History</source>
+        <translation>Очистить историю</translation>
     </message>
     <message>
         <source>Text</source>
@@ -1297,7 +1326,7 @@ http://sourceforge.net/projects/crengine/
         <translation>Свиток</translation>
     </message>
     <message>
-        <source>Vew Mode</source>
+        <source>View Mode</source>
         <translation>Режим просмотра</translation>
     </message>
     <message>
@@ -1849,7 +1878,7 @@ http://sourceforge.net/projects/crengine/
         <translation>Дополнительный шрифт</translation>
     </message>
     <message>
-        <source>Enable documetn internal styles</source>
+        <source>Enable document internal styles</source>
         <translation>Разрешить встроенные стили</translation>
     </message>
     <message>
@@ -1965,18 +1994,6 @@ http://sourceforge.net/projects/crengine/
         <translation>Произвольный масштаб</translation>
     </message>
     <message>
-        <source>1</source>
-        <translation>х1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation>х2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation>х3</translation>
-    </message>
-    <message>
         <source>Block images zoom in</source>
         <translation>Обычные картинки, увеличеие</translation>
     </message>
@@ -1991,6 +2008,50 @@ http://sourceforge.net/projects/crengine/
     <message>
         <source>Image scaling options</source>
         <translation>Масштабирование картинок</translation>
+    </message>
+    <message>
+        <source>Percents with decimal place:</source>
+        <translation>Проценты, цифры после запятой:</translation>
+    </message>
+    <message>
+        <source>Page Options</source>
+        <translation>Опции страницы</translation>
+    </message>
+    <message>
+        <source>Presets</source>
+        <translation>Пресеты</translation>
+    </message>
+    <message>
+        <source>Row</source>
+        <translation>Строка:</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохр.</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Загр.</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Удал.</translation>
+    </message>
+    <message>
+        <source>Win Size</source>
+        <translation>Размер окна</translation>
+    </message>
+    <message>
+        <source>Win Pos</source>
+        <translation>Позиция окна</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation>Шрифт</translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation>Размер шрифта</translation>
     </message>
 </context>
 <context>

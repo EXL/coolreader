@@ -194,9 +194,8 @@ int main(int argc, char *argv[])
             qApp->setApplicationName("CoolReader");
 
              QTranslator qtTranslator;
-             if (qtTranslator.load("qt_" + QLocale::system().name(),
-                     QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-                QApplication::installTranslator(&qtTranslator);
+             if (qtTranslator.load("qt_" + QLocale::system().name(), translations))
+                 QApplication::installTranslator(&qtTranslator);
 
              QTranslator myappTranslator;
              QString trname = "cr3_" + QLocale::system().name();

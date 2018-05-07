@@ -170,6 +170,10 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     m_ui->cbShowBattery->setEnabled( b );
     m_ui->cbShowClock->setEnabled( b );
     m_ui->cbShowBookName->setEnabled( b );
+    m_ui->cbShowPercentP->setEnabled( b );
+    m_ui->cbPercentPd->setEnabled( b );
+    if (b)
+        m_ui->cbPercentPd->setEnabled(m_props->getBoolDef(PROP_SHOW_POS_PERCENT, false));
 
     m_ui->cbStartupAction->setCurrentIndex( m_props->getIntDef( PROP_APP_START_ACTION, 0 ) );
 
@@ -761,6 +765,9 @@ void SettingsDlg::on_cbShowPageHeader_stateChanged(int s)
     m_ui->cbShowBattery->setEnabled( b );
     m_ui->cbShowClock->setEnabled( b );
     m_ui->cbShowBookName->setEnabled( b );
+    m_ui->cbShowPercentP->setEnabled( b );
+    if (m_ui->cbShowPercentP->isChecked())
+        m_ui->cbPercentPd->setEnabled( b );
 }
 
 void SettingsDlg::on_cbShowBookName_stateChanged(int s)
@@ -775,8 +782,8 @@ void SettingsDlg::on_cbShowClock_stateChanged(int s)
 
 void SettingsDlg::on_cbShowPercentP_stateChanged(int s)
 {
-    m_ui->cbPercentPd->setEnabled(s);
     setCheck( PROP_SHOW_POS_PERCENT, s );
+    m_ui->cbPercentPd->setEnabled(s);
 }
 
 void SettingsDlg::on_cbShowBattery_stateChanged(int s)

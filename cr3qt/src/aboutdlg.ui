@@ -56,7 +56,7 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(c) 1998-2010 Vadim Lopatin. Slightly patched by EXL, see: &lt;a href=&quot;http://exlmoto.ru/cool-reader-system-fonts&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://exlmoto.ru/cool-reader-system-fonts&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(c) 1998-2010 Vadim Lopatin. Slightly patched by EXL, see: &lt;a href=&quot;http://exlmoto.ru/cool-reader-system-fonts&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://exlmoto.ru/cool-reader-system-fonts&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="openExternalLinks">
         <bool>true</bool>
@@ -91,8 +91,8 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Monospace'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CoolReader is free open source e-book viewer based on CoolReader engine. &lt;br /&gt;Source code is available at SourceForge &lt;a href=&quot;http://sourceforge.net/projects/crengine&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://sourceforge.net/projects/crengine&lt;br /&gt;&lt;/span&gt;&lt;/a&gt;under the terms of GNU GPL2 license.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Third party components used:&lt;br /&gt;&lt;/span&gt;Qt4.8 - as GUI library &lt;br /&gt;FreeType - font engine &lt;br /&gt;ZLib - ompressing library &lt;br /&gt;libpng - PNG image format support &lt;br /&gt;libjpeg - JPEG image format support &lt;br /&gt;Hyphenation dictionaries - from AlReader&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CoolReader is free open source e-book viewer based on CRengine. &lt;br /&gt;Source code is available at SourceForge &lt;a href=&quot;http://sourceforge.net/projects/crengine&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://sourceforge.net/projects/crengine&lt;br /&gt;&lt;/span&gt;&lt;/a&gt;under the terms of GNU GPLv2 license.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Third party components used:&lt;br /&gt;&lt;/span&gt;Qt - as GUI library &lt;br /&gt;FreeType - font engine &lt;br /&gt;ZLib - compressing library &lt;br /&gt;libpng - PNG image format support &lt;br /&gt;libjpeg - JPEG image format support &lt;br /&gt;Hyphenation dictionaries - from AlReader&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -433,7 +433,7 @@ POSSIBILITY OF SUCH DAMAGES.
             <bool>true</bool>
            </property>
            <property name="plainText">
-            <string>Source code may be downloaded from sourceforge and github crengine project pages:
+            <string>Source code may be downloaded from SourceForge and GitHub CRengine project pages:
 http://sourceforge.net/projects/crengine/
 https://github.com/buggins/coolreader
 

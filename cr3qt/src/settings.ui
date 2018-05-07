@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
-    <height>708</height>
+    <width>485</width>
+    <height>603</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -281,7 +281,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>Vew Mode</string>
+              <string>View Mode</string>
              </property>
             </widget>
            </item>
@@ -1692,8 +1692,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>418</width>
-              <height>571</height>
+              <width>458</width>
+              <height>482</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_9">

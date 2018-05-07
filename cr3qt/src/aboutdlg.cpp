@@ -8,8 +8,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
     m_ui(new Ui::AboutDialog)
 {
     m_ui->setupUi(this);
-	m_ui->lblVersion->setText(QString("Cool Reader v") + QString(CR_ENGINE_VERSION));
-	m_ui->lblDate->setText(QString(CR_ENGINE_BUILD_DATE));
+    m_ui->lblVersion->setText(QString("Cool Reader v") + QString(CR_ENGINE_VERSION));
+    m_ui->lblDate->setText(tr("Build time: ") + QString(CR_ENGINE_BUILD_DATE));
 }
 
 AboutDialog::~AboutDialog()
@@ -32,11 +32,11 @@ bool AboutDialog::showDlg( QWidget * parent )
 {
     AboutDialog * dlg = new AboutDialog( parent );
     dlg->setModal( true );
-    dlg->setWindowTitle(tr("About CoolReader"));
+    dlg->setWindowTitle(tr("About Cool Reader"));
     dlg->show();
     dlg->raise();
     dlg->activateWindow();
-	return true;
+    return true;
 }
 
 
