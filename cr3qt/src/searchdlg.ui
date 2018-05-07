@@ -25,7 +25,26 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Text</string>
+        <string>Search:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="edPattern">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="insertPolicy">
+        <enum>QComboBox::InsertAtBottom</enum>
+       </property>
+       <property name="duplicatesEnabled">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -46,17 +65,21 @@
      <item row="3" column="1">
       <widget class="QRadioButton" name="rbBackward">
        <property name="text">
-        <string>Search backward</string>
+        <string>Search bac&amp;kward</string>
        </property>
       </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="edPattern"/>
      </item>
     </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btnClearHistory">
+       <property name="text">
+        <string>Clear History</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -92,7 +115,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>edPattern</tabstop>
   <tabstop>cbCaseSensitive</tabstop>
   <tabstop>rbForward</tabstop>
   <tabstop>rbBackward</tabstop>

@@ -2,6 +2,7 @@
 #include "ui_settings.h"
 #include "cr3widget.h"
 #include "crqtutil.h"
+#include "mainwindow.h"
 #include <qglobal.h>
 #if QT_VERSION >= 0x050000
 #include <QtWidgets/QColorDialog>
@@ -11,6 +12,7 @@
 #include <QtGui/QStyleFactory>
 #endif
 #include <QDir>
+#include <QSettings>
 
 static int def_margins[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 20, 25, 30, 40, 50, 60 };
 #define MAX_MARGIN_INDEX (sizeof(def_margins)/sizeof(int))
@@ -72,15 +74,21 @@ static const char * styleNames[] = {
 
 static int interline_spaces[] = {75, 80, 85, 90, 95, 100, 110, 120, 140, 150};
 
-SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView ) :
+SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByteArray g, QPoint p, QSize ss) :
     QDialog(parent),
     m_ui(new Ui::SettingsDlg),
-    m_docview( docView )
+    m_docview( docView ),
+    wSize(ss),
+    wPos(p),
+    wState(t),
+    wGeometry(g)
 {
     initDone = false;
 
     m_ui->setupUi(this);
     m_props = m_docview->getOptions();
+
+    mainWindow = parent;
 
     m_oldHyph = cr2qt(HyphMan::getSelectedDictionary()->getId());
 
@@ -165,7 +173,13 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView ) :
 
     m_ui->cbStartupAction->setCurrentIndex( m_props->getIntDef( PROP_APP_START_ACTION, 0 ) );
 
-
+    m_ui->tablePresets->setColumnCount(5);
+    m_ui->tablePresets->setRowCount(5);
+    QStringList col_names;
+    col_names << tr("Title") << tr("Win Size") << tr("Win Pos") << tr("Font") << tr("Font Size");
+    m_ui->tablePresets->setHorizontalHeaderLabels(col_names);
+    m_ui->tablePresets->setEditTriggers(QTableWidget::NoEditTriggers);
+    updateTable();
 
     int lp = m_props->getIntDef( PROP_LANDSCAPE_PAGES, 2 );
     int vm = m_props->getIntDef( PROP_PAGE_VIEW_MODE, 1 );
@@ -300,9 +314,9 @@ SettingsDlg::~SettingsDlg()
     delete m_ui;
 }
 
-bool SettingsDlg::showDlg(  QWidget * parent, CR3View * docView )
+bool SettingsDlg::showDlg(  QWidget * parent, CR3View * docView, QByteArray t, QByteArray g, QPoint p, QSize s )
 {
-    SettingsDlg * dlg = new SettingsDlg( parent, docView );
+    SettingsDlg * dlg = new SettingsDlg( parent, docView, t, g, p, s );
     dlg->show();
     return true;
 }
@@ -860,6 +874,143 @@ void SettingsDlg::on_cbLookAndFeel_currentIndexChanged( QString styleName )
         return;
     CRLog::debug( "on_cbLookAndFeel_currentIndexChanged(%s)", styleName.toUtf8().data() );
     m_props->setString( PROP_WINDOW_STYLE, styleName );
+}
+
+void SettingsDlg::on_btnSavePreset_clicked()
+{
+    int idx = m_ui->cbPresets->currentIndex();
+
+    QString title = cr2qt(m_docview->getDocView()->getTitle());
+    QString font = m_props->getStringDef(PROP_FONT_FACE, "Arial");
+    QString fontSize = m_props->getStringDef(PROP_FONT_SIZE, "22");
+    QString size = QString::number(wSize.height()) + "x" + QString::number(wSize.width());
+    QString pos = "x: " + QString::number(wPos.x()) + " y: " + QString::number(wPos.y());
+
+    m_ui->tablePresets->setItem(idx, 0, new QTableWidgetItem(title));
+    m_ui->tablePresets->setItem(idx, 1, new QTableWidgetItem(size));
+    m_ui->tablePresets->setItem(idx, 2, new QTableWidgetItem(pos));
+    m_ui->tablePresets->setItem(idx, 3, new QTableWidgetItem(font));
+    m_ui->tablePresets->setItem(idx, 4, new QTableWidgetItem(fontSize));
+
+    QSettings settings;
+    settings.beginGroup(QString("Preset_%1").arg(idx));
+    settings.setValue("Title", title);
+    settings.setValue("Font", font);
+    settings.setValue("FontSize", fontSize);
+    settings.setValue("WinSize", wSize);
+    settings.setValue("WinPos", wPos);
+    settings.setValue("WinState", wState);
+    settings.setValue("WinGeometry", wGeometry);
+    settings.endGroup();
+
+    updateTable();
+}
+
+void SettingsDlg::on_btnClearPreset_clicked()
+{
+    int idx = m_ui->cbPresets->currentIndex();
+
+    QSettings settings;
+    settings.beginGroup(QString("Preset_%1").arg(idx));
+    settings.remove("");
+    settings.endGroup();
+
+    updateTable();
+}
+
+void SettingsDlg::on_btnLoadPreset_clicked()
+{
+    int idx = m_ui->cbPresets->currentIndex();
+
+    QString font;
+    QString fontSize;
+    QSize sizeW;
+    QPoint posW;
+    QByteArray stateW;
+    QByteArray geometryW;
+
+    QSettings settings;
+    settings.beginGroup(QString("Preset_%1").arg(idx));
+    font = settings.value("Font").toString();
+    fontSize = settings.value("FontSize").toString();
+    sizeW = settings.value("WinSize").toSize();
+    posW = settings.value("WinPos").toPoint();
+    stateW = settings.value("WinState").toByteArray();
+    geometryW = settings.value("WinGeometry").toByteArray();
+    settings.endGroup();
+
+    if (font.isEmpty() || fontSize.isEmpty())
+        return;
+
+    reinterpret_cast<MainWindow*>(mainWindow)->restoreState(stateW);
+    reinterpret_cast<MainWindow*>(mainWindow)->restoreGeometry(geometryW);
+    reinterpret_cast<MainWindow*>(mainWindow)->resize(sizeW);
+    reinterpret_cast<MainWindow*>(mainWindow)->move(posW);
+
+    int f_idx = getComboBoxElemIndexByText(font, m_ui->cbTextFontFace);
+    int fs_idx = getComboBoxElemIndexByText(fontSize, m_ui->cbTextFontSize);
+
+    if ((f_idx > 0) && (fs_idx > 0)) {
+        m_ui->cbTextFontFace->setCurrentIndex(f_idx);
+        m_ui->cbTextFontSize->setCurrentIndex(fs_idx);
+        m_props->setString( PROP_FONT_FACE, font );
+        updateStyleSample();
+        m_props->setString( PROP_FONT_SIZE, fontSize );
+        updateStyleSample();
+        m_docview->setOptions( m_props );
+    }
+}
+
+int SettingsDlg::getComboBoxElemIndexByText(const QString &text, const QComboBox *cb) const
+{
+    for (int i = 0; i < cb->count(); ++i) {
+        if (cb->itemText(i) == text) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void SettingsDlg::updateTable()
+{
+    m_ui->tablePresets->clearContents();
+    QSettings settings;
+
+    // http://www.qtcentre.org/threads/42870-Read-Several-Groups-in-INI-file-from-QSettings
+    foreach (QString group, settings.childGroups()) {
+        if (!group.startsWith("Preset_"))
+            continue;
+
+        int idx = group.right(1).toInt();
+
+        settings.beginGroup(group);
+        const QStringList childKeys = settings.childKeys();
+
+        //QStringList Keys;
+        //QStringList values;
+
+        foreach (const QString &childKey, childKeys) {
+            // Keys << childKey;
+            if (childKey == "Title") {
+                m_ui->tablePresets->setItem(idx, 0, new QTableWidgetItem(settings.value(childKey).toString()));
+            } else if (childKey == "WinSize") {
+                QSize s = settings.value(childKey).toSize();
+                QString ss = QString::number(s.height()) + "x" + QString::number(s.width());
+                m_ui->tablePresets->setItem(idx, 1, new QTableWidgetItem(ss));
+            } else if (childKey == "WinPos") {
+                QPoint p = settings.value(childKey).toPoint();
+                QString pos = "x: " + QString::number(p.x()) + " y: " + QString::number(p.y());
+                m_ui->tablePresets->setItem(idx, 2, new QTableWidgetItem(pos));
+            } else if (childKey == "Font") {
+                m_ui->tablePresets->setItem(idx, 3, new QTableWidgetItem(settings.value(childKey).toString()));
+            } else if (childKey == "FontSize") {
+                m_ui->tablePresets->setItem(idx, 4, new QTableWidgetItem(settings.value(childKey).toString()));
+            }
+            // values << settings.value(childKey).toString();
+        }
+        // qDebug() << idx << group << Keys;
+        settings.endGroup();
+    }
 }
 
 void SettingsDlg::on_cbTitleFontFace_currentIndexChanged(QString s)

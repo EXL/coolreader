@@ -125,12 +125,15 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    searchDialog = new SearchDialog(this, ui->view);
+    searchDialog->setModal(false);
+
     labelTitle = new QLabel(this);
     labelTitle->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     labelProgress = new QLabel(this);
 
-    labelTitle->setStyleSheet("QLabel { padding: 0px 0px 0px 5px; }");
-    labelProgress->setStyleSheet("QLabel { padding: 0px 5px 0px 0px; }");
+    labelTitle->setStyleSheet("QLabel { padding: 0px 0px 0px 3px; }");
+    labelProgress->setStyleSheet("QLabel { padding: 0px 3px 0px 0px; }");
     labelProgress->setAlignment(Qt::AlignRight);
 
     ui->statusBar->addWidget(labelTitle, 1);
@@ -376,7 +379,7 @@ void MainWindow::on_actionRecentBooks_triggered()
 
 void MainWindow::on_actionSettings_triggered()
 {
-    SettingsDlg::showDlg( this, ui->view );
+    SettingsDlg::showDlg( this, ui->view, saveState(), saveGeometry(), pos(), size() );
 }
 
 void MainWindow::toggleProperty( const char * name )
@@ -558,7 +561,8 @@ void MainWindow::on_actionFileProperties_triggered()
 
 void MainWindow::on_actionFindText_triggered()
 {
-    SearchDialog::showDlg(this, ui->view);
+    searchDialog->showDlg();
+//    SearchDialog::showDlg(this, ui->view);
 //    QMessageBox * mb = new QMessageBox( QMessageBox::Information, tr("Not implemented"), tr("Search is not implemented yet"), QMessageBox::Close, this );
 //    mb->exec();
 }

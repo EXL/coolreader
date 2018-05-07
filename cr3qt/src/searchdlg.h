@@ -16,19 +16,24 @@ public:
     SearchDialog(QWidget *parent, CR3View * docView);
     ~SearchDialog();
 
-    static bool showDlg( QWidget * parent, CR3View * docView );
-
+    bool showDlg();
     bool findText( lString16 pattern, int origin, bool reverse, bool caseInsensitive );
 protected:
     void changeEvent(QEvent *e);
-
+    void closeEvent(QCloseEvent *);
 private:
     Ui::SearchDialog *ui;
     CR3View * _docview;
     lString16 _lastPattern;
+
+    void saveHistory();
+    void readHistory();
+    void clearHistory();
+    void addValueWoDuplicates(const QString &str);
 private slots:
     void on_btnFindNext_clicked();
     void on_btnClose_clicked();
+    void on_btnClearHistory_clicked();
 };
 
 #endif // SEARCHDLG_H

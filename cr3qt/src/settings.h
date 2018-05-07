@@ -121,9 +121,9 @@ class SettingsDlg : public QDialog {
 public:
     virtual ~SettingsDlg();
 
-    static bool showDlg(  QWidget * parent, CR3View * docView );
+    static bool showDlg(QWidget * parent, CR3View * docView , QByteArray t, QByteArray g, QPoint p, QSize s);
 protected:
-    explicit SettingsDlg(QWidget *parent, CR3View * docView );
+    explicit SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByteArray g, QPoint p, QSize ss );
     virtual void changeEvent(QEvent *e);
 
     void setCheck( const char * optionName, int checkState );
@@ -167,6 +167,15 @@ private:
     StyleItem m_verticalAlignDecoration;
     QStringList m_styleNames;
 
+    QWidget *mainWindow;
+    QSize wSize;
+    QPoint wPos;
+    QByteArray wState;
+    QByteArray wGeometry;
+
+    int getComboBoxElemIndexByText(const QString &text, const QComboBox *cb) const;
+    void updateTable();
+
 private slots:
     void on_cbPageSkin_currentIndexChanged(int index);
     void on_cbTxtPreFormatted_stateChanged(int );
@@ -179,6 +188,9 @@ private slots:
     void on_cbTitleFontSize_currentIndexChanged(QString );
     void on_cbTitleFontFace_currentIndexChanged(QString );
     void on_cbLookAndFeel_currentIndexChanged(QString );
+    void on_btnSavePreset_clicked();
+    void on_btnLoadPreset_clicked();
+    void on_btnClearPreset_clicked();
     void on_btnHeaderTextColor_clicked();
     void on_btnBgColor_clicked();
     void on_btnTextColor_clicked();

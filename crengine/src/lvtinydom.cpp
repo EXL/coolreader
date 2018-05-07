@@ -5808,7 +5808,7 @@ bool ldomXRange::findText( lString16 pattern, bool caseInsensitive, bool reverse
             int offs = _end.getOffset();
 
             if ( firstFoundTextY!=-1 && maxHeight>0 ) {
-                ldomXPointer p( _start.getNode(), offs );
+                ldomXPointer p( _end.getNode(), offs );
                 int currentTextY = p.toPoint().y;
                 if ( currentTextY<firstFoundTextY-maxHeight )
                     return words.length()>0;

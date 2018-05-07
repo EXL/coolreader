@@ -9,6 +9,7 @@
 #endif
 #include "settings.h"
 #include "cr3widget.h"
+#include "searchdlg.h"
 
 #include <QLabel>
 
@@ -23,6 +24,8 @@ class MainWindow : public QMainWindow, public PropsChangeCallback
 
     QLabel *labelTitle;
     QLabel *labelProgress;
+
+    SearchDialog *searchDialog;
 
 public:
     virtual void onPropsChange( PropsRef props );

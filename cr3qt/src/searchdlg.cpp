@@ -1,5 +1,9 @@
 #include "cr3widget.h"
+
 #include <QEvent>
+#include <QSettings>
+#include <QLineEdit>
+
 #include <qglobal.h>
 #if QT_VERSION >= 0x050000
 #include <QtWidgets/QDialog>
@@ -8,16 +12,21 @@
 #include <QtGui/QDialog>
 #include <QtGui/QMessageBox>
 #endif
+
 #include "searchdlg.h"
 #include "ui_searchdlg.h"
 
-bool SearchDialog::showDlg( QWidget * parent, CR3View * docView )
+bool SearchDialog::showDlg()
 {
-    SearchDialog * dlg = new SearchDialog( parent, docView );
-    dlg->setModal( true );
-    dlg->show();
-    dlg->raise();
-    dlg->activateWindow();
+    readHistory();
+
+    ui->edPattern->setFocus();
+    ui->edPattern->lineEdit()->selectAll();
+    //ui->edPattern->clearEditText();
+
+    this->show();
+    this->raise();
+    this->activateWindow();
     //dlg->
     return true;
 }
@@ -49,6 +58,86 @@ void SearchDialog::changeEvent(QEvent *e)
     }
 }
 
+void SearchDialog::closeEvent(QCloseEvent *ev)
+{
+    saveHistory();
+    ui->edPattern->clearEditText();
+    return QDialog::closeEvent(ev);
+}
+
+void SearchDialog::saveHistory()
+{
+    QStringList historyValues;
+
+    for (int i = 0; i < ui->edPattern->count(); ++i) {
+        historyValues << ui->edPattern->itemText(i);
+    }
+
+    QSettings settings;
+    settings.beginGroup("Search");
+    int idx = 0;
+    foreach (const QString &value, historyValues) {
+        if (!value.isEmpty())
+            settings.setValue(QString("History_%1").arg(idx), value);
+        idx++;
+    }
+    settings.endGroup();
+}
+
+void SearchDialog::readHistory()
+{
+    QStringList historyValues;
+
+    QSettings settings;
+    settings.beginGroup("Search");
+    // The order is important!
+    QStringList keys = settings.childKeys();
+    for (int i = 0; i < keys.length(); ++i) {
+        historyValues << settings.value(QString("History_%1").arg(i)).toString();
+    }
+    settings.endGroup();
+
+    ui->edPattern->clear();
+
+    int idx = 0;
+    foreach (const QString &value, historyValues) {
+        if (!value.isEmpty())
+            ui->edPattern->insertItem(idx, value);
+        idx++;
+    }
+
+    ui->edPattern->setCurrentIndex(ui->edPattern->count() - 1);
+}
+
+void SearchDialog::clearHistory()
+{
+    ui->edPattern->clear();
+
+    QSettings settings;
+    settings.beginGroup("Search");
+    settings.remove("");
+    settings.endGroup();
+}
+
+void SearchDialog::addValueWoDuplicates(const QString &str)
+{
+    if (str.trimmed().isEmpty())
+        return;
+
+    if (str.length() > 150)
+        return;
+
+    bool found = false;
+    for (int i = 0; i < ui->edPattern->count(); ++i) {
+        if (str == ui->edPattern->itemText(i)) {
+            found = true;
+        }
+    }
+
+    if (!found)
+        ui->edPattern->insertItem(ui->edPattern->count(), str);
+}
+
 bool SearchDialog::findText( lString16 pattern, int origin, bool reverse, bool caseInsensitive )
 {
     if ( pattern.empty() )
@@ -59,7 +148,7 @@ bool SearchDialog::findText( lString16 pattern, int origin, bool reverse, bool c
     LVArray<ldomWord> words;
     lvRect rc;
     _docview->getDocView()->GetPos( rc );
-    int pageHeight = rc.height();
+    int pageHeight = _docview->getDocView()->GetHeight() * 2;
     int start = -1;
     int end = -1;
     if ( reverse ) {
@@ -109,7 +198,13 @@ bool SearchDialog::findText( lString16 pattern, int origin, bool reverse, bool c
 void SearchDialog::on_btnFindNext_clicked()
 {
     bool found = false;
-    QString pattern = ui->edPattern->text();
+    QString pattern = ui->edPattern->currentText();
+    addValueWoDuplicates(pattern);
+
+    ui->edPattern->setFocus();
+    ui->edPattern->lineEdit()->selectAll();
+
+    saveHistory();
     lString16 p16 = qt2cr(pattern);
     bool reverse = ui->rbBackward->isChecked();
     bool caseInsensitive = ui->cbCaseSensitive->checkState()!=Qt::Checked;
@@ -127,4 +222,9 @@ void SearchDialog::on_btnFindNext_clicked()
 void SearchDialog::on_btnClose_clicked()
 {
     this->close();
+}
+
+void SearchDialog::on_btnClearHistory_clicked()
+{
+    clearHistory();
 }

@@ -188,6 +188,11 @@ int main(int argc, char *argv[])
             QString translations = exeDir + "i18n/";
 #endif
 #endif
+            // For QSettings
+            qApp->setOrganizationDomain("ru");
+            qApp->setOrganizationName("CoolReader");
+            qApp->setApplicationName("CoolReader");
+
              QTranslator qtTranslator;
              if (qtTranslator.load("qt_" + QLocale::system().name(),
                      QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
