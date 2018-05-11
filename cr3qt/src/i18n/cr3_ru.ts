@@ -1306,6 +1306,30 @@ https://github.com/buggins/coolreader
         <translation>Показать строку состояния</translation>
     </message>
     <message>
+        <source>Title</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <source>Chapter</source>
+        <translation>Глава</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Время</translation>
+    </message>
+    <message>
+        <source>Pages</source>
+        <translation>Страницы</translation>
+    </message>
+    <message>
+        <source>Percents</source>
+        <translation>Проценты</translation>
+    </message>
+    <message>
+        <source>Battery</source>
+        <translation>Батарея</translation>
+    </message>
+    <message>
         <source>Fullscreen display</source>
         <translation>Полно-экранный режим</translation>
     </message>

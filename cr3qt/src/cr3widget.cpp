@@ -348,6 +348,12 @@ void CR3View::updateDefProps()
     _data->_props->setStringDef( PROP_WINDOW_SHOW_SCROLLBAR, "1" );
     _data->_props->setStringDef( PROP_WINDOW_TOOLBAR_SIZE, "1" );
     _data->_props->setStringDef( PROP_WINDOW_SHOW_STATUSBAR, "0" );
+    _data->_props->setStringDef( PROP_STA_TITL, "1" );
+    _data->_props->setStringDef( PROP_STA_CHAP, "0" );
+    _data->_props->setStringDef( PROP_STA_TIME, "0" );
+    _data->_props->setStringDef( PROP_STA_PAGE, "1" );
+    _data->_props->setStringDef( PROP_STA_PERC, "1" );
+    _data->_props->setStringDef( PROP_STA_BATT, "1" );
     _data->_props->setStringDef( PROP_APP_START_ACTION, "0" );
 
 
@@ -1107,10 +1113,64 @@ QString CR3View::getRightInfo() const
         batt = QString::number(battState);
     }
 
-    return tr("Time: ") + time + " | " +
-           tr("Pages: ") + pg_cur + "/" + pg_cnt + " | " +
-           tr("Progress: ") + percent + "% | " +
-           tr("Batt: ") + batt + ((battState >= 0) ? "%" : "");
+    QString ans = "";
+    int first = 0;
+    if (_staTime) {
+        if (first > 0)
+            ans += " | ";
+        ans += tr("Time: ") + time;
+        first++;
+    }
+    if (_staPage) {
+        if (first > 0)
+            ans += " | ";
+        ans += tr("Pages: ") + pg_cur + "/" + pg_cnt;
+        first++;
+    }
+    if (_staPerc) {
+        if (first > 0)
+            ans += " | ";
+        ans += tr("Progress: ") + percent + "%";
+        first++;
+    }
+    if (_staBatt) {
+        if (first > 0)
+            ans += " | ";
+        ans += tr("Batt: ") + batt + ((battState >= 0) ? "%" : "");
+        first++;
+    }
+
+    return ans;
+}
+
+void CR3View::setStaBatt(bool staBatt)
+{
+    _staBatt = staBatt;
+}
+
+void CR3View::setStaPerc(bool staPerc)
+{
+    _staPerc = staPerc;
+}
+
+void CR3View::setStaPage(bool staPage)
+{
+    _staPage = staPage;
+}
+
+void CR3View::setStaTime(bool staTime)
+{
+    _staTime = staTime;
+}
+
+void CR3View::setStaChap(bool staChap)
+{
+    _staChap = staChap;
+}
+
+void CR3View::setStaTitl(bool staTitl)
+{
+    _staTitl = staTitl;
 }
 
 QString CR3View::getLeftInfo()
@@ -1121,7 +1181,7 @@ QString CR3View::getLeftInfo()
     bool showCh = false;
     chapter = cr2qt(_docview->getChapterName());
     if (!chapter.isEmpty()) {
-        chapter = " | " + chapter;
+        //chapter = " | " + chapter;
         showCh = true;
     }
 
@@ -1135,7 +1195,24 @@ QString CR3View::getLeftInfo()
 
     emit setWindowTitleInfo(title);
 
-    return authors + title + ((showCh) ? chapter : QString(" "));
+    QString ans = "";
+    int first = 0;
+    if (_staTitl) {
+        if (first > 0)
+            ans += " | ";
+        ans += authors + title;
+        first++;
+    }
+    if (_staChap) {
+        if (showCh) {
+            if (first > 0)
+                ans += " | ";
+            ans += chapter;
+            first++;
+        }
+    }
+
+    return ans;
 }
 
 void CR3View::mousePressEvent ( QMouseEvent * event )

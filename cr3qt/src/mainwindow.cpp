@@ -403,6 +403,24 @@ void MainWindow::onPropsChange( PropsRef props )
         if ( name == PROP_PAGE_TURN_CLICK ) {
             ui->view->setUseClickForNextPage( v );
         }
+        if ( name == PROP_STA_TITL ) {
+            ui->view->setStaTitl( v );
+        }
+        if ( name == PROP_STA_CHAP ) {
+            ui->view->setStaChap( v );
+        }
+        if ( name == PROP_STA_TIME ) {
+            ui->view->setStaTime( v );
+        }
+        if ( name == PROP_STA_PAGE ) {
+            ui->view->setStaPage( v );
+        }
+        if ( name == PROP_STA_PERC ) {
+            ui->view->setStaPerc( v );
+        }
+        if ( name == PROP_STA_BATT ) {
+            ui->view->setStaBatt( v );
+        }
         if ( name == PROP_PAGE_PERCENT_PD ) {
             ui->view->setPercendPd( v );
         }

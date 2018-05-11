@@ -139,6 +139,12 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     optionToUi( PROP_WINDOW_SHOW_STATUSBAR, m_ui->cbWindowShowStatusBar );
 
     optionToUi( PROP_PAGE_TURN_CLICK, m_ui->cbTurnPageMouse );
+    optionToUi( PROP_STA_TITL, m_ui->cbStaTitle);
+    optionToUi( PROP_STA_CHAP, m_ui->cbStaChapter);
+    optionToUi( PROP_STA_TIME, m_ui->cbStaTime);
+    optionToUi( PROP_STA_PAGE, m_ui->cbStaPages);
+    optionToUi( PROP_STA_PERC, m_ui->cbStaPercents);
+    optionToUi( PROP_STA_BATT, m_ui->cbStaBatt);
     optionToUi( PROP_FOOTNOTES, m_ui->cbShowFootNotes );
     optionToUi( PROP_SHOW_BATTERY, m_ui->cbShowBattery );
     optionToUi( PROP_SHOW_TIME, m_ui->cbShowClock );
@@ -175,6 +181,14 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     m_ui->cbPercentPd->setEnabled( b );
     if (b)
         m_ui->cbPercentPd->setEnabled(m_props->getBoolDef(PROP_SHOW_POS_PERCENT, false));
+
+    bool c = !(m_props->getIntDef( PROP_WINDOW_SHOW_STATUSBAR, 0 )==0);
+    m_ui->cbStaTitle->setEnabled( c );
+    m_ui->cbStaChapter->setEnabled( c );
+    m_ui->cbStaTime->setEnabled( c );
+    m_ui->cbStaPages->setEnabled( c );
+    m_ui->cbStaPercents->setEnabled( c );
+    m_ui->cbStaBatt->setEnabled( c );
 
     m_ui->cbStartupAction->setCurrentIndex( m_props->getIntDef( PROP_APP_START_ACTION, 0 ) );
 
@@ -735,6 +749,13 @@ void SettingsDlg::on_cbWindowShowMenu_stateChanged(int s)
 void SettingsDlg::on_cbWindowShowStatusBar_stateChanged(int s)
 {
     setCheck( PROP_WINDOW_SHOW_STATUSBAR, s );
+    bool c = !(m_props->getIntDef( PROP_WINDOW_SHOW_STATUSBAR, 0)==0);
+    m_ui->cbStaTitle->setEnabled( c );
+    m_ui->cbStaChapter->setEnabled( c );
+    m_ui->cbStaTime->setEnabled( c );
+    m_ui->cbStaPages->setEnabled( c );
+    m_ui->cbStaPercents->setEnabled( c );
+    m_ui->cbStaBatt->setEnabled( c );
 }
 
 void SettingsDlg::on_cbWindowShowScrollbar_stateChanged(int s)
@@ -1305,4 +1326,34 @@ void SettingsDlg::on_tablePresets_itemChanged(QTableWidgetItem *item)
 
         updateTable();
     }
+}
+
+void SettingsDlg::on_cbStaTitle_stateChanged(int s)
+{
+    setCheck( PROP_STA_TITL, s );
+}
+
+void SettingsDlg::on_cbStaChapter_stateChanged(int s)
+{
+    setCheck( PROP_STA_CHAP, s );
+}
+
+void SettingsDlg::on_cbStaTime_stateChanged(int s)
+{
+    setCheck( PROP_STA_TIME, s );
+}
+
+void SettingsDlg::on_cbStaPages_stateChanged(int s)
+{
+    setCheck( PROP_STA_PAGE, s );
+}
+
+void SettingsDlg::on_cbStaPercents_stateChanged(int s)
+{
+    setCheck( PROP_STA_PERC, s );
+}
+
+void SettingsDlg::on_cbStaBatt_stateChanged(int s)
+{
+    setCheck( PROP_STA_BATT, s );
 }

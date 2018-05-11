@@ -34,6 +34,12 @@ namespace Ui {
 #define PROP_WINDOW_STYLE           "window.style"
 #define PROP_PAGE_TURN_CLICK        "page.turn.click"
 #define PROP_PAGE_PERCENT_PD        "page.percent.pd"
+#define PROP_STA_TIME               "statusbar.option.time"
+#define PROP_STA_PAGE               "statusbar.option.page"
+#define PROP_STA_PERC               "statusbar.option.perc"
+#define PROP_STA_BATT               "statusbar.option.batt"
+#define PROP_STA_TITL               "statusbar.option.titl"
+#define PROP_STA_CHAP               "statusbar.option.chap"
 #define PROP_APP_START_ACTION       "cr3.app.start.action"
 
 #define DECL_DEF_CR_FONT_SIZES static int cr_font_sizes[] = { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, \
@@ -247,6 +253,12 @@ private slots:
     void on_cbImageBlockZoomoutMode_currentIndexChanged(int index);
     void on_cbImageBlockZoomoutScale_currentIndexChanged(int index);
     void on_tablePresets_itemChanged(QTableWidgetItem *item);
+    void on_cbStaTitle_stateChanged(int );
+    void on_cbStaChapter_stateChanged(int );
+    void on_cbStaTime_stateChanged(int );
+    void on_cbStaPages_stateChanged(int );
+    void on_cbStaPercents_stateChanged(int );
+    void on_cbStaBatt_stateChanged(int );
 };
 
 #endif // SETTINGSDLG_H

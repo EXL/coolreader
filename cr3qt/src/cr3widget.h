@@ -124,6 +124,12 @@ class CR3View : public QWidget, public LVDocViewCallback
 
         void setUseClickForNextPage(bool value);
         void setPercendPd(int value);
+        void setStaTitl(bool staTitl);
+        void setStaChap(bool staChap);
+        void setStaTime(bool staTime);
+        void setStaPage(bool staPage);
+        void setStaPerc(bool staPerc);
+        void setStaBatt(bool staBatt);
 
     public slots:
         void contextMenu( QPoint pos );
@@ -196,6 +202,12 @@ class CR3View : public QWidget, public LVDocViewCallback
         int _lastBatteryState;
         bool _useClickForNextPage;
         int _pagePercentDp;
+        bool _staTitl;
+        bool _staChap;
+        bool _staTime;
+        bool _staPage;
+        bool _staPerc;
+        bool _staBatt;
 };
 
 #endif // CR3WIDGET_H
