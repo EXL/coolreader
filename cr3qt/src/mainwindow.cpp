@@ -73,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
     addAction(ui->actionToggleEditMode);
     addAction(ui->actionNextSentence);
     addAction(ui->actionPrevSentence);
+    addAction(ui->actionMove_Window_to_0_0);
 
 #ifdef _LINUX
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/.cr3/");
@@ -608,4 +609,9 @@ void MainWindow::on_actionNextSentence_triggered()
 void MainWindow::on_actionPrevSentence_triggered()
 {
     ui->view->prevSentence();
+}
+
+void MainWindow::on_actionMove_Window_to_0_0_triggered()
+{
+    this->move(0, 0);
 }

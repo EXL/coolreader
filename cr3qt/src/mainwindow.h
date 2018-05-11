@@ -82,6 +82,7 @@ private slots:
     void on_view_destroyed();
     void on_actionNextSentence_triggered();
     void on_actionPrevSentence_triggered();
+    void on_actionMove_Window_to_0_0_triggered();
 };
 
 #endif // MAINWINDOW_H

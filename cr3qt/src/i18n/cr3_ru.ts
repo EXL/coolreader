@@ -1121,6 +1121,10 @@ https://github.com/buggins/coolreader
         <translation>Предыдущая страница</translation>
     </message>
     <message>
+        <source>Move window to 0,0</source>
+        <translation>Переместить окно в 0,0</translation>
+    </message>
+    <message>
         <source>Left</source>
         <translation>Влево</translation>
     </message>
