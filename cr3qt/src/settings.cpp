@@ -1328,6 +1328,12 @@ void SettingsDlg::on_tablePresets_itemChanged(QTableWidgetItem *item)
     }
 }
 
+void SettingsDlg::on_tablePresets_cellClicked(int row, int column)
+{
+    Q_UNUSED(column);
+    m_ui->cbPresets->setCurrentIndex(row);
+}
+
 void SettingsDlg::on_cbStaTitle_stateChanged(int s)
 {
     setCheck( PROP_STA_TITL, s );
