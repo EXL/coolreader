@@ -12,6 +12,8 @@
 #include <QtGui/QComboBox>
 #endif
 
+#include <QTableWidgetItem>
+
 #include "crqtutil.h"
 
 namespace Ui {
@@ -173,6 +175,8 @@ private:
     QByteArray wState;
     QByteArray wGeometry;
 
+    bool tableInit;
+
     int getComboBoxElemIndexByText(const QString &text, const QComboBox *cb) const;
     void updateTable();
 
@@ -242,6 +246,7 @@ private slots:
     void on_cbImageBlockZoominScale_currentIndexChanged(int index);
     void on_cbImageBlockZoomoutMode_currentIndexChanged(int index);
     void on_cbImageBlockZoomoutScale_currentIndexChanged(int index);
+    void on_tablePresets_itemChanged(QTableWidgetItem *item);
 };
 
 #endif // SETTINGSDLG_H

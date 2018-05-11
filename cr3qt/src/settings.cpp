@@ -84,6 +84,7 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     wGeometry(g)
 {
     initDone = false;
+    tableInit = false;
 
     m_ui->setupUi(this);
     m_props = m_docview->getOptions();
@@ -180,9 +181,9 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     m_ui->tablePresets->setColumnCount(5);
     m_ui->tablePresets->setRowCount(5);
     QStringList col_names;
-    col_names << tr("Title") << tr("Win Size") << tr("Win Pos") << tr("Font") << tr("Font Size");
+    col_names << tr("Comment") << tr("Win Size") << tr("Win Pos") << tr("Font") << tr("Font Size");
     m_ui->tablePresets->setHorizontalHeaderLabels(col_names);
-    m_ui->tablePresets->setEditTriggers(QTableWidget::NoEditTriggers);
+    // m_ui->tablePresets->setEditTriggers(QTableWidget::NoEditTriggers);
     updateTable();
 
     int lp = m_props->getIntDef( PROP_LANDSCAPE_PAGES, 2 );
@@ -893,11 +894,11 @@ void SettingsDlg::on_btnSavePreset_clicked()
     QString size = QString::number(wSize.height()) + "x" + QString::number(wSize.width());
     QString pos = "x: " + QString::number(wPos.x()) + " y: " + QString::number(wPos.y());
 
-    m_ui->tablePresets->setItem(idx, 0, new QTableWidgetItem(title));
-    m_ui->tablePresets->setItem(idx, 1, new QTableWidgetItem(size));
-    m_ui->tablePresets->setItem(idx, 2, new QTableWidgetItem(pos));
-    m_ui->tablePresets->setItem(idx, 3, new QTableWidgetItem(font));
-    m_ui->tablePresets->setItem(idx, 4, new QTableWidgetItem(fontSize));
+//    m_ui->tablePresets->setItem(idx, 0, new QTableWidgetItem(title));
+//    m_ui->tablePresets->setItem(idx, 1, new QTableWidgetItem(size));
+//    m_ui->tablePresets->setItem(idx, 2, new QTableWidgetItem(pos));
+//    m_ui->tablePresets->setItem(idx, 3, new QTableWidgetItem(font));
+//    m_ui->tablePresets->setItem(idx, 4, new QTableWidgetItem(fontSize));
 
     QSettings settings;
     settings.beginGroup(QString("Preset_%1").arg(idx));
@@ -983,6 +984,8 @@ void SettingsDlg::updateTable()
     m_ui->tablePresets->clearContents();
     QSettings settings;
 
+    tableInit = true;
+
     // http://www.qtcentre.org/threads/42870-Read-Several-Groups-in-INI-file-from-QSettings
     foreach (QString group, settings.childGroups()) {
         if (!group.startsWith("Preset_"))
@@ -999,25 +1002,50 @@ void SettingsDlg::updateTable()
         foreach (const QString &childKey, childKeys) {
             // Keys << childKey;
             if (childKey == "Title") {
-                m_ui->tablePresets->setItem(idx, 0, new QTableWidgetItem(settings.value(childKey).toString()));
+                QTableWidgetItem *item = new QTableWidgetItem(settings.value(childKey).toString());
+                //item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 0, item);
             } else if (childKey == "WinSize") {
                 QSize s = settings.value(childKey).toSize();
                 QString ss = QString::number(s.height()) + "x" + QString::number(s.width());
-                m_ui->tablePresets->setItem(idx, 1, new QTableWidgetItem(ss));
+                QTableWidgetItem *item = new QTableWidgetItem(ss);
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 1, item);
             } else if (childKey == "WinPos") {
                 QPoint p = settings.value(childKey).toPoint();
                 QString pos = "x: " + QString::number(p.x()) + " y: " + QString::number(p.y());
-                m_ui->tablePresets->setItem(idx, 2, new QTableWidgetItem(pos));
+                QTableWidgetItem *item = new QTableWidgetItem(pos);
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 2, item);
             } else if (childKey == "Font") {
-                m_ui->tablePresets->setItem(idx, 3, new QTableWidgetItem(settings.value(childKey).toString()));
+                QTableWidgetItem *item = new QTableWidgetItem(settings.value(childKey).toString());
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 3, item);
             } else if (childKey == "FontSize") {
-                m_ui->tablePresets->setItem(idx, 4, new QTableWidgetItem(settings.value(childKey).toString()));
+                QTableWidgetItem *item = new QTableWidgetItem(settings.value(childKey).toString());
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 4, item);
             }
             // values << settings.value(childKey).toString();
         }
         // qDebug() << idx << group << Keys;
         settings.endGroup();
     }
+
+    for (int i = 0; i < m_ui->tablePresets->columnCount(); ++i) {
+        for (int j = 0; j < m_ui->tablePresets->rowCount(); ++j) {
+            QTableWidgetItem *item = m_ui->tablePresets->item(i, j);
+            if (!item) {
+                item = new QTableWidgetItem();
+                m_ui->tablePresets->setItem(i, j, item);
+                //if (item->text().isEmpty()) {
+                    item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                //}
+            }
+        }
+    }
+
+    tableInit = false;
 }
 
 void SettingsDlg::on_cbTitleFontFace_currentIndexChanged(QString s)
@@ -1263,4 +1291,18 @@ void SettingsDlg::on_cbImageBlockZoomoutMode_currentIndexChanged(int index)
 void SettingsDlg::on_cbImageBlockZoomoutScale_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMOUT_BLOCK_SCALE, index);
+}
+
+void SettingsDlg::on_tablePresets_itemChanged(QTableWidgetItem *item)
+{
+    if (!tableInit) {
+        int idx = item->row();
+
+        QSettings settings;
+        settings.beginGroup(QString("Preset_%1").arg(idx));
+        settings.setValue("Title", item->text());
+        settings.endGroup();
+
+        updateTable();
+    }
 }

@@ -2053,6 +2053,10 @@ https://github.com/buggins/coolreader
         <source>Font Size</source>
         <translation>Размер шрифта</translation>
     </message>
+    <message>
+        <source>Comment</source>
+        <translation>Комментарий</translation>
+    </message>
 </context>
 <context>
     <name>TocDlg</name>
