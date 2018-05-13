@@ -100,9 +100,9 @@ static css_font_family_t DEFAULT_FONT_FAMILY = css_ff_sans_serif;
 //    css_ff_monospace
 
 #ifdef LBOOK
-#define INFO_FONT_SIZE      22
+#define INFO_FONT_SIZE      18
 #else
-#define INFO_FONT_SIZE      22
+#define INFO_FONT_SIZE      18
 #endif
 
 #ifndef MIN_STATUS_FONT_SIZE
@@ -5737,8 +5737,7 @@ void LVDocView::propsUpdateDefaults(CRPropRef props) {
 	props->setStringDef(PROP_FALLBACK_FONT_FACE, props->getStringDef(PROP_FONT_FACE,
                         defFontFace.c_str()));
 
-	props->setIntDef(PROP_FONT_SIZE,
-			m_font_sizes[m_font_sizes.length() * 2 / 3]);
+	props->setIntDef(PROP_FONT_SIZE, 22);
 	props->limitValueList(PROP_FONT_SIZE, m_font_sizes.ptr(),
 			m_font_sizes.length());
 	props->limitValueList(PROP_INTERLINE_SPACE, cr_interline_spaces,

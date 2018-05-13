@@ -17,8 +17,6 @@
 static int def_margins[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 20, 25, 30, 40, 50, 60 };
 #define MAX_MARGIN_INDEX (sizeof(def_margins)/sizeof(int))
 
-DECL_DEF_CR_FONT_SIZES;
-
 static bool initDone = false;
 
 static void findImagesFromDirectory( lString16 dir, lString16Collection & files ) {
@@ -239,18 +237,19 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     m_ui->cbTextFontFace->addItems( m_faceList );
     m_ui->cbTitleFontFace->addItems( m_faceList );
     m_ui->cbFallbackFontFace->addItems( m_faceList );
-    QStringList sizeList;
-    LVArray<int> sizes( cr_font_sizes, sizeof(cr_font_sizes)/sizeof(int) );
-    for ( int i=0; i<sizes.length(); i++ )
-        sizeList.append( QString("%1").arg(sizes[i]) );
-    m_ui->cbTextFontSize->addItems( sizeList );
-    m_ui->cbTitleFontSize->addItems( sizeList );
+    // QStringList sizeList;
+    // LVArray<int> sizes( cr_font_sizes, sizeof(cr_font_sizes)/sizeof(int) );
+    // for ( int i=0; i<sizes.length(); i++ )
+    //     sizeList.append( QString("%1").arg(sizes[i]) );
+    // m_ui->cbTextFontSize->addItems( sizeList );
+    // m_ui->cbTitleFontSize->addItems( sizeList );
     
     const char * defFontFace = "DejaVu Sans";
     static const char * goodFonts[] = {
         "DejaVu Sans",
         "FreeSans",
         "Liberation Sans",
+        "Calibri",
         "Arial",
         NULL
     };
@@ -261,8 +260,8 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
         }
     }
 
-    fontToUi( PROP_FONT_FACE, PROP_FONT_SIZE, m_ui->cbTextFontFace, m_ui->cbTextFontSize, defFontFace );
-    fontToUi( PROP_STATUS_FONT_FACE, PROP_STATUS_FONT_SIZE, m_ui->cbTitleFontFace, m_ui->cbTitleFontSize, defFontFace );
+    fontToUi( PROP_FONT_FACE, PROP_FONT_SIZE, m_ui->cbTextFontFace, m_ui->sbTextFontSize, defFontFace );
+    fontToUi( PROP_STATUS_FONT_FACE, PROP_STATUS_FONT_SIZE, m_ui->cbTitleFontFace, m_ui->sbTitleFontSize, defFontFace );
     fontToUi( PROP_FALLBACK_FONT_FACE, PROP_FALLBACK_FONT_FACE, m_ui->cbFallbackFontFace, NULL, defFontFace );
 
 //		{_("90%"), "90"},
@@ -973,17 +972,19 @@ void SettingsDlg::on_btnLoadPreset_clicked()
 
     reinterpret_cast<MainWindow*>(mainWindow)->restoreState(stateW);
     reinterpret_cast<MainWindow*>(mainWindow)->restoreGeometry(geometryW);
-    reinterpret_cast<MainWindow*>(mainWindow)->resize(sizeW);
-    reinterpret_cast<MainWindow*>(mainWindow)->move(posW);
+    //reinterpret_cast<MainWindow*>(mainWindow)->resize(sizeW);
+    //reinterpret_cast<MainWindow*>(mainWindow)->move(posW);
 
     int f_idx = getComboBoxElemIndexByText(font, m_ui->cbTextFontFace);
-    int fs_idx = getComboBoxElemIndexByText(fontSize, m_ui->cbTextFontSize);
+    // int fs_idx = getComboBoxElemIndexByText(fontSize, m_ui->cbTextFontSize);
+    int fs_idx = m_ui->sbTextFontSize->value();
 
     if ((f_idx > 0) && (fs_idx > 0)) {
         m_ui->cbTextFontFace->setCurrentIndex(f_idx);
-        m_ui->cbTextFontSize->setCurrentIndex(fs_idx);
+        // m_ui->cbTextFontSize->setCurrentIndex(fs_idx);
+        m_ui->sbTextFontSize->setValue(fs_idx);
         m_props->setString( PROP_FONT_FACE, font );
-        updateStyleSample();
+        // updateStyleSample();
         m_props->setString( PROP_FONT_SIZE, fontSize );
         updateStyleSample();
         m_docview->setOptions( m_props );
@@ -1076,11 +1077,11 @@ void SettingsDlg::on_cbTitleFontFace_currentIndexChanged(QString s)
     m_props->setString( PROP_STATUS_FONT_FACE, s );
 }
 
-void SettingsDlg::on_cbTitleFontSize_currentIndexChanged(QString s)
+void SettingsDlg::on_sbTitleFontSize_valueChanged(int val)
 {
     if ( !initDone )
         return;
-    m_props->setString( PROP_STATUS_FONT_SIZE, s );
+    m_props->setString( PROP_STATUS_FONT_SIZE, QString::number(val) );
 }
 
 void SettingsDlg::on_cbTextFontFace_currentIndexChanged(QString s)
@@ -1091,25 +1092,25 @@ void SettingsDlg::on_cbTextFontFace_currentIndexChanged(QString s)
     updateStyleSample();
 }
 
-void SettingsDlg::on_cbTextFontSize_currentIndexChanged(QString s)
+void SettingsDlg::on_sbTextFontSize_valueChanged(int val)
 {
     if ( !initDone )
         return;
-    m_props->setString( PROP_FONT_SIZE, s );
+    m_props->setString( PROP_FONT_SIZE, QString::number(val) );
     updateStyleSample();
 }
 
-void SettingsDlg::fontToUi( const char * faceOptionName, const char * sizeOptionName, QComboBox * faceCombo, QComboBox * sizeCombo, const char * defFontFace )
+void SettingsDlg::fontToUi( const char * faceOptionName, const char * sizeOptionName, QComboBox * faceCombo, QSpinBox * sizeSpinBox, const char * defFontFace )
 {
     QString faceName =  m_props->getStringDef( faceOptionName, defFontFace );
     int faceIndex = faceCombo->findText( faceName );
     if ( faceIndex>=0 )
         faceCombo->setCurrentIndex( faceIndex );
-    if (sizeCombo) {
-        QString sizeName =  m_props->getStringDef( sizeOptionName, sizeCombo->itemText(4).toUtf8().data() );
-        int sizeIndex = sizeCombo->findText( sizeName );
-        if ( sizeIndex>=0 )
-            sizeCombo->setCurrentIndex( sizeIndex );
+    if (sizeSpinBox) {
+        QString sizeName =  m_props->getStringDef( sizeOptionName, "22" );
+        int sizeIndex = sizeName.toInt();
+        if ( sizeIndex>0 )
+            sizeSpinBox->setValue( sizeIndex );
     }
 }
 
