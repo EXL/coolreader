@@ -151,7 +151,7 @@ ADD_EXECUTABLE(cr3 ${CR3_MAN_PAGES} ${CR3_CHANGELOG} ${CR3_SOURCES} ${CR3_RCS} $
 endif (WIN32)
 
 if( NOT ${GUI} STREQUAL QT )
-qt5_use_modules(cr3 Widgets)
+target_link_libraries(cr3 Qt5::Widgets)
 endif( NOT ${GUI} STREQUAL QT )
 
 if(WIN32)
