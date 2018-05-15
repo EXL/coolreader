@@ -2082,6 +2082,26 @@ https://github.com/buggins/coolreader
         <translation>Размер шрифта</translation>
     </message>
     <message>
+        <source>Status Bar</source>
+        <translation>Строка состояния</translation>
+    </message>
+    <message>
+        <source>Full Screen</source>
+        <translation>Во весь экран</translation>
+    </message>
+    <message>
+        <source>Maximized</source>
+        <translation>Максимизация</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Выкл.</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>Вкл.</translation>
+    </message>
+    <message>
         <source>Comment</source>
         <translation>Комментарий</translation>
     </message>

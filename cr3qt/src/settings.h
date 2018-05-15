@@ -156,7 +156,7 @@ protected:
 
 private:
     Ui::SettingsDlg *m_ui;
-    CR3View * m_docview;
+    CR3View *m_docview;
     PropsRef m_props;
     QString m_oldHyph;
     QStringList m_backgroundFiles;

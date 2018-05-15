@@ -190,10 +190,11 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
 
     m_ui->cbStartupAction->setCurrentIndex( m_props->getIntDef( PROP_APP_START_ACTION, 0 ) );
 
-    m_ui->tablePresets->setColumnCount(5);
+    m_ui->tablePresets->setColumnCount(9);
     m_ui->tablePresets->setRowCount(5);
     QStringList col_names;
-    col_names << tr("Comment") << tr("Win Size") << tr("Win Pos") << tr("Font") << tr("Font Size");
+    col_names << tr("Comment") << tr("Win Size") << tr("Win Pos") << tr("Font") << tr("Font Size")
+              << tr("Status Bar") << tr("Full Screen") << tr("View Mode") << tr("Maximized");
     m_ui->tablePresets->setHorizontalHeaderLabels(col_names);
     // m_ui->tablePresets->setEditTriggers(QTableWidget::NoEditTriggers);
     updateTable();
@@ -911,8 +912,20 @@ void SettingsDlg::on_btnSavePreset_clicked()
     QString title = cr2qt(m_docview->getDocView()->getTitle());
     QString font = m_props->getStringDef(PROP_FONT_FACE, "Arial");
     QString fontSize = m_props->getStringDef(PROP_FONT_SIZE, "22");
-    QString size = QString::number(wSize.height()) + "x" + QString::number(wSize.width());
-    QString pos = "x: " + QString::number(wPos.x()) + " y: " + QString::number(wPos.y());
+    QString statusBarS = m_props->getStringDef(PROP_WINDOW_SHOW_STATUSBAR, "0");
+    QString fullScreenS = m_props->getStringDef(PROP_WINDOW_FULLSCREEN, "0");
+    QString maxS = qobject_cast<MainWindow*>(mainWindow)->isMaximized() ? "1" : "0";
+
+    QString viewModeS;
+    int lp = m_props->getIntDef( PROP_LANDSCAPE_PAGES, 2 );
+    int vm = m_props->getIntDef( PROP_PAGE_VIEW_MODE, 1 );
+    if ( vm==0 )
+        viewModeS = "2";
+    else
+        viewModeS = (lp==1) ? "0" : "1";
+
+//    QString size = QString::number(wSize.height()) + "x" + QString::number(wSize.width());
+//    QString pos = "x: " + QString::number(wPos.x()) + " y: " + QString::number(wPos.y());
 
 //    m_ui->tablePresets->setItem(idx, 0, new QTableWidgetItem(title));
 //    m_ui->tablePresets->setItem(idx, 1, new QTableWidgetItem(size));
@@ -929,6 +942,10 @@ void SettingsDlg::on_btnSavePreset_clicked()
     settings.setValue("WinPos", wPos);
     settings.setValue("WinState", wState);
     settings.setValue("WinGeometry", wGeometry);
+    settings.setValue("StatusBar", statusBarS);
+    settings.setValue("FullScreen", fullScreenS);
+    settings.setValue("ViewMode", viewModeS);
+    settings.setValue("Maximized", maxS);
     settings.endGroup();
 
     updateTable();
@@ -949,13 +966,17 @@ void SettingsDlg::on_btnClearPreset_clicked()
 void SettingsDlg::on_btnLoadPreset_clicked()
 {
     int idx = m_ui->cbPresets->currentIndex();
-
     QString font;
     QString fontSize;
+    QString statusBarS;
+    QString fullScreenS;
+    QString viewModeS;
+    QString maxS;
     QSize sizeW;
     QPoint posW;
     QByteArray stateW;
     QByteArray geometryW;
+    int fs = 0, ms = 0;
 
     QSettings settings;
     settings.beginGroup(QString("Preset_%1").arg(idx));
@@ -965,15 +986,14 @@ void SettingsDlg::on_btnLoadPreset_clicked()
     posW = settings.value("WinPos").toPoint();
     stateW = settings.value("WinState").toByteArray();
     geometryW = settings.value("WinGeometry").toByteArray();
+    statusBarS = settings.value("StatusBar", "0").toString();
+    fullScreenS = settings.value("FullScreen", "0").toString();
+    maxS = settings.value("Maximized", "0").toString();
+    viewModeS = settings.value("ViewMode", "0").toString();
     settings.endGroup();
 
     if (font.isEmpty() || fontSize.isEmpty())
         return;
-
-    reinterpret_cast<MainWindow*>(mainWindow)->restoreState(stateW);
-    reinterpret_cast<MainWindow*>(mainWindow)->restoreGeometry(geometryW);
-    //reinterpret_cast<MainWindow*>(mainWindow)->resize(sizeW);
-    //reinterpret_cast<MainWindow*>(mainWindow)->move(posW);
 
     int f_idx = getComboBoxElemIndexByText(font, m_ui->cbTextFontFace);
     // int fs_idx = getComboBoxElemIndexByText(fontSize, m_ui->cbTextFontSize);
@@ -986,9 +1006,53 @@ void SettingsDlg::on_btnLoadPreset_clicked()
         m_props->setString( PROP_FONT_FACE, font );
         // updateStyleSample();
         m_props->setString( PROP_FONT_SIZE, fontSize );
-        updateStyleSample();
-        m_docview->setOptions( m_props );
     }
+
+    if (!statusBarS.isEmpty()) {
+        int z = statusBarS.toInt();
+        if (z == 1)
+            z++;
+        m_ui->cbWindowShowStatusBar->setCheckState((Qt::CheckState)(z));
+        on_cbWindowShowStatusBar_stateChanged(z);
+        // setCheck( PROP_WINDOW_SHOW_STATUSBAR, statusBarS.toInt() );
+    }
+
+    if (!maxS.isEmpty()) {
+        ms = maxS.toInt();
+        Qt::WindowStates ws = qobject_cast<MainWindow*>(mainWindow)->windowState();
+        if (!ms) {
+            qobject_cast<MainWindow*>(mainWindow)->setWindowState(ws & ~Qt::WindowMaximized);
+        } else {
+            qobject_cast<MainWindow*>(mainWindow)->setWindowState(ws | Qt::WindowMaximized);
+            if (!fullScreenS.isEmpty()) {
+                fs = fullScreenS.toInt();
+                setCheck( PROP_WINDOW_FULLSCREEN, fs );
+                Qt::WindowStates ws = qobject_cast<MainWindow*>(mainWindow)->windowState();
+                if (!fs) {
+                    qobject_cast<MainWindow*>(mainWindow)->setWindowState(ws & ~Qt::WindowFullScreen);
+                } else {
+                    qobject_cast<MainWindow*>(mainWindow)->setWindowState(ws | Qt::WindowFullScreen);
+                }
+            }
+        }
+    }
+
+    if (!viewModeS.isEmpty()) {
+        on_cbViewMode_currentIndexChanged(viewModeS.toInt());
+    }
+
+#if QT_VERSION >= 0x050000
+    qobject_cast<MainWindow*>(mainWindow)->restoreState(stateW);
+    qobject_cast<MainWindow*>(mainWindow)->restoreGeometry(geometryW);
+#else
+    if (!ms || !fs) {
+        qobject_cast<MainWindow*>(mainWindow)->resize(sizeW);
+        qobject_cast<MainWindow*>(mainWindow)->move(posW);
+    }
+#endif
+
+    updateStyleSample();
+    m_docview->setOptions( m_props );
 }
 
 int SettingsDlg::getComboBoxElemIndexByText(const QString &text, const QComboBox *cb) const
@@ -1047,6 +1111,34 @@ void SettingsDlg::updateTable()
                 QTableWidgetItem *item = new QTableWidgetItem(settings.value(childKey).toString());
                 item->setFlags(item->flags() & ~Qt::ItemIsEditable);
                 m_ui->tablePresets->setItem(idx, 4, item);
+            } else if (childKey == "StatusBar") {
+                QString en = (settings.value(childKey).toString().toInt() == 0) ? tr("Off") : tr("On");
+                QTableWidgetItem *item = new QTableWidgetItem(en);
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 5, item);
+            } else if (childKey == "FullScreen") {
+                QString en = (settings.value(childKey).toString().toInt() == 0) ? tr("Off") : tr("On");
+                QTableWidgetItem *item = new QTableWidgetItem(en);
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 6, item);
+            } else if (childKey == "ViewMode") {
+                int n = settings.value(childKey).toString().toInt();
+                QString vm;
+                if (n == 0) {
+                    vm = tr("One page");
+                } else if (n == 1) {
+                    vm = tr("Two pages");
+                } else {
+                    vm = tr("Scroll View");
+                }
+                QTableWidgetItem *item = new QTableWidgetItem(vm);
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 7, item);
+            } else if (childKey == "Maximized") {
+                QString en = (settings.value(childKey).toString().toInt() == 0) ? tr("Off") : tr("On");
+                QTableWidgetItem *item = new QTableWidgetItem(en);
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                m_ui->tablePresets->setItem(idx, 8, item);
             }
             // values << settings.value(childKey).toString();
         }
@@ -1054,8 +1146,8 @@ void SettingsDlg::updateTable()
         settings.endGroup();
     }
 
-    for (int i = 0; i < m_ui->tablePresets->columnCount(); ++i) {
-        for (int j = 0; j < m_ui->tablePresets->rowCount(); ++j) {
+    for (int i = 0; i < m_ui->tablePresets->rowCount(); ++i) {
+        for (int j = 0; j < m_ui->tablePresets->columnCount(); ++j) {
             QTableWidgetItem *item = m_ui->tablePresets->item(i, j);
             if (!item) {
                 item = new QTableWidgetItem();
