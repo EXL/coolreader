@@ -396,10 +396,15 @@ void MainWindow::onPropsChange( PropsRef props )
         int v = (value != "0");
         CRLog::debug("MainWindow::onPropsChange [%d] '%s'=%s ", i, props->name(i), props->value(i).toUtf8().data() );
         if ( name == PROP_WINDOW_FULLSCREEN ) {
-            bool state = windowState().testFlag(Qt::WindowFullScreen);
-            bool vv = v ? true : false;
-            if ( state != vv )
-                setWindowState( windowState() ^ Qt::WindowFullScreen );
+            if (v) {
+                setWindowState( windowState() | Qt::WindowFullScreen );
+            } else {
+                setWindowState( windowState() & ~Qt::WindowFullScreen );
+            }
+//            bool state = windowState().testFlag(Qt::WindowFullScreen);
+//            bool vv = v ? true : false;
+//            if ( state != vv )
+//                setWindowState( windowState() ^ Qt::WindowFullScreen );
         }
         if ( name == PROP_PAGE_TURN_CLICK ) {
             ui->view->setUseClickForNextPage( v );
