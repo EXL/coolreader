@@ -454,6 +454,8 @@ void SettingsDlg::initStyleControls(const char * styleName) {
     static const char * marginLeftStyles[] = {
         "", // inherited
         "margin-left: 0em",
+        "margin-left: 0.2em",
+        "margin-left: 0.3em",
         "margin-left: 0.5em",
         "margin-left: 1em",
         "margin-left: 1.5em",
@@ -469,6 +471,8 @@ void SettingsDlg::initStyleControls(const char * styleName) {
     static const char * marginRightStyles[] = {
         "", // inherited
         "margin-right: 0em",
+        "margin-right: 0.2em",
+        "margin-right: 0.3em",
         "margin-right: 0.5em",
         "margin-right: 1em",
         "margin-right: 1.5em",
@@ -485,6 +489,8 @@ void SettingsDlg::initStyleControls(const char * styleName) {
     QString marginLeftRightStyleNames[] = {
         tr("-"),
         tr("0"),
+        tr("20% of line height"),
+        tr("30% of line height"),
         tr("50% of line height"),
         tr("100% of line height"),
         tr("150% of line height"),
