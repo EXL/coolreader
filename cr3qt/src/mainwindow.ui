@@ -620,6 +620,39 @@
     <string>Ctrl+M</string>
    </property>
   </action>
+  <action name="actionIncrease_Brightness">
+   <property name="text">
+    <string>Increase Brightness</string>
+   </property>
+   <property name="toolTip">
+    <string>Increase Brightness</string>
+   </property>
+   <property name="shortcut">
+    <string>*</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Brightness">
+   <property name="text">
+    <string>Decrease Brightness</string>
+   </property>
+   <property name="toolTip">
+    <string>Decrease Brightness</string>
+   </property>
+   <property name="shortcut">
+    <string>/</string>
+   </property>
+  </action>
+  <action name="actionReset_Brightness">
+   <property name="text">
+    <string>Reset Brightness</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset Brightness</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+*</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

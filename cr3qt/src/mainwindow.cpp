@@ -74,6 +74,9 @@ MainWindow::MainWindow(QWidget *parent)
     addAction(ui->actionNextSentence);
     addAction(ui->actionPrevSentence);
     addAction(ui->actionMove_Window_to_0_0);
+    addAction(ui->actionIncrease_Brightness);
+    addAction(ui->actionDecrease_Brightness);
+    addAction(ui->actionReset_Brightness);
 
 #ifdef _LINUX
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/.cr3/");
@@ -488,6 +491,11 @@ void MainWindow::contextMenu( QPoint pos )
     if ( ui->view->isPointInsideSelection( pos ) )
         menu->addAction(ui->actionCopy);
     menu->addAction(ui->actionAddBookmark);
+    menu->addSeparator();
+    menu->addAction(ui->actionIncrease_Brightness);
+    menu->addAction(ui->actionDecrease_Brightness);
+    menu->addAction(ui->actionReset_Brightness);
+    menu->addSeparator();
     menu->addAction(ui->actionClose);
     menu->exec(ui->view->mapToGlobal(pos));
 }
@@ -619,4 +627,72 @@ void MainWindow::on_actionPrevSentence_triggered()
 void MainWindow::on_actionMove_Window_to_0_0_triggered()
 {
     this->move(0, 0);
+}
+
+QColor MainWindow::getColor( PropsRef props, const char * optionName, unsigned def )
+{
+    lvColor cr( props->getColorDef( optionName, def ) );
+    return QColor( cr.r(), cr.g(), cr.b() );
+}
+
+void MainWindow::setColor( PropsRef props, const char * optionName, QColor cl )
+{
+    props->setHex( optionName, lvColor( cl.red(), cl.green(), cl.blue() ).get() );
+}
+
+void MainWindow::changeColor(QColor &cl, bool increase)
+{
+    int inc = 5;
+    int red = cl.red();
+    int green = cl.green();
+    int blue = cl.blue();
+    if (increase) {
+        red += inc; green += inc; blue += inc;
+        if (red > 255) red = 255;
+        if (green > 255) green = 255;
+        if (blue > 255) blue = 255;
+    } else {
+        red -= inc; green -= inc; blue -= inc;
+        if (red < 0) red = 0;
+        if (green < 0) green = 0;
+        if (blue < 0) blue = 0;
+    }
+    cl.setRed(red);
+    cl.setGreen(green);
+    cl.setBlue(blue);
+}
+
+void MainWindow::changeBrightness(bool increase)
+{
+    PropsRef pr = ui->view->getOptions();
+    QColor txtColor = getColor( pr, PROP_FONT_COLOR, 0x000000 );
+    QColor bgColor = getColor( pr, PROP_BACKGROUND_COLOR, 0xFFFFFF );
+
+    changeColor(bgColor, increase);
+    changeColor(txtColor, !increase);
+
+    setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
+    setColor(pr, PROP_FONT_COLOR, txtColor);
+
+    ui->view->setOptions(pr);
+}
+
+void MainWindow::on_actionIncrease_Brightness_triggered()
+{
+    changeBrightness(true);
+}
+
+void MainWindow::on_actionDecrease_Brightness_triggered()
+{
+    changeBrightness(false);
+}
+
+void MainWindow::on_actionReset_Brightness_triggered()
+{
+    PropsRef pr = ui->view->getOptions();
+    QColor txtColor(Qt::black);
+    QColor bgColor(Qt::white);
+    setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
+    setColor(pr, PROP_FONT_COLOR, txtColor);
+    ui->view->setOptions(pr);
 }

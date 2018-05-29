@@ -1125,6 +1125,18 @@ https://github.com/buggins/coolreader
         <translation>Переместить окно в 0,0</translation>
     </message>
     <message>
+        <source>Increase Brightness</source>
+        <translation>Увеличить яркость</translation>
+    </message>
+    <message>
+        <source>Decrease Brightness</source>
+        <translation>Уменьшить яркость</translation>
+    </message>
+    <message>
+        <source>Reset Brightness</source>
+        <translation>Сбросить яркость</translation>
+    </message>
+    <message>
         <source>Left</source>
         <translation>Влево</translation>
     </message>
