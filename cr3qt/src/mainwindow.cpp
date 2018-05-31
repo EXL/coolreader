@@ -76,6 +76,8 @@ MainWindow::MainWindow(QWidget *parent)
     addAction(ui->actionMove_Window_to_0_0);
     addAction(ui->actionIncrease_Brightness);
     addAction(ui->actionDecrease_Brightness);
+    addAction(ui->actionIncrease_Font_Brightness);
+    addAction(ui->actionDecrease_Font_Brightness);
     addAction(ui->actionReset_Brightness);
 
 #ifdef _LINUX
@@ -494,6 +496,8 @@ void MainWindow::contextMenu( QPoint pos )
     menu->addSeparator();
     menu->addAction(ui->actionIncrease_Brightness);
     menu->addAction(ui->actionDecrease_Brightness);
+    menu->addAction(ui->actionIncrease_Font_Brightness);
+    menu->addAction(ui->actionDecrease_Font_Brightness);
     menu->addAction(ui->actionReset_Brightness);
     menu->addSeparator();
     menu->addAction(ui->actionClose);
@@ -662,29 +666,39 @@ void MainWindow::changeColor(QColor &cl, bool increase)
     cl.setBlue(blue);
 }
 
-void MainWindow::changeBrightness(bool increase)
+void MainWindow::changeBrightness(bool increase, bool font)
 {
     PropsRef pr = ui->view->getOptions();
-    QColor txtColor = getColor( pr, PROP_FONT_COLOR, 0x000000 );
-    QColor bgColor = getColor( pr, PROP_BACKGROUND_COLOR, 0xFFFFFF );
-
-    changeColor(bgColor, increase);
-    changeColor(txtColor, !increase);
-
-    setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
-    setColor(pr, PROP_FONT_COLOR, txtColor);
-
+    if (font) {
+        QColor txtColor = getColor( pr, PROP_FONT_COLOR, 0x000000 );
+        changeColor(txtColor, !increase);
+        setColor(pr, PROP_FONT_COLOR, txtColor);
+    } else {
+        QColor bgColor = getColor( pr, PROP_BACKGROUND_COLOR, 0xFFFFFF );
+        changeColor(bgColor, increase);
+        setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
+    }
     ui->view->setOptions(pr);
 }
 
 void MainWindow::on_actionIncrease_Brightness_triggered()
 {
-    changeBrightness(true);
+    changeBrightness(true, false);
 }
 
 void MainWindow::on_actionDecrease_Brightness_triggered()
 {
-    changeBrightness(false);
+    changeBrightness(false, false);
+}
+
+void MainWindow::on_actionIncrease_Font_Brightness_triggered()
+{
+    changeBrightness(false, true);
+}
+
+void MainWindow::on_actionDecrease_Font_Brightness_triggered()
+{
+    changeBrightness(true, true);
 }
 
 void MainWindow::on_actionReset_Brightness_triggered()

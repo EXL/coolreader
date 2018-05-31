@@ -40,7 +40,7 @@ private:
     QColor getColor( PropsRef props, const char * optionName, unsigned def );
     void setColor( PropsRef props, const char * optionName, QColor cl );
     void changeColor(QColor &cl, bool increase);
-    void changeBrightness(bool increase);
+    void changeBrightness(bool increase, bool font);
 protected:
     virtual void showEvent ( QShowEvent * event );
     virtual void focusInEvent ( QFocusEvent * event );
@@ -90,6 +90,8 @@ private slots:
     void on_actionMove_Window_to_0_0_triggered();
     void on_actionIncrease_Brightness_triggered();
     void on_actionDecrease_Brightness_triggered();
+    void on_actionIncrease_Font_Brightness_triggered();
+    void on_actionDecrease_Font_Brightness_triggered();
     void on_actionReset_Brightness_triggered();
 };
 

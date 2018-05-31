@@ -653,6 +653,28 @@
     <string>Ctrl+*</string>
    </property>
   </action>
+  <action name="actionIncrease_Font_Brightness">
+   <property name="text">
+    <string>Increase Font Brightness</string>
+   </property>
+   <property name="toolTip">
+    <string>Increase Font Brightness</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+*</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Font_Brightness">
+   <property name="text">
+    <string>Decrease Font Brightness</string>
+   </property>
+   <property name="toolTip">
+    <string>Decrease Font Brightness</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+/</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
