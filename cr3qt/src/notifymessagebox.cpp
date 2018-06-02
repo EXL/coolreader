@@ -8,15 +8,13 @@
 #include <QCoreApplication>
 #include <QPropertyAnimation>
 
-#include <QDebug>
-
 namespace
 {
     const QColor FILL_COLOR(66, 68, 70);
     const QColor TEXT_COLOR(188, 190, 191);
 
     const QFont FONT("Segoe UI", 16);
-    const int DISPLAY_TIME = 1500;
+    const int DISPLAY_TIME = 600;
 }
 
 NotifyMessageBox::NotifyMessageBox(const QString& text, QWidget* parent)
@@ -56,15 +54,17 @@ void NotifyMessageBox::run()
 {
     show();
     update();
-    QTimer::singleShot(m_milliseconds, this, &NotifyMessageBox::fadeOut);
+    QTimer::singleShot(m_milliseconds, this, SLOT(fadeOut()));
+    //QTimer::singleShot(m_milliseconds, this, &NotifyMessageBox::fadeOut);
 }
 
 void NotifyMessageBox::fadeOut()
 {
     QPropertyAnimation* animation = new QPropertyAnimation(this, "opacity", this);
-    connect(animation, &QPropertyAnimation::finished, this, &NotifyMessageBox::deleteLater);
+    connect(animation, SIGNAL(finished()), this, SLOT(deleteLater()));
+    // connect(animation, &QPropertyAnimation::finished, this, &NotifyMessageBox::deleteLater);
 
-    animation->setDuration(500);
+    animation->setDuration(250);
     animation->setStartValue(1.);
     animation->setEndValue(0.);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
@@ -103,9 +103,12 @@ void NotifyMessageBox::paintEvent(QPaintEvent* event)
     p.setOpacity(m_opacity);
     p.fillRect(event->rect(), FILL_COLOR);
     p.setPen(TEXT_COLOR);
-    p.drawRect(event->rect().adjusted(0, 0, -1, -1));
+    // p.drawRect(event->rect().adjusted(0, 0, -1, -1));
     p.setFont(font());
 
-    QSize halfSize = m_label.size().toSize() / 2;
-    p.drawStaticText(rect().center() -= QPoint(halfSize.width(), halfSize.height()), m_label);
+    if (!first) {
+        first_size = m_label.size().toSize() / 2;
+        first = true;
+    }
+    p.drawStaticText(rect().center() -= QPoint(first_size.width() - 4, first_size.height()), m_label);
 }
