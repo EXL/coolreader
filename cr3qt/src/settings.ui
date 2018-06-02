@@ -133,11 +133,25 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QCheckBox" name="cbTurnPageMouse">
-           <property name="text">
-            <string>Turn pages by mouse click</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_99">
+           <item>
+            <widget class="QCheckBox" name="cbTurnPageMouse">
+            <property name="toolTip">
+                <string>&lt;p&gt;&lt;img src=&quot;:/icons/icons/tablet.png&quot;/&gt;&lt;/p&gt;</string>
+            </property>
+             <property name="text">
+              <string>Tablet Mode (hover mouse to hint)</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="cbShowHints">
+             <property name="text">
+              <string>Pop-up hints</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item row="6" column="1">
           <widget class="QCheckBox" name="cbShowFootNotes">

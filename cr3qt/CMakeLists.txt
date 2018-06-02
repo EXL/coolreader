@@ -24,6 +24,7 @@ SET(CR3_MOC_HDRS
   src/exportprogressdlg.h
   src/tocdlg.h
   src/searchdlg.h
+  src/notifymessagebox.h
 )
 
 SET (CR3_SOURCES 
@@ -41,6 +42,7 @@ SET (CR3_SOURCES
   src/wolexportdlg.cpp
   src/exportprogressdlg.cpp
   src/searchdlg.cpp
+  src/notifymessagebox.cpp
 )
 
 if(MAC)

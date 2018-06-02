@@ -50,6 +50,9 @@ public slots:
     void on_actionFindText_triggered();
     void setStatusBarInfo(const QString &left, const QString &right);
     void setWinTitInfo(const QString &info);
+    void fontBrightnessAdapter(bool inc);
+    void backBrightnessAdapter(bool inc);
+    void fontSizeAdapter(bool inc);
 private slots:
     void on_actionNextPage3_triggered();
     void on_actionToggleEditMode_triggered();

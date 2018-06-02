@@ -6,6 +6,7 @@
 #include "qpainter.h"
 #include "settings.h"
 #include "addbookmarkdlg.h"
+#include "notifymessagebox.h"
 #include <qglobal.h>
 #if QT_VERSION >= 0x050000
 #include <QResizeEvent>
@@ -1220,7 +1221,51 @@ void CR3View::mousePressEvent ( QMouseEvent * event )
     bool left = event->button() == Qt::LeftButton;
 
     if (left && _useClickForNextPage) {
-        (event->x() < (size().width() / 2)) ? prevPage() : nextPage();
+        int x_ev = event->x();
+        int y_ev = event->y();
+
+        int x_off = size().width() / 2;
+        int y_off = size().height() / 2;
+        int hx_off = x_off / 2;
+        int dx_off = hx_off * 3;
+
+        if (y_ev < y_off) {
+            if (x_ev < x_off) {
+                if (x_ev < hx_off) {
+                    NotifyMessageBox::showMessage(tr("Decrease Background Brightness"), this);
+                    emit backBrightness(false);
+                } else {
+                    NotifyMessageBox::showMessage(tr("Decrease Font Brightness"), this);
+                    emit fontBrightness(false);
+                }
+            } else {
+                if (x_ev < dx_off) {
+                    NotifyMessageBox::showMessage(tr("Increase Font Brightness"), this);
+                    emit fontBrightness(true);
+                } else {
+                    NotifyMessageBox::showMessage(tr("Increase Background Brightness"), this);
+                    emit backBrightness(true);
+                }
+            }
+        } else {
+            if (x_ev < x_off) {
+                if (x_ev < hx_off) {
+                    NotifyMessageBox::showMessage(tr("Previous Page"), this);
+                    prevPage();
+                } else {
+                    NotifyMessageBox::showMessage(tr("Decrease Font Size"), this);
+                    emit fontSize(false);
+                }
+            } else {
+                if (x_ev < dx_off) {
+                    NotifyMessageBox::showMessage(tr("Increase Font Size"), this);
+                    emit fontSize(true);
+                } else {
+                    NotifyMessageBox::showMessage(tr("Next Page"), this);
+                    nextPage();
+                }
+            }
+        }
         return;
     }
 

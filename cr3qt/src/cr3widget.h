@@ -20,7 +20,6 @@ public:
 
 class CR3View : public QWidget, public LVDocViewCallback
 {
-
         Q_OBJECT
 
         Q_PROPERTY( QScrollBar* scrollBar READ scrollBar WRITE setScrollBar )
@@ -157,6 +156,9 @@ class CR3View : public QWidget, public LVDocViewCallback
         //void fileNameChanged( const QString & );
         void setStatusInfo(const QString &, const QString &);
         void setWindowTitleInfo(const QString &);
+        void backBrightness(bool inc);
+        void fontBrightness(bool inc);
+        void fontSize(bool inc);
 
     protected:
         virtual void keyPressEvent ( QKeyEvent * event );

@@ -149,6 +149,9 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(setStatusBarInfo(QString, QString)));
     connect(ui->view, SIGNAL(setWindowTitleInfo(QString)),
             this, SLOT(setWinTitInfo(QString)));
+    connect(ui->view, SIGNAL(backBrightness(bool)), this, SLOT(backBrightnessAdapter(bool)));
+    connect(ui->view, SIGNAL(fontBrightness(bool)), this, SLOT(fontBrightnessAdapter(bool)));
+    connect(ui->view, SIGNAL(fontSize(bool)), this, SLOT(fontSizeAdapter(bool)));
 
 //     QTranslator qtTranslator;
 //     if (qtTranslator.load("qt_" + QLocale::system().name(),
@@ -477,6 +480,32 @@ void MainWindow::setWinTitInfo(const QString &info)
 {
     if (!info.isEmpty())
         setWindowTitle(QString("Cool Reader - ") + info);
+}
+
+void MainWindow::fontBrightnessAdapter(bool inc)
+{
+    changeBrightness(inc, true);
+}
+
+void MainWindow::backBrightnessAdapter(bool inc)
+{
+    changeBrightness(inc, false);
+}
+
+void MainWindow::fontSizeAdapter(bool inc)
+{
+    PropsRef pr = ui->view->getOptions();
+    QString sizeName =  pr->getStringDef( PROP_FONT_SIZE, "22" );
+    int sizeIndex = sizeName.toInt();
+    if (inc) {
+        sizeIndex++;
+        if (sizeIndex > 100) sizeIndex = 100;
+    } else {
+        sizeIndex--;
+        if (sizeIndex < 8) sizeIndex = 8;
+    }
+    pr->setString( PROP_FONT_SIZE, QString::number(sizeIndex) );
+    ui->view->setOptions(pr);
 }
 
 void MainWindow::contextMenu( QPoint pos )

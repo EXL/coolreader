@@ -489,6 +489,38 @@ https://github.com/buggins/coolreader
         <translation>Ошибка открытия документа </translation>
     </message>
     <message>
+        <source>Decrease Background Brightness</source>
+        <translation>Яркость фона уменьшена</translation>
+    </message>
+    <message>
+        <source>Decrease Font Brightness</source>
+        <translation>Яркость текста уменьшена</translation>
+    </message>
+    <message>
+        <source>Increase Font Brightness</source>
+        <translation>Яркость текста увеличена</translation>
+    </message>
+    <message>
+        <source>Increase Background Brightness</source>
+        <translation>Яркость фона увеличена</translation>
+    </message>
+    <message>
+        <source>Previous Page</source>
+        <translation>Предыдущая страница</translation>
+    </message>
+    <message>
+        <source>Decrease Font Size</source>
+        <translation>Размер шрифта уменьшен</translation>
+    </message>
+    <message>
+        <source>Increase Font Size</source>
+        <translation>Размер шрифта увеличен</translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation>Следуюшая страница</translation>
+    </message>
+    <message>
         <source>Time: </source>
         <translation>Время: </translation>
     </message>
@@ -1458,8 +1490,12 @@ https://github.com/buggins/coolreader
         <translation>10</translation>
     </message>
     <message>
-        <source>Turn pages by mouse click</source>
-        <translation>Переворачивать страницы кликом мышки</translation>
+        <source>Tablet Mode (hover mouse to hint)</source>
+        <translation>Планшетный режим (наведите для подсказки)</translation>
+    </message>
+    <message>
+        <source>Pop-up hints</source>
+        <translation>Всплывающие подсказки</translation>
     </message>
     <message>
         <source>15</source>
