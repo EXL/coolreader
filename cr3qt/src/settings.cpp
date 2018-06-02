@@ -135,14 +135,15 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     optionToUi( PROP_WINDOW_SHOW_SCROLLBAR, m_ui->cbWindowShowScrollbar );
     optionToUi( PROP_WINDOW_TOOLBAR_SIZE, m_ui->cbWindowShowToolbar );
     optionToUi( PROP_WINDOW_SHOW_STATUSBAR, m_ui->cbWindowShowStatusBar );
-
     optionToUi( PROP_PAGE_TURN_CLICK, m_ui->cbTurnPageMouse );
-    optionToUi( PROP_STA_TITL, m_ui->cbStaTitle);
-    optionToUi( PROP_STA_CHAP, m_ui->cbStaChapter);
-    optionToUi( PROP_STA_TIME, m_ui->cbStaTime);
-    optionToUi( PROP_STA_PAGE, m_ui->cbStaPages);
-    optionToUi( PROP_STA_PERC, m_ui->cbStaPercents);
-    optionToUi( PROP_STA_BATT, m_ui->cbStaBatt);
+    optionToUi( PROP_PAGE_POPUP, m_ui->cbShowHints );
+    m_ui->cbShowHints->setEnabled(m_props->getBoolDef(PROP_PAGE_TURN_CLICK, true));
+    optionToUi( PROP_STA_TITL, m_ui->cbStaTitle );
+    optionToUi( PROP_STA_CHAP, m_ui->cbStaChapter );
+    optionToUi( PROP_STA_TIME, m_ui->cbStaTime );
+    optionToUi( PROP_STA_PAGE, m_ui->cbStaPages );
+    optionToUi( PROP_STA_PERC, m_ui->cbStaPercents );
+    optionToUi( PROP_STA_BATT, m_ui->cbStaBatt );
     optionToUi( PROP_FOOTNOTES, m_ui->cbShowFootNotes );
     optionToUi( PROP_SHOW_BATTERY, m_ui->cbShowBattery );
     optionToUi( PROP_SHOW_TIME, m_ui->cbShowClock );
@@ -735,6 +736,13 @@ void SettingsDlg::setCheckInversed( const char * optionName, int checkState )
 void SettingsDlg::on_cbTurnPageMouse_stateChanged(int s)
 {
     setCheck( PROP_PAGE_TURN_CLICK, s );
+    bool c = !(m_props->getIntDef( PROP_PAGE_TURN_CLICK, 0)==0);
+    m_ui->cbShowHints->setEnabled( c );
+}
+
+void SettingsDlg::on_cbShowHints_stateChanged(int s)
+{
+    setCheck( PROP_PAGE_POPUP, s );
 }
 
 void SettingsDlg::on_cbWindowFullscreen_stateChanged(int s)

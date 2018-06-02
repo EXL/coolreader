@@ -34,6 +34,7 @@ namespace Ui {
 #define PROP_WINDOW_SHOW_SCROLLBAR  "window.scrollbar.show"
 #define PROP_WINDOW_STYLE           "window.style"
 #define PROP_PAGE_TURN_CLICK        "page.turn.click"
+#define PROP_PAGE_POPUP             "page.popup"
 #define PROP_PAGE_PERCENT_PD        "page.percent.pd"
 #define PROP_STA_TIME               "statusbar.option.time"
 #define PROP_STA_PAGE               "statusbar.option.page"
@@ -221,6 +222,7 @@ private slots:
     void on_cbWindowShowToolbar_stateChanged(int );
     void on_cbWindowFullscreen_stateChanged(int );
     void on_cbTurnPageMouse_stateChanged(int );
+    void on_cbShowHints_stateChanged(int );
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
     void on_buttonBox_clicked(QAbstractButton * button);

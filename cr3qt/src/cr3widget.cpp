@@ -344,6 +344,7 @@ void CR3View::updateDefProps()
 {
     _data->_props->setStringDef( PROP_WINDOW_FULLSCREEN, "0" );
     _data->_props->setStringDef( PROP_PAGE_TURN_CLICK, "0" );
+    _data->_props->setStringDef( PROP_PAGE_POPUP, "1" );
     _data->_props->setStringDef( PROP_PAGE_PERCENT_PD, "2" );
     _data->_props->setStringDef( PROP_WINDOW_SHOW_MENU, "1" );
     _data->_props->setStringDef( PROP_WINDOW_SHOW_SCROLLBAR, "1" );
@@ -951,6 +952,11 @@ void CR3View::setUseClickForNextPage(bool value)
     _useClickForNextPage = value;
 }
 
+void CR3View::setShowPopUp(bool value)
+{
+    _showPopup = value;
+}
+
 void CR3View::setPercendPd(int value)
 {
     _pagePercentDp = value;
@@ -1232,36 +1238,36 @@ void CR3View::mousePressEvent ( QMouseEvent * event )
         if (y_ev < y_off) {
             if (x_ev < x_off) {
                 if (x_ev < hx_off) {
-                    NotifyMessageBox::showMessage(tr("Decrease Background Brightness"), this);
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Decrease Background Brightness"), this);
                     emit backBrightness(false);
                 } else {
-                    NotifyMessageBox::showMessage(tr("Decrease Font Brightness"), this);
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Decrease Font Brightness"), this);
                     emit fontBrightness(false);
                 }
             } else {
                 if (x_ev < dx_off) {
-                    NotifyMessageBox::showMessage(tr("Increase Font Brightness"), this);
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Increase Font Brightness"), this);
                     emit fontBrightness(true);
                 } else {
-                    NotifyMessageBox::showMessage(tr("Increase Background Brightness"), this);
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Increase Background Brightness"), this);
                     emit backBrightness(true);
                 }
             }
         } else {
             if (x_ev < x_off) {
                 if (x_ev < hx_off) {
-                    NotifyMessageBox::showMessage(tr("Previous Page"), this);
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Previous Page"), this);
                     prevPage();
                 } else {
-                    NotifyMessageBox::showMessage(tr("Decrease Font Size"), this);
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Decrease Font Size"), this);
                     emit fontSize(false);
                 }
             } else {
                 if (x_ev < dx_off) {
-                    NotifyMessageBox::showMessage(tr("Increase Font Size"), this);
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Increase Font Size"), this);
                     emit fontSize(true);
                 } else {
-                    NotifyMessageBox::showMessage(tr("Next Page"), this);
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Next Page"), this);
                     nextPage();
                 }
             }

@@ -417,6 +417,9 @@ void MainWindow::onPropsChange( PropsRef props )
         if ( name == PROP_PAGE_TURN_CLICK ) {
             ui->view->setUseClickForNextPage( v );
         }
+        if ( name == PROP_PAGE_POPUP ) {
+            ui->view->setShowPopUp( v );
+        }
         if ( name == PROP_STA_TITL ) {
             ui->view->setStaTitl( v );
         }

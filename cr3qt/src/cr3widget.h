@@ -122,6 +122,7 @@ class CR3View : public QWidget, public LVDocViewCallback
         virtual void OnFormatProgress( int percent );
 
         void setUseClickForNextPage(bool value);
+        void setShowPopUp(bool value);
         void setPercendPd(int value);
         void setStaTitl(bool staTitl);
         void setStaChap(bool staChap);
@@ -203,6 +204,7 @@ class CR3View : public QWidget, public LVDocViewCallback
         bool _editMode;
         int _lastBatteryState;
         bool _useClickForNextPage;
+        bool _showPopup;
         int _pagePercentDp;
         bool _staTitl;
         bool _staChap;
