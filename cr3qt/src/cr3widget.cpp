@@ -1231,29 +1231,30 @@ void CR3View::mousePressEvent ( QMouseEvent * event )
         int y_ev = event->y();
 
         int x_off = size().width() / 2;
-        int y_off = size().height() / 2;
+        int y_off = size().height() / 3;
+        int dy_off = y_off * 2;
         int hx_off = x_off / 2;
         int dx_off = hx_off * 3;
 
         if (y_ev < y_off) {
             if (x_ev < x_off) {
                 if (x_ev < hx_off) {
-                    if (_showPopup) NotifyMessageBox::showMessage(tr("Decrease Background Brightness"), this);
-                    emit backBrightness(false);
-                } else {
                     if (_showPopup) NotifyMessageBox::showMessage(tr("Decrease Font Brightness"), this);
                     emit fontBrightness(false);
+                } else {
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Decrease Background Brightness"), this);
+                    emit backBrightness(false);
                 }
             } else {
                 if (x_ev < dx_off) {
-                    if (_showPopup) NotifyMessageBox::showMessage(tr("Increase Font Brightness"), this);
-                    emit fontBrightness(true);
-                } else {
                     if (_showPopup) NotifyMessageBox::showMessage(tr("Increase Background Brightness"), this);
                     emit backBrightness(true);
+                } else {
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Increase Font Brightness"), this);
+                    emit fontBrightness(true);
                 }
             }
-        } else {
+        } else if ((y_ev > y_off) && (y_ev < dy_off)) {
             if (x_ev < x_off) {
                 if (x_ev < hx_off) {
                     if (_showPopup) NotifyMessageBox::showMessage(tr("Previous Page"), this);
@@ -1266,6 +1267,24 @@ void CR3View::mousePressEvent ( QMouseEvent * event )
                 if (x_ev < dx_off) {
                     if (_showPopup) NotifyMessageBox::showMessage(tr("Increase Font Size"), this);
                     emit fontSize(true);
+                } else {
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Next Page"), this);
+                    nextPage();
+                }
+            }
+        } else {
+            if (x_ev < x_off) {
+                if (x_ev < hx_off) {
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Previous Page"), this);
+                    prevPage();
+                } else {
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Previous Page"), this);
+                    prevPage();
+                }
+            } else {
+                if (x_ev < dx_off) {
+                    if (_showPopup) NotifyMessageBox::showMessage(tr("Next Page"), this);
+                    nextPage();
                 } else {
                     if (_showPopup) NotifyMessageBox::showMessage(tr("Next Page"), this);
                     nextPage();
