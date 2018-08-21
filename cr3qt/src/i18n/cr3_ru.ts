@@ -345,7 +345,7 @@ Latest source code is available from GIT repositories:
 See README.TXT at root directory of project for build instructions.
 
 Source Code of EXL&apos;s fork:
-&gt; git clone https://github.com/EXL/coolreader</source>
+&gt; git clone https://github.com/EXLMOTODEV/coolreader</source>
         <translation>Исходный код доступен на страницах проекта СRengine:
 http://sourceforge.net/projects/crengine/
 https://github.com/buggins/coolreader
@@ -357,7 +357,7 @@ https://github.com/buggins/coolreader
 Инструкция по сборке находится в файле README.TXT корневого каталога.
 
 Исходный код форка от EXL:
-&gt; git clone https://github.com/EXL/coolreader</translation>
+&gt; git clone https://github.com/EXLMOTODEV/coolreader</translation>
     </message>
 </context>
 <context>
