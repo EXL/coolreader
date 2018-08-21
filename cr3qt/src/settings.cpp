@@ -245,7 +245,7 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     //     sizeList.append( QString("%1").arg(sizes[i]) );
     // m_ui->cbTextFontSize->addItems( sizeList );
     // m_ui->cbTitleFontSize->addItems( sizeList );
-    
+
     const char * defFontFace = "DejaVu Sans";
     static const char * goodFonts[] = {
         "DejaVu Sans",
@@ -325,6 +325,8 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     initStyleControls("def");
 
     initDone = true;
+
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 
     //m_ui->cbPageSkin->addItem(QString("[None]"), QVariant());
 }
@@ -738,26 +740,31 @@ void SettingsDlg::on_cbTurnPageMouse_stateChanged(int s)
     setCheck( PROP_PAGE_TURN_CLICK, s );
     bool c = !(m_props->getIntDef( PROP_PAGE_TURN_CLICK, 0)==0);
     m_ui->cbShowHints->setEnabled( c );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbShowHints_stateChanged(int s)
 {
     setCheck( PROP_PAGE_POPUP, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbWindowFullscreen_stateChanged(int s)
 {
     setCheck( PROP_WINDOW_FULLSCREEN, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbWindowShowToolbar_stateChanged(int s)
 {
     setCheck( PROP_WINDOW_TOOLBAR_SIZE, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbWindowShowMenu_stateChanged(int s)
 {
     setCheck( PROP_WINDOW_SHOW_MENU, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbWindowShowStatusBar_stateChanged(int s)
@@ -770,11 +777,13 @@ void SettingsDlg::on_cbWindowShowStatusBar_stateChanged(int s)
     m_ui->cbStaPages->setEnabled( c );
     m_ui->cbStaPercents->setEnabled( c );
     m_ui->cbStaBatt->setEnabled( c );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbWindowShowScrollbar_stateChanged(int s)
 {
     setCheck( PROP_WINDOW_SHOW_SCROLLBAR, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbViewMode_currentIndexChanged(int index)
@@ -792,6 +801,7 @@ void SettingsDlg::on_cbViewMode_currentIndexChanged(int index)
             m_props->setInt( PROP_PAGE_VIEW_MODE, 0 );
             break;
     }
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbShowPageHeader_stateChanged(int s)
@@ -804,32 +814,38 @@ void SettingsDlg::on_cbShowPageHeader_stateChanged(int s)
     m_ui->cbShowPercentP->setEnabled( b );
     if (m_ui->cbShowPercentP->isChecked())
         m_ui->cbPercentPd->setEnabled( b );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbShowBookName_stateChanged(int s)
 {
     setCheck( PROP_SHOW_TITLE, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbShowClock_stateChanged(int s)
 {
     setCheck( PROP_SHOW_TIME, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbShowPercentP_stateChanged(int s)
 {
     setCheck( PROP_SHOW_POS_PERCENT, s );
     m_ui->cbPercentPd->setEnabled(s);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbShowBattery_stateChanged(int s)
 {
     setCheck( PROP_SHOW_BATTERY, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbShowFootNotes_stateChanged(int s)
 {
     setCheck( PROP_FOOTNOTES, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 
 }
 
@@ -841,6 +857,7 @@ void SettingsDlg::on_cbMargins_currentIndexChanged(int index)
     m_props->setInt( PROP_PAGE_MARGIN_TOP, m );
     m_props->setInt( PROP_PAGE_MARGIN_LEFT, m );
     m_props->setInt( PROP_PAGE_MARGIN_RIGHT, m );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::setBackground( QWidget * wnd, QColor cl )
@@ -899,16 +916,19 @@ void SettingsDlg::colorDialog( const char * optionName, QString title )
 void SettingsDlg::on_btnTextColor_clicked()
 {
     colorDialog( PROP_FONT_COLOR, tr("Text color") );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_btnBgColor_clicked()
 {
     colorDialog( PROP_BACKGROUND_COLOR, tr("Background color") );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_btnHeaderTextColor_clicked()
 {
     colorDialog( PROP_STATUS_FONT_COLOR, tr("Page header text color") );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbLookAndFeel_currentIndexChanged( QString styleName )
@@ -917,6 +937,7 @@ void SettingsDlg::on_cbLookAndFeel_currentIndexChanged( QString styleName )
         return;
     CRLog::debug( "on_cbLookAndFeel_currentIndexChanged(%s)", styleName.toUtf8().data() );
     m_props->setString( PROP_WINDOW_STYLE, styleName );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_btnSavePreset_clicked()
@@ -963,6 +984,8 @@ void SettingsDlg::on_btnSavePreset_clicked()
     settings.endGroup();
 
     updateTable();
+
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_btnClearPreset_clicked()
@@ -975,6 +998,7 @@ void SettingsDlg::on_btnClearPreset_clicked()
     settings.endGroup();
 
     updateTable();
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_btnLoadPreset_clicked()
@@ -1067,6 +1091,7 @@ void SettingsDlg::on_btnLoadPreset_clicked()
 
     updateStyleSample();
     m_docview->setOptions( m_props );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 int SettingsDlg::getComboBoxElemIndexByText(const QString &text, const QComboBox *cb) const
@@ -1181,6 +1206,7 @@ void SettingsDlg::on_cbTitleFontFace_currentIndexChanged(QString s)
     if ( !initDone )
         return;
     m_props->setString( PROP_STATUS_FONT_FACE, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_sbTitleFontSize_valueChanged(int val)
@@ -1188,6 +1214,7 @@ void SettingsDlg::on_sbTitleFontSize_valueChanged(int val)
     if ( !initDone )
         return;
     m_props->setString( PROP_STATUS_FONT_SIZE, QString::number(val) );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbTextFontFace_currentIndexChanged(QString s)
@@ -1196,6 +1223,7 @@ void SettingsDlg::on_cbTextFontFace_currentIndexChanged(QString s)
         return;
     m_props->setString( PROP_FONT_FACE, s );
     updateStyleSample();
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_sbTextFontSize_valueChanged(int val)
@@ -1204,6 +1232,7 @@ void SettingsDlg::on_sbTextFontSize_valueChanged(int val)
         return;
     m_props->setString( PROP_FONT_SIZE, QString::number(val) );
     updateStyleSample();
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::fontToUi( const char * faceOptionName, const char * sizeOptionName, QComboBox * faceCombo, QSpinBox * sizeSpinBox, const char * defFontFace )
@@ -1226,6 +1255,7 @@ void SettingsDlg::on_cbInterlineSpace_currentIndexChanged(int index)
         return;
     m_props->setInt( PROP_INTERLINE_SPACE, interline_spaces[index] );
     updateStyleSample();
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbHyphenation_currentIndexChanged(int index)
@@ -1234,21 +1264,24 @@ void SettingsDlg::on_cbHyphenation_currentIndexChanged(int index)
     QString s = dl[index < dl.count() ? index : 1];
     m_props->setString( PROP_HYPHENATION_DICT, s );
     updateStyleSample();
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbStartupAction_currentIndexChanged(int index)
 {
     m_props->setInt( PROP_APP_START_ACTION, index );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbTxtPreFormatted_toggled(bool checked)
 {
-
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbTxtPreFormatted_stateChanged(int s)
 {
     setCheck( PROP_TXT_OPTION_PREFORMATTED, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbPageSkin_currentIndexChanged(int index)
@@ -1257,87 +1290,93 @@ void SettingsDlg::on_cbPageSkin_currentIndexChanged(int index)
         return;
     if ( index>=0 && index<m_backgroundFiles.length() )
         m_props->setString( PROP_BACKGROUND_IMAGE, m_backgroundFiles[index] );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbFloatingPunctuation_stateChanged(int s)
 {
     setCheck( PROP_FLOATING_PUNCTUATION, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbPercentPd_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_PAGE_PERCENT_PD, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbFontGamma_currentIndexChanged(QString s)
 {
     m_props->setString( PROP_FONT_GAMMA, s );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbStyleName_currentIndexChanged(int index)
 {
     if (index >= 0 && initDone)
         initStyleControls(styleNames[index]);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefAlignment_currentIndexChanged(int index)
 {
-    m_styleItemAlignment.update(index);
+    m_styleItemAlignment.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefFirstLine_currentIndexChanged(int index)
 {
-    m_styleItemIndent.update(index);
+    m_styleItemIndent.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefMarginBefore_currentIndexChanged(int index)
 {
-    m_styleItemMarginBefore.update(index);
+    m_styleItemMarginBefore.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefMarginAfter_currentIndexChanged(int index)
 {
-    m_styleItemMarginAfter.update(index);
+    m_styleItemMarginAfter.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefMarginLeft_currentIndexChanged(int index)
 {
-    m_styleItemMarginLeft.update(index);
+    m_styleItemMarginLeft.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefMarginRight_currentIndexChanged(int index)
 {
-    m_styleItemMarginRight.update(index);
+    m_styleItemMarginRight.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefFontSize_currentIndexChanged(int index)
 {
-    m_styleFontSize.update(index);
+    m_styleFontSize.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefFontFace_currentIndexChanged(int index)
 {
-    m_styleFontFace.update(index);
+    m_styleFontFace.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefFontWeight_currentIndexChanged(int index)
 {
-    m_styleFontWeight.update(index);
+    m_styleFontWeight.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefFontStyle_currentIndexChanged(int index)
 {
-    m_styleFontStyle.update(index);
+    m_styleFontStyle.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbDefFontColor_currentIndexChanged(int index)
 {
-    m_styleFontColor.update(index);
+    m_styleFontColor.update(index); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbFontHinting_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_FONT_HINTING, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbFallbackFontFace_currentIndexChanged(const QString &s)
@@ -1346,32 +1385,38 @@ void SettingsDlg::on_cbFallbackFontFace_currentIndexChanged(const QString &s)
         return;
     m_props->setString(PROP_FALLBACK_FONT_FACE, s);
     updateStyleSample();
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbEnableEmbeddedFonts_toggled(bool checked)
 {
     setCheck(PROP_EMBEDDED_FONTS, checked ? Qt::Checked : Qt::Unchecked);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbEnableDocumentStyles_toggled(bool checked)
 {
     setCheck(PROP_EMBEDDED_STYLES, checked ? Qt::Checked : Qt::Unchecked);
     m_ui->cbEnableEmbeddedFonts->setEnabled(checked);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_btnSelectionColor_clicked()
 {
     colorDialog( PROP_HIGHLIGHT_SELECTION_COLOR, tr("Selection color") );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_btnCommentColor_clicked()
 {
     colorDialog( PROP_HIGHLIGHT_BOOKMARK_COLOR_COMMENT, tr("Comment bookmark color") );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_btnCorrectionColor_clicked()
 {
     colorDialog( PROP_HIGHLIGHT_BOOKMARK_COLOR_CORRECTION, tr("Correction bookmark color") );
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbBookmarkHighlightMode_currentIndexChanged(int index)
@@ -1379,46 +1424,70 @@ void SettingsDlg::on_cbBookmarkHighlightMode_currentIndexChanged(int index)
     if ( !initDone )
         return;
     m_props->setInt(PROP_HIGHLIGHT_COMMENT_BOOKMARKS, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbImageInlineZoominMode_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMIN_INLINE_MODE, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbImageInlineZoominScale_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMIN_INLINE_SCALE, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbImageInlineZoomoutMode_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMOUT_INLINE_MODE, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbImageInlineZoomoutScale_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMOUT_INLINE_SCALE, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbImageBlockZoominMode_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMIN_BLOCK_MODE, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbImageBlockZoominScale_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMIN_BLOCK_SCALE, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbImageBlockZoomoutMode_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMOUT_BLOCK_MODE, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbImageBlockZoomoutScale_currentIndexChanged(int index)
 {
     m_props->setInt(PROP_IMG_SCALING_ZOOMOUT_BLOCK_SCALE, index);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+}
+
+void SettingsDlg::on_cbDefTextDecoration_currentIndexChanged(int index)
+{
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+}
+
+void SettingsDlg::on_cbDefVerticalAlign_currentIndexChanged(int index)
+{
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+}
+
+void SettingsDlg::on_cbDefLineHeight_currentIndexChanged(int index)
+{
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_tablePresets_itemChanged(QTableWidgetItem *item)
@@ -1433,40 +1502,42 @@ void SettingsDlg::on_tablePresets_itemChanged(QTableWidgetItem *item)
 
         updateTable();
     }
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_tablePresets_cellClicked(int row, int column)
 {
     Q_UNUSED(column);
     m_ui->cbPresets->setCurrentIndex(row);
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbStaTitle_stateChanged(int s)
 {
-    setCheck( PROP_STA_TITL, s );
+    setCheck( PROP_STA_TITL, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbStaChapter_stateChanged(int s)
 {
-    setCheck( PROP_STA_CHAP, s );
+    setCheck( PROP_STA_CHAP, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbStaTime_stateChanged(int s)
 {
-    setCheck( PROP_STA_TIME, s );
+    setCheck( PROP_STA_TIME, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbStaPages_stateChanged(int s)
 {
-    setCheck( PROP_STA_PAGE, s );
+    setCheck( PROP_STA_PAGE, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbStaPercents_stateChanged(int s)
 {
-    setCheck( PROP_STA_PERC, s );
+    setCheck( PROP_STA_PERC, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void SettingsDlg::on_cbStaBatt_stateChanged(int s)
 {
-    setCheck( PROP_STA_BATT, s );
+    setCheck( PROP_STA_BATT, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }

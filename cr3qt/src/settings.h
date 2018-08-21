@@ -257,6 +257,9 @@ private slots:
     void on_cbImageBlockZoominScale_currentIndexChanged(int index);
     void on_cbImageBlockZoomoutMode_currentIndexChanged(int index);
     void on_cbImageBlockZoomoutScale_currentIndexChanged(int index);
+    void on_cbDefTextDecoration_currentIndexChanged(int index);
+    void on_cbDefVerticalAlign_currentIndexChanged(int index);
+    void on_cbDefLineHeight_currentIndexChanged(int index);
     void on_tablePresets_itemChanged(QTableWidgetItem *item);
     void on_tablePresets_cellClicked(int row, int column);
     void on_cbStaTitle_stateChanged(int );
