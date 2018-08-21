@@ -27,7 +27,7 @@ bool SearchDialog::showDlg()
     this->show();
     this->raise();
     this->activateWindow();
-    //dlg->
+    //this->setAttribute(Qt::WA_DeleteOnClose);
     return true;
 }
 

@@ -83,7 +83,7 @@ bool RecentBooksDlg::showDlg( QWidget * parent,  CR3View * docView )
     dlg->show();
     dlg->raise();
     dlg->activateWindow();
-    //dlg->
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
     return true;
 }
 

@@ -15,6 +15,7 @@ bool AddBookmarkDialog::editBookmark( QWidget * parent, CR3View * docView, CRBoo
     dlg->show();
     dlg->raise();
     dlg->activateWindow();
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
     return true;
 }
 
@@ -71,6 +72,7 @@ bool AddBookmarkDialog::showDlg( QWidget * parent, CR3View * docView )
     dlg->show();
     dlg->raise();
     dlg->activateWindow();
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
     return true;
 }
 

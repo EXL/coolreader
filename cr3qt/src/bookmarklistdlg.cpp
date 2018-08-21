@@ -73,16 +73,16 @@ BookmarkListDialog::BookmarkListDialog(QWidget *parent, CR3View * docView ) :
         else if ( bm->getType()==bmkt_correction )
             t = tr("E", "Bookmark type first letter - Correction/Edit");
         m_ui->tableWidget->setRowCount(y+1);
-		{
-			int i=0;
-			_list.append( bm );
-			m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem( crpercent( bm->getPercent() )) );
-			m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem(t) );
-			//m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem( limit(cr2qt(bm->getTitleText())) ) );
-			m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem( limit(cr2qt(bm->getPosText())) ) );
-			m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem( limit(cr2qt(bm->getCommentText())) ) );
+        {
+            int i=0;
+            _list.append( bm );
+            m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem( crpercent( bm->getPercent() )) );
+            m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem(t) );
+            //m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem( limit(cr2qt(bm->getTitleText())) ) );
+            m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem( limit(cr2qt(bm->getPosText())) ) );
+            m_ui->tableWidget->setItem( y, i++, new QTableWidgetItem( limit(cr2qt(bm->getCommentText())) ) );
             m_ui->tableWidget->verticalHeader()->setResizeModeMethod( y, QHeaderView::ResizeToContents );
-		}
+        }
         y++;
     }
     if ( bestindex>=0 ) {
@@ -113,7 +113,7 @@ bool BookmarkListDialog::showDlg( QWidget * parent, CR3View * docView )
     dlg->show();
     dlg->raise();
     dlg->activateWindow();
-    //dlg->
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
     return true;
 }
 

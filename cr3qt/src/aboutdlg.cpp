@@ -36,6 +36,7 @@ bool AboutDialog::showDlg( QWidget * parent )
     dlg->show();
     dlg->raise();
     dlg->activateWindow();
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
     return true;
 }
 
