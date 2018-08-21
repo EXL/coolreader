@@ -152,7 +152,6 @@ class CR3View : public QWidget, public LVDocViewCallback
         void nextSentence();
         void prevSentence();
 
-
     signals:
         //void fileNameChanged( const QString & );
         void setStatusInfo(const QString &, const QString &);

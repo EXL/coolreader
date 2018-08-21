@@ -513,13 +513,13 @@ int getBatteryState()
     BOOL pow = GetSystemPowerStatus(&bstatus);
     if (bstatus.BatteryFlag & 128)
         return CR_BATTERY_STATE_NO_BATTERY; // no system battery
-	if (bstatus.ACLineStatus==8 && bstatus.BatteryLifePercent<100 )
-		return CR_BATTERY_STATE_CHARGING; // charging
+    if (bstatus.ACLineStatus==8 && bstatus.BatteryLifePercent<100 )
+        return CR_BATTERY_STATE_CHARGING; // charging
     if (bstatus.BatteryLifePercent>=0 && bstatus.BatteryLifePercent<=100)
-		return bstatus.BatteryLifePercent;
+        return bstatus.BatteryLifePercent;
     return CR_BATTERY_STATE_NO_BATTERY;
 #else
-	return CR_BATTERY_STATE_NO_BATTERY;
+    return CR_BATTERY_STATE_NO_BATTERY;
 #endif
 }
 
@@ -528,11 +528,11 @@ void CR3View::paintEvent ( QPaintEvent * event )
     QPainter painter(this);
     QRect rc = rect();
     emit setStatusInfo(getLeftInfo(), getRightInfo());
-	int newBatteryState = getBatteryState();
-	if (_lastBatteryState != newBatteryState) {
-		_docview->setBatteryState( newBatteryState );
-		_lastBatteryState = newBatteryState;
-	}
+    int newBatteryState = getBatteryState();
+    if (_lastBatteryState != newBatteryState) {
+        _docview->setBatteryState( newBatteryState );
+        _lastBatteryState = newBatteryState;
+    }
     LVDocImageRef ref = _docview->getPageImage(0);
     if ( ref.isNull() ) {
         //painter.fillRect();
@@ -753,7 +753,7 @@ void CR3View::refreshPropFromView( const char * propName )
 }
 
 void CR3View::zoomIn()
-{ 
+{
     doCommand( DCMD_ZOOM_IN, 1 );
     refreshPropFromView( PROP_FONT_SIZE );
 }
@@ -941,8 +941,8 @@ bool CR3View::saveHistory( QString fn )
         }
     }
     if ( stream.isNull() ) {
-    	CRLog::error("Error while creating history file %s - position will be lost", UnicodeToUtf8(filename).c_str() );
-    	return false;
+        CRLog::error("Error while creating history file %s - position will be lost", UnicodeToUtf8(filename).c_str() );
+        return false;
     }
     return _docview->getHistory()->saveToStream( stream.get() );
 }
@@ -1612,7 +1612,7 @@ void CR3View::OnFormatProgress( int percent )
 void CR3View::OnLoadFileFirstPagesReady()
 {
 #if 0 // disabled
-	if ( !_data->_props->getBoolDef( PROP_PROGRESS_SHOW_FIRST_PAGE, 1 ) ) {
+    if ( !_data->_props->getBoolDef( PROP_PROGRESS_SHOW_FIRST_PAGE, 1 ) ) {
         CRLog::info( "OnLoadFileFirstPagesReady() - don't paint first page because " PROP_PROGRESS_SHOW_FIRST_PAGE " setting is 0" );
         return;
     }

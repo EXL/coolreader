@@ -45,6 +45,7 @@ protected:
     virtual void showEvent ( QShowEvent * event );
     virtual void focusInEvent ( QFocusEvent * event );
     virtual void closeEvent ( QCloseEvent * event );
+    virtual bool event(QEvent *e);
 public slots:
     void contextMenu( QPoint pos );
     void on_actionFindText_triggered();
@@ -96,6 +97,7 @@ private slots:
     void on_actionIncrease_Font_Brightness_triggered();
     void on_actionDecrease_Font_Brightness_triggered();
     void on_actionReset_Brightness_triggered();
+    void enableCr3Widget();
 };
 
 #endif // MAINWINDOW_H

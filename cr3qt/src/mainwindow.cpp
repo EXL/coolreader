@@ -14,6 +14,8 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QMessageBox>
+#include <QTimer>
+
 #include "settings.h"
 #include "tocdlg.h"
 #include "recentdlg.h"
@@ -39,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->view->setScrollBar( ui->scroll );
 
-	QIcon icon = QIcon(":/icons/icons/cr3.png");
-	CRLog::warn("\n\n\n*** ######### application icon %s\n\n\n", icon.isNull() ? "null" : "found");
-	qApp->setWindowIcon(icon);
+    QIcon icon = QIcon(":/icons/icons/cr3.png");
+    CRLog::warn("\n\n\n*** ######### application icon %s\n\n\n", icon.isNull() ? "null" : "found");
+    qApp->setWindowIcon(icon);
 
     addAction(ui->actionOpen);
     addAction(ui->actionRecentBooks);
@@ -169,6 +171,23 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::closeEvent ( QCloseEvent * event )
 {
     ui->view->saveWindowPos( this, "main." );
+}
+
+bool MainWindow::event(QEvent *e)
+{
+    switch(e->type()) {
+    case QEvent::WindowActivate:
+        // gained focus
+        QTimer::singleShot(100, this, SLOT(enableCr3Widget())); // 100 ms
+        break;
+    case QEvent::WindowDeactivate:
+        // lost focus
+        ui->view->setEnabled(false);
+        break;
+    default:
+        break;
+    }
+    return QMainWindow::event(e);
 }
 
 MainWindow::~MainWindow()
@@ -564,7 +583,7 @@ void MainWindow::showEvent ( QShowEvent * event )
         // file name specified at command line
         CRLog::info("Startup Action: filename passed in command line");
         if ( !ui->view->loadDocument( _filenameToOpen ) )
-			CRLog::error("cannot load document");
+            CRLog::error("cannot load document");
     } else if ( n==0 ) {
         // open recent book
         CRLog::info("Startup Action: Open recent book");
@@ -741,4 +760,9 @@ void MainWindow::on_actionReset_Brightness_triggered()
     setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
     setColor(pr, PROP_FONT_COLOR, txtColor);
     ui->view->setOptions(pr);
+}
+
+void MainWindow::enableCr3Widget()
+{
+    ui->view->setEnabled(true);
 }
