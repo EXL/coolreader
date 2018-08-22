@@ -43,17 +43,21 @@ static void findBackgrounds( lString16Collection & baseDirs, lString16Collection
     int i;
     for ( i=0; i<baseDirs.length(); i++ ) {
         lString16 baseDir = baseDirs[i];
+#ifndef _LINUX
         if (baseDir == exeDir) {
             baseDir = "";
         }
+#endif // !_LINUX
         LVAppendPathDelimiter(baseDir);
         findImagesFromDirectory( baseDir + "backgrounds", files );
     }
     for ( i=0; i<baseDirs.length(); i++ ) {
         lString16 baseDir = baseDirs[i];
+#ifndef _LINUX
         if (baseDir == exeDir) {
             baseDir = "";
         }
+#endif // !_LINUX
         LVAppendPathDelimiter(baseDir);
         findImagesFromDirectory( baseDir + "textures", files );
     }
