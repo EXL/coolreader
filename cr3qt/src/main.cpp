@@ -175,6 +175,9 @@ int main(int argc, char *argv[])
         //    return 3;
         //}
         {
+#if QT_VERSION >= 0x050000
+            QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
             QApplication a(argc, argv);
 #if MAC == 1
             QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/Contents/Resources/"); //QDir::separator();
