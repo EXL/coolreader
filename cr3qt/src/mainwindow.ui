@@ -675,6 +675,17 @@
     <string>Shift+/</string>
    </property>
   </action>
+  <action name="actionInvert_Brightness">
+   <property name="text">
+    <string>Invert Brightness</string>
+   </property>
+   <property name="toolTip">
+    <string>Invert Brightness</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+/</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

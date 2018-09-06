@@ -101,6 +101,7 @@ private slots:
     void on_actionIncrease_Font_Brightness_triggered();
     void on_actionDecrease_Font_Brightness_triggered();
     void on_actionReset_Brightness_triggered();
+    void on_actionInvert_Brightness_triggered();
     void enableCr3Widget();
 };
 

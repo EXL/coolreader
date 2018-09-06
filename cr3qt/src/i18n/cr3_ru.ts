@@ -1173,6 +1173,10 @@ https://github.com/buggins/coolreader
         <translation>Уменьшить яркость шрифта</translation>
     </message>
     <message>
+        <source>Invert Brightness</source>
+        <translation>Инвертировать</translation>
+    </message>
+    <message>
         <source>Reset Brightness</source>
         <translation>Сбросить яркость</translation>
     </message>

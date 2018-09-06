@@ -80,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
     addAction(ui->actionDecrease_Brightness);
     addAction(ui->actionIncrease_Font_Brightness);
     addAction(ui->actionDecrease_Font_Brightness);
+    addAction(ui->actionInvert_Brightness);
     addAction(ui->actionReset_Brightness);
 
 #ifdef _LINUX
@@ -549,6 +550,7 @@ void MainWindow::contextMenu( QPoint pos )
     menu->addAction(ui->actionDecrease_Brightness);
     menu->addAction(ui->actionIncrease_Font_Brightness);
     menu->addAction(ui->actionDecrease_Font_Brightness);
+    menu->addAction(ui->actionInvert_Brightness);
     menu->addAction(ui->actionReset_Brightness);
     menu->addSeparator();
     menu->addAction(ui->actionClose);
@@ -759,6 +761,20 @@ void MainWindow::on_actionReset_Brightness_triggered()
     QColor bgColor(Qt::white);
     setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
     setColor(pr, PROP_FONT_COLOR, txtColor);
+    ui->view->setOptions(pr);
+}
+
+void MainWindow::on_actionInvert_Brightness_triggered()
+{
+    PropsRef pr = ui->view->getOptions();
+    QColor bg = getColor(pr, PROP_BACKGROUND_COLOR, 0);
+    if (bg.blue() < 128) {
+        setColor(pr, PROP_BACKGROUND_COLOR, QColor(Qt::white));
+        setColor(pr, PROP_FONT_COLOR, QColor(Qt::black));
+    } else {
+        setColor(pr, PROP_BACKGROUND_COLOR, QColor(Qt::black));
+        setColor(pr, PROP_FONT_COLOR, QColor(Qt::white));
+    }
     ui->view->setOptions(pr);
 }
 
