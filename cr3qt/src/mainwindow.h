@@ -60,6 +60,7 @@ public slots:
     void fontSizeAdapter(bool inc);
 private slots:
     void on_actionNextPage3_triggered();
+    void on_actionPrevPage3_triggered();
     void on_actionToggleEditMode_triggered();
     void on_actionRotate_triggered();
     void on_actionFileProperties_triggered();

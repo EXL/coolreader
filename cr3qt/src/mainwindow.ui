@@ -686,6 +686,17 @@
     <string>Ctrl+/</string>
    </property>
   </action>
+  <action name="actionPrevPage3">
+   <property name="text">
+    <string>Previous Page</string>
+   </property>
+   <property name="toolTip">
+    <string>Previous Page</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Space</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     addAction(ui->actionNextPage2);
     addAction(ui->actionPrevPage2);
     addAction(ui->actionNextPage3);
+    addAction(ui->actionPrevPage3);
     addAction(ui->actionNextLine);
     addAction(ui->actionPrevLine);
     addAction(ui->actionFirstPage);
@@ -669,6 +670,11 @@ void MainWindow::on_actionToggleEditMode_triggered()
 void MainWindow::on_actionNextPage3_triggered()
 {
     ui->view->nextPage();
+}
+
+void MainWindow::on_actionPrevPage3_triggered()
+{
+    ui->view->prevPage();
 }
 
 void MainWindow::on_actionNextSentence_triggered()
