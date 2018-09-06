@@ -532,7 +532,7 @@ void MainWindow::fontSizeAdapter(bool inc)
 
 void MainWindow::contextMenu( QPoint pos )
 {
-    QMenu *menu = new QMenu;
+    MainContextMenu *menu = new MainContextMenu(this);
     menu->addAction(ui->actionNextPage);
     menu->addAction(ui->actionPrevPage);
     menu->addSeparator();
@@ -765,4 +765,9 @@ void MainWindow::on_actionReset_Brightness_triggered()
 void MainWindow::enableCr3Widget()
 {
     ui->view->setEnabled(true);
+}
+
+void MainWindow::disableCr3Widget()
+{
+    ui->view->setEnabled(false);
 }

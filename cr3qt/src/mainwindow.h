@@ -12,6 +12,9 @@
 #include "searchdlg.h"
 
 #include <QLabel>
+#include <QMenu>
+#include <QEvent>
+#include <QTimer>
 
 namespace Ui
 {
@@ -30,6 +33,7 @@ class MainWindow : public QMainWindow, public PropsChangeCallback
 public:
     virtual void onPropsChange( PropsRef props );
     MainWindow(QWidget *parent = 0);
+    void disableCr3Widget();
     ~MainWindow();
 
 private:
@@ -98,6 +102,26 @@ private slots:
     void on_actionDecrease_Font_Brightness_triggered();
     void on_actionReset_Brightness_triggered();
     void enableCr3Widget();
+};
+
+class MainContextMenu : public QMenu {
+    Q_OBJECT
+
+    MainWindow *mainWindow;
+
+protected:
+    void closeEvent(QCloseEvent *) {
+        QTimer::singleShot(300, mainWindow, SLOT(enableCr3Widget())); // 300 ms
+    }
+
+    void showEvent(QShowEvent *) {
+        mainWindow->disableCr3Widget();
+    }
+
+public:
+    MainContextMenu(MainWindow *mainWindow) : QMenu(mainWindow) {
+        this->mainWindow = mainWindow;
+    }
 };
 
 #endif // MAINWINDOW_H
