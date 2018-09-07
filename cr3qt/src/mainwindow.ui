@@ -101,6 +101,13 @@
     <addaction name="actionRotate"/>
     <addaction name="actionMove_Window_to_0_0"/>
     <addaction name="separator"/>
+    <addaction name="actionIncrease_Brightness"/>
+    <addaction name="actionDecrease_Brightness"/>
+    <addaction name="actionIncrease_Font_Brightness"/>
+    <addaction name="actionDecrease_Font_Brightness"/>
+    <addaction name="actionInvert_Brightness"/>
+    <addaction name="actionReset_Brightness"/>
+    <addaction name="separator"/>
     <addaction name="actionTOC"/>
     <addaction name="actionShowBookmarksList"/>
     <addaction name="actionAddBookmark"/>
