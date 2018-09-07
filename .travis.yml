@@ -1,0 +1,38 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      sudo: required
+      dist: trusty
+      compiler: gcc
+      services:
+        - docker
+    - os: osx
+      compiler: clang
+      osx_image: xcode7.3
+
+script:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then mkdir ../build ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cd ../build ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then PATH="$(brew --prefix qt)/bin:$PATH" cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS:STRING="-Os -O3" -DGUI=QT5 -DMAX_IMAGE_SCALE_MUL=2 -DDOC_DATA_COMPRESSION_LEVEL=3 -DDOC_BUFFER_SIZE=0x1400000 -DBIG_PAGE_MARGINS=1 ../coolreader ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then make -j2 ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then make DESTDIR=/tmp/macos_build/ install ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cd /tmp/macos_build/usr/local/ ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then mkdir CoolReader3.app/ ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then mv Contents/ CoolReader3.app/ ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then curl -LOJ "http://esxi.z-lab.me:666/~exl_lab/software/qt_ru.qm" ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then mv qt_ru.qm CoolReader3.app/Contents/Resources/i18n/ ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then PATH="$(brew --prefix qt)/bin:$PATH" macdeployqt CoolReader3.app -always-overwrite -dmg ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then curl --upload-file ./CoolReader3.dmg https://transfer.sh/CoolReader3.dmg ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker build . ; fi
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker pull ubuntu:16.04 ; fi
+
+install:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update > /dev/null ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install freetype ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install qt5 ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew link qt5 --force ; fi
