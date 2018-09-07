@@ -175,7 +175,7 @@ int main(int argc, char *argv[])
         //    return 3;
         //}
         {
-#if QT_VERSION >= 0x050000
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
             QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
             QApplication a(argc, argv);
