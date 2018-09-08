@@ -46,15 +46,24 @@ SET (CR3_SOURCES
 )
 
 if(MAC)
+    message("DATA DIR: null (macOS)")
     ADD_DEFINITIONS(-DCR3_DATA_DIR=""
           -DUSE_FONTCONFIG=0
     ${CARBON_CFLAGS}
     )
+ELSEIF(APPIMAGE)
+    message("DATA DIR: ${CMAKE_INSTALL_PREFIX}/share/cr3/ (AppImage)")
+    ADD_DEFINITIONS(-DCR3_DATA_DIR="${CMAKE_INSTALL_PREFIX}/share/cr3/"
+        -DUSE_FONTCONFIG=1
+        -DAPPIMAGE=1
+        )
 ELSEIF (UNIX)
-    ADD_DEFINITIONS(-DCR3_DATA_DIR="${CMAKE_INSTALL_PREFIX}/share/cr3/" 
-          -DUSE_FONTCONFIG=1 
-    )
+    message("DATA DIR: ${CMAKE_INSTALL_PREFIX}/share/cr3/ (Unix)")
+    ADD_DEFINITIONS(-DCR3_DATA_DIR="${CMAKE_INSTALL_PREFIX}/share/cr3/"
+        -DUSE_FONTCONFIG=1
+        )
 ELSE()
+    message("DATA DIR: null (MS Windows/Other)")
     ADD_DEFINITIONS(-DCR3_DATA_DIR=""
           -DUSE_FONTCONFIG=0
     )

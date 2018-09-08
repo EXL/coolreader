@@ -458,6 +458,9 @@
    <property name="toolTip">
     <string>About Qt...</string>
    </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
   </action>
   <action name="actionAboutCoolReader">
    <property name="text">

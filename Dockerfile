@@ -30,7 +30,7 @@ RUN apt-get install -y qtchooser qttools5-dev-tools qt5-default > /dev/null
 # Build AppImage for Linux, Qt 5, x86_64
 RUN mkdir ../build-linux-qt5/
 WORKDIR /usr/share/build-linux-qt5/
-RUN source /opt/qt*/bin/qt*-env.sh && cmake -D GUI=QT5 -D CMAKE_BUILD_TYPE=Release -D MAX_IMAGE_SCALE_MUL=2 -D DOC_DATA_COMPRESSION_LEVEL=3 -D DOC_BUFFER_SIZE=0x1400000 -D CMAKE_INSTALL_PREFIX=/usr ../CoolReader3
+RUN source /opt/qt*/bin/qt*-env.sh && cmake -D GUI=QT5 -D CMAKE_BUILD_TYPE=Release -D APPIMAGE=1 -D MAX_IMAGE_SCALE_MUL=2 -D DOC_DATA_COMPRESSION_LEVEL=3 -D DOC_BUFFER_SIZE=0x1400000 -D CMAKE_INSTALL_PREFIX=/usr ../CoolReader3
 RUN make -j$(nproc)
 RUN make DESTDIR=/tmp/AppDir/ install
 

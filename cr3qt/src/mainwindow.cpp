@@ -90,7 +90,11 @@ MainWindow::MainWindow(QWidget *parent)
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/cr3/");
 #endif
 #ifdef _LINUX
+#if defined(APPIMAGE)
+    QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/../share/cr3/");
+#else
     QString exeDir = QString(CR3_DATA_DIR);
+#endif
 #else
     QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/"); //QDir::separator();
 #endif

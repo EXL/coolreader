@@ -180,12 +180,15 @@ int main(int argc, char *argv[])
 #endif
             QApplication a(argc, argv);
 #if MAC == 1
-            QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/Contents/Resources/"); //QDir::separator();
+            QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/../Resources/"); //QDir::separator();
             QString translations = exeDir + "i18n";
 #else
 #if defined(_WIN32)
             QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/"); //QDir::separator();
             QString translations = exeDir + "i18n";
+#elif defined(APPIMAGE)
+            QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/../share/cr3/");
+            QString translations = exeDir + "i18n/";
 #else
             QString exeDir = cr2qt(datadir);
             QString translations = exeDir + "i18n/";
