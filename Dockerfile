@@ -57,7 +57,8 @@ RUN chmod a+x linuxdeployqt-continuous-x86_64.AppImage
 RUN unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
 RUN ./linuxdeployqt-continuous-x86_64.AppImage --appimage-extract
 RUN curl -LOJ "http://esxi.z-lab.me:666/~exl_lab/software/qt_ru.qm"
-RUN mv qt_ru.qm AppDir/usr/share/cr3/i18n/
+RUN curl -LOJ "http://esxi.z-lab.me:666/~exl_lab/software/qtbase_ru.qm"
+RUN mv qt_ru.qm qtbase_ru.qm AppDir/usr/share/cr3/i18n/
 RUN source /opt/qt*/bin/qt*-env.sh && ./squashfs-root/AppRun AppDir/usr/share/applications/cr3.desktop -bundle-non-qt-libs
 RUN source /opt/qt*/bin/qt*-env.sh && ./squashfs-root/AppRun AppDir/usr/share/applications/cr3.desktop -appimage
 RUN i686-w64-mingw32-strip -s coolreader-win/cr3.exe

@@ -196,8 +196,13 @@ int main(int argc, char *argv[])
             qApp->setOrganizationName("CoolReader");
             qApp->setApplicationName("CoolReader");
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#define QT_TR_FILE "qtbase_"
+#else
+#define QT_TR_FILE "qt_"
+#endif
              QTranslator qtTranslator;
-             if (qtTranslator.load("qt_" + QLocale::system().name(), translations))
+             if (qtTranslator.load(QT_TR_FILE + QLocale::system().name(), translations))
                  QApplication::installTranslator(&qtTranslator);
 
              QTranslator myappTranslator;
