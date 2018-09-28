@@ -2357,6 +2357,10 @@ bool LVDocView::windowToDocPoint(lvPoint & pt) {
 	} else {
 		// PAGES mode
 		int page = getCurPage();
+		// CRLog::error("Page: %d", page);
+		if (getVisiblePageCount() == 2) {
+			page--;
+		}
 		lvRect * rc = NULL;
 		lvRect page1(m_pageRects[0]);
 		int headerHeight = getPageHeaderHeight();
