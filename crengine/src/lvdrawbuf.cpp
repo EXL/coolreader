@@ -707,6 +707,16 @@ void LVGrayDrawBuf::Draw( LVImageSourceRef img, int x, int y, int width, int hei
         return;
     LVImageScaledDrawCallback drawcb( this, img, x, y, width, height, dither );
     img->Decode( &drawcb );
+/*
+    // hex(((0x112233) >> 16) << 24)
+    // CRLog::error("%#010x", GetTextColor());
+    lUInt32 color = GetTextColor();
+    bool bounds = ((color >> 16) == 0xFF) || ((color >> 16) == 0x00);
+    if (!bounds) {
+        // FillRect(x, y, x+width, y+height, color | ~((color >> 16) << 24));
+        FillRect(x, y, x+width, y+height, color | 0x3F000000);
+    }
+*/
 }
 
 
@@ -1253,6 +1263,15 @@ void LVColorDrawBuf::Draw( LVImageSourceRef img, int x, int y, int width, int he
     //fprintf( stderr, "LVColorDrawBuf::Draw( img(%d, %d), %d, %d, %d, %d\n", img->GetWidth(), img->GetHeight(), x, y, width, height );
     LVImageScaledDrawCallback drawcb( this, img, x, y, width, height, dither );
     img->Decode( &drawcb );
+
+    // hex(((0x112233) >> 16) << 24)
+    // CRLog::error("%#010x", GetTextColor());
+    lUInt32 color = GetTextColor();
+    bool bounds = ((color >> 16) == 0xFF) || ((color >> 16) == 0x00);
+    if (!bounds) {
+        // FillRect(x, y, x+width, y+height, color | ~((color >> 16) << 24));
+        FillRect(x, y, x+width, y+height, color | 0x3F000000);
+    }
 }
 
 /// fills buffer with specified color

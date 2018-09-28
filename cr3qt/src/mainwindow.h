@@ -45,6 +45,7 @@ private:
     void setColor( PropsRef props, const char * optionName, QColor cl );
     void changeColor(QColor &cl, bool increase);
     void changeBrightness(bool increase, bool font);
+    int normalizeColorHack(int abNormalColor) const;
 protected:
     virtual void showEvent ( QShowEvent * event );
     virtual void focusInEvent ( QFocusEvent * event );

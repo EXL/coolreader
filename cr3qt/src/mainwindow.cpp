@@ -710,19 +710,19 @@ void MainWindow::setColor( PropsRef props, const char * optionName, QColor cl )
 void MainWindow::changeColor(QColor &cl, bool increase)
 {
     int inc = 5;
-    int red = cl.red();
-    int green = cl.green();
-    int blue = cl.blue();
+    int red = normalizeColorHack(cl.red());
+    int green = normalizeColorHack(cl.green());
+    int blue = normalizeColorHack(cl.blue());
     if (increase) {
         red += inc; green += inc; blue += inc;
-        if (red > 255) red = 255;
-        if (green > 255) green = 255;
-        if (blue > 255) blue = 255;
+        if (red >= 255) red = 254;
+        if (green >= 255) green = 254;
+        if (blue >= 255) blue = 254;
     } else {
         red -= inc; green -= inc; blue -= inc;
-        if (red < 0) red = 0;
-        if (green < 0) green = 0;
-        if (blue < 0) blue = 0;
+        if (red <= 0) red = 1;
+        if (green <= 0) green = 1;
+        if (blue <= 0) blue = 1;
     }
     cl.setRed(red);
     cl.setGreen(green);
@@ -732,16 +732,36 @@ void MainWindow::changeColor(QColor &cl, bool increase)
 void MainWindow::changeBrightness(bool increase, bool font)
 {
     PropsRef pr = ui->view->getOptions();
+    QColor txtColor = getColor( pr, PROP_FONT_COLOR, 0x000000 );
+    QColor bgColor = getColor( pr, PROP_BACKGROUND_COLOR, 0xFFFFFF );
     if (font) {
-        QColor txtColor = getColor( pr, PROP_FONT_COLOR, 0x000000 );
+        bool whiteT = (bgColor.red() <= 1 && bgColor.green() <= 1 && bgColor.blue() <= 1) &&
+                (txtColor.red() >= 254 && txtColor.green() >= 254 && txtColor.blue() >= 254);
+        bool blackT = (bgColor.red() >= 254 && bgColor.green() >= 254 && bgColor.blue() >= 254) &&
+                (txtColor.red() <= 1 && txtColor.green() <= 1 && txtColor.blue() <= 1);
+        // CRLog::error("B: %d, W: %d, Inc: %d", blackT, whiteT, increase);
+        if ((blackT && increase) || (whiteT && !increase)) {
+            return;
+        }
         changeColor(txtColor, !increase);
         setColor(pr, PROP_FONT_COLOR, txtColor);
     } else {
-        QColor bgColor = getColor( pr, PROP_BACKGROUND_COLOR, 0xFFFFFF );
         changeColor(bgColor, increase);
         setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
     }
     ui->view->setOptions(pr);
+}
+
+int MainWindow::normalizeColorHack(int abNormalColor) const
+{
+    switch (abNormalColor) {
+    case 1:
+        return 0;
+    case 254:
+        return 255;
+    default:
+        return abNormalColor;
+    }
 }
 
 void MainWindow::on_actionIncrease_Brightness_triggered()
