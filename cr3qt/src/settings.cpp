@@ -310,7 +310,6 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     }
     m_ui->cbHyphenation->setCurrentIndex(hi>=0 ? hi : 1);
 
-
     m_ui->crSample->setOptions( m_props );
     m_ui->crSample->getDocView()->setShowCover( false );
     m_ui->crSample->getDocView()->setViewMode( DVM_SCROLL, 1 );
@@ -896,6 +895,8 @@ void SettingsDlg::updateStyleSample()
     setBackground( m_ui->frmSelectionColor, selectionColor );
     setBackground( m_ui->frmCommentColor, commentColor );
     setBackground( m_ui->frmCorrectionColor, correctionColor );
+
+    m_ui->crSample->setUseClickForNextPage(false);
 
     m_ui->crSample->setOptions( m_props );
     m_ui->crSample->getDocView()->setShowCover( false );
