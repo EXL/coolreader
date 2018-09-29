@@ -247,9 +247,16 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     QStyle * s = QApplication::style();
     QString currStyle = s->objectName();
     CRLog::debug("Current system style is %s", currStyle.toUtf8().data() );
-    if ( !styles.contains(style, Qt::CaseInsensitive) )
+    if ( !styles.contains(style, Qt::CaseInsensitive) ) {
         style = currStyle;
-    int index = styles.indexOf( style, Qt::CaseInsensitive );
+    }
+    int index = -1;
+    for (int i = 0; i < styles.size(); ++i) {
+        if (styles[i].compare( style, Qt::CaseInsensitive ) == 0) {
+            index = i;
+            break;
+        }
+    }
     if ( index >=0 )
         m_ui->cbLookAndFeel->setCurrentIndex( index );
 
