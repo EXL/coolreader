@@ -3,7 +3,7 @@
 
 cd "$(dirname "$0")"
 
-pacman -Syuu --noconfirm --force
+pacman -Syuu --noconfirm --force --needed
 pacman --noconfirm -S --needed mingw-w64-x86_64-toolchain
 pacman --noconfirm -S --needed mingw-w64-x86_64-curl
 pacman --noconfirm -S --needed mingw-w64-x86_64-cmake

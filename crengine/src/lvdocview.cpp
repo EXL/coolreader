@@ -2359,8 +2359,8 @@ bool LVDocView::windowToDocPoint(lvPoint & pt) {
 	} else {
 		// PAGES mode
 		int page = getCurPage();
-		// CRLog::error("Page: %d", page);
-		if (getVisiblePageCount() == 2) {
+		// CRLog::error("Page: %d, PageCount: %d", page, getPageCount());
+		if (getVisiblePageCount() == 2 && getPageCount() > 1) {
 			page--;
 		}
 		lvRect * rc = NULL;
@@ -5961,8 +5961,7 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
             m_props->setString(name.c_str(), value);
             REQUEST_RENDER("propsApply -img scale")
         } else if (name == PROP_FONT_COLOR || name == PROP_BACKGROUND_COLOR
-                   || name == PROP_DISPLAY_INVERSE || name==PROP_STATUS_FONT_COLOR
-                   || name == PROP_IMG_DISABLE_ALPHA_CHANNEL || name == PROP_IMG_COLOR_FONT) {
+                   || name == PROP_DISPLAY_INVERSE || name==PROP_STATUS_FONT_COLOR) {
             // update current value in properties
             m_props->setString(name.c_str(), value);
             lUInt32 textColor = props->getColorDef(PROP_FONT_COLOR, m_props->getColorDef(PROP_FONT_COLOR, 0x000000));
@@ -5973,16 +5972,6 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
                                                      m_props->getColorDef(PROP_STATUS_FONT_COLOR,
                                                                           0xFF000000));
             bool inverse = props->getBoolDef(PROP_DISPLAY_INVERSE, m_props->getBoolDef(PROP_DISPLAY_INVERSE, false));
-            if (name == PROP_IMG_DISABLE_ALPHA_CHANNEL) {
-                int dac = props->getIntDef(PROP_IMG_DISABLE_ALPHA_CHANNEL, 0);
-                setDisAlphaChannel(dac);
-                break;
-            }
-            if (name == PROP_IMG_COLOR_FONT) {
-                int cf = props->getIntDef(PROP_IMG_COLOR_FONT, 0);
-                setImgColorFont(cf);
-                break;
-            }
             if (inverse) {
                 CRLog::trace("Setting inverse colors");
                 //if (name == PROP_FONT_COLOR)
@@ -6116,6 +6105,16 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
         } else if (name == PROP_PAGE_VIEW_MODE) {
             bool value = props->getBoolDef(PROP_CACHE_VALIDATION_ENABLED, true);
             enableCacheFileContentsValidation(value);
+        } else if (name == PROP_IMG_DISABLE_ALPHA_CHANNEL || name == PROP_IMG_COLOR_FONT) {
+            if (name == PROP_IMG_DISABLE_ALPHA_CHANNEL) {
+                int dac = props->getIntDef(PROP_IMG_DISABLE_ALPHA_CHANNEL, 0);
+                setDisAlphaChannel(dac);
+            }
+            if (name == PROP_IMG_COLOR_FONT) {
+                int cf = props->getIntDef(PROP_IMG_COLOR_FONT, 0);
+                setImgColorFont(cf);
+            }
+            REQUEST_RENDER("propsApply  PROP_IMG_DISABLE_ALPHA_CHANNEL || PROP_IMG_COLOR_FONT")
         } else {
 
             // unknown property, adding to list of unknown properties
