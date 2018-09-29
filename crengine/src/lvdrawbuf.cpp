@@ -1273,7 +1273,7 @@ void LVColorDrawBuf::Draw( LVImageSourceRef img, int x, int y, int width, int he
     // CRLog::error("%#010x", GetTextColor());
     lUInt32 color = GetTextColor();
     bool bounds = ((color >> 16) == 0xFF) || ((color >> 16) == 0x00);
-    if (!bounds) {
+    if (!bounds && GetImageColorFont()) {
         // FillRect(x, y, x+width, y+height, color | ~((color >> 16) << 24));
         FillRect(x, y, x+width, y+height, color | 0x3F000000);
     }

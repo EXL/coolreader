@@ -171,7 +171,8 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     optionToUi( PROP_FLOATING_PUNCTUATION, m_ui->cbFloatingPunctuation );
     optionToUi( PROP_HIGHLIGHT_SELECTION_INVERT, m_ui->cbInvertSelection );
     m_ui->btnSelectionColor->setEnabled(!m_props->getBoolDef(PROP_HIGHLIGHT_SELECTION_INVERT, true));
-    optionToUi( PROP_IMG_DISABLE_ALPHA_CHANNEL, m_ui->cbImageDisableAlpha);
+    optionToUi( PROP_IMG_DISABLE_ALPHA_CHANNEL, m_ui->cbImageDisableAlpha );
+    optionToUi( PROP_IMG_COLOR_FONT, m_ui->cbImageColorFont );
     optionToUiIndex( PROP_PAGE_PERCENT_PD, m_ui->cbPercentPd );
     optionToUiIndex( PROP_IMG_SCALING_ZOOMIN_INLINE_MODE, m_ui->cbImageInlineZoominMode );
     optionToUiIndex( PROP_IMG_SCALING_ZOOMIN_INLINE_SCALE, m_ui->cbImageInlineZoominScale );
@@ -1572,4 +1573,9 @@ void SettingsDlg::on_cbInvertSelection_stateChanged(int s)
 void SettingsDlg::on_cbImageDisableAlpha_stateChanged(int s)
 {
     setCheck( PROP_IMG_DISABLE_ALPHA_CHANNEL, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+}
+
+void SettingsDlg::on_cbImageColorFont_stateChanged(int s)
+{
+    setCheck( PROP_IMG_COLOR_FONT, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }

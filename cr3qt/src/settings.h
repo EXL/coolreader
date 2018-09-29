@@ -270,6 +270,7 @@ private slots:
     void on_cbStaBatt_stateChanged(int );
     void on_cbInvertSelection_stateChanged(int );
     void on_cbImageDisableAlpha_stateChanged(int );
+    void on_cbImageColorFont_stateChanged(int );
 };
 
 #endif // SETTINGSDLG_H

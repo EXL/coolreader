@@ -2106,6 +2106,10 @@ https://github.com/buggins/coolreader
         <translation>Отключить альфа-канал</translation>
     </message>
     <message>
+        <source>Use font color</source>
+        <translation>Использовать цвет шрифта</translation>
+    </message>
+    <message>
         <source>Percents with decimal place:</source>
         <translation>Проценты, цифры после запятой:</translation>
     </message>
