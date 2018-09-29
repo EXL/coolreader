@@ -278,6 +278,7 @@ private:
     lUInt32 m_backgroundColor;
     lUInt32 m_textColor;
     lUInt32 m_statusColor;
+    bool m_disAlphaChannel;
     font_ref_t     m_font;
     font_ref_t     m_infoFont;
     LVFontRef      m_batteryFont;
@@ -699,6 +700,13 @@ public:
     {
         m_textColor = cl;
         m_props->setColor(PROP_FONT_COLOR, cl);
+        clearImageCache();
+    }
+
+    void setDisAlphaChannel( bool disAlphaChannel )
+    {
+        m_disAlphaChannel = disAlphaChannel;
+        m_props->setInt(PROP_IMG_DISABLE_ALPHA_CHANNEL, (int) disAlphaChannel);
         clearImageCache();
     }
 

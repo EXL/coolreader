@@ -1260,6 +1260,11 @@ int  LVColorDrawBuf::GetBitsPerPixel()
 
 void LVColorDrawBuf::Draw( LVImageSourceRef img, int x, int y, int width, int height, bool dither )
 {
+    // Disable Images Alpha Channel Hack
+    if (GetDisAlphaChannel()) {
+        FillRect(x, y, x+width, y+height, 0x00FFFFFF); // White color
+    }
+
     //fprintf( stderr, "LVColorDrawBuf::Draw( img(%d, %d), %d, %d, %d, %d\n", img->GetWidth(), img->GetHeight(), x, y, width, height );
     LVImageScaledDrawCallback drawcb( this, img, x, y, width, height, dither );
     img->Decode( &drawcb );

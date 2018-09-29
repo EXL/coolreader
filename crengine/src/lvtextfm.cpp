@@ -1277,8 +1277,6 @@ void LFormattedText::Draw( LVDrawBuf * buf, int x, int y, ldomMarkedRangeList * 
 {
     int i, j;
     int invert_selection = m_pbuffer->highlight_options.invertSelection;
-    // TODO: if alpha
-    int border = 2;
     formatted_line_t * frmline;
     src_text_fragment_t * srcline;
     formatted_word_t * word;
@@ -1336,7 +1334,10 @@ void LFormattedText::Draw( LVDrawBuf * buf, int x, int y, ldomMarkedRangeList * 
                     lvRect mark;
                     ldomMarkedRange * range = marks->get(i);
                     if ( range->intersects( lineRect, mark ) ) {
-                        //
+                        int border = 0;
+                        if (buf->GetDisAlphaChannel()) {
+                            border = 2;
+                        }
                         buf->FillRect(mark.left + x - border, mark.top + y - border, mark.right + x + border, mark.bottom + y + border,
                                       m_pbuffer->highlight_options.selectionColor);
                     }

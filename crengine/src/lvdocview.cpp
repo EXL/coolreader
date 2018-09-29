@@ -2284,6 +2284,7 @@ void LVDocView::Draw(LVDrawBuf & drawbuf, int position, int page, bool rotate, b
 		drawbuf.Resize(m_dx, m_dy);
 	drawbuf.SetBackgroundColor(m_backgroundColor);
 	drawbuf.SetTextColor(m_textColor);
+	drawbuf.SetDisAlphaChannel(m_disAlphaChannel);
 	//CRLog::trace("Draw() : calling clear()", m_dx, m_dy);
 
 	if (!m_is_rendered)
@@ -5821,8 +5822,7 @@ void LVDocView::propsUpdateDefaults(CRPropRef props) {
     props->setIntDef(PROP_EMBEDDED_STYLES, 1);
     props->setIntDef(PROP_EMBEDDED_FONTS, 1);
     props->setIntDef(PROP_TXT_OPTION_PREFORMATTED, 0);
-    props->limitValueList(PROP_TXT_OPTION_PREFORMATTED, bool_options_def_false,
-            2);
+    props->limitValueList(PROP_TXT_OPTION_PREFORMATTED, bool_options_def_false, 2);
 #endif
 
     props->setStringDef(PROP_FONT_GAMMA, "1.00");
@@ -5836,6 +5836,7 @@ void LVDocView::propsUpdateDefaults(CRPropRef props) {
     props->setIntDef(PROP_IMG_SCALING_ZOOMOUT_INLINE_MODE, defImgScaling.mode);
     props->setIntDef(PROP_IMG_SCALING_ZOOMIN_BLOCK_MODE, defImgScaling.mode);
     props->setIntDef(PROP_IMG_SCALING_ZOOMIN_INLINE_MODE, defImgScaling.mode);
+    props->setIntDef(PROP_IMG_DISABLE_ALPHA_CHANNEL, 0);
 
     int p = props->getIntDef(PROP_FORMAT_MIN_SPACE_CONDENSING_PERCENT, DEF_MIN_SPACE_CONDENSING_PERCENT);
     if (p<25)
@@ -5954,12 +5955,12 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
         } else if (name == PROP_IMG_SCALING_ZOOMIN_INLINE_SCALE || name == PROP_IMG_SCALING_ZOOMIN_INLINE_MODE
                    || name == PROP_IMG_SCALING_ZOOMOUT_INLINE_SCALE || name == PROP_IMG_SCALING_ZOOMOUT_INLINE_MODE
                    || name == PROP_IMG_SCALING_ZOOMIN_BLOCK_SCALE || name == PROP_IMG_SCALING_ZOOMIN_BLOCK_MODE
-                   || name == PROP_IMG_SCALING_ZOOMOUT_BLOCK_SCALE || name == PROP_IMG_SCALING_ZOOMOUT_BLOCK_MODE
-                   ) {
+                   || name == PROP_IMG_SCALING_ZOOMOUT_BLOCK_SCALE || name == PROP_IMG_SCALING_ZOOMOUT_BLOCK_MODE) {
             m_props->setString(name.c_str(), value);
             REQUEST_RENDER("propsApply -img scale")
         } else if (name == PROP_FONT_COLOR || name == PROP_BACKGROUND_COLOR
-                   || name == PROP_DISPLAY_INVERSE || name==PROP_STATUS_FONT_COLOR) {
+                   || name == PROP_DISPLAY_INVERSE || name==PROP_STATUS_FONT_COLOR
+                   || name == PROP_IMG_DISABLE_ALPHA_CHANNEL) {
             // update current value in properties
             m_props->setString(name.c_str(), value);
             lUInt32 textColor = props->getColorDef(PROP_FONT_COLOR, m_props->getColorDef(PROP_FONT_COLOR, 0x000000));
@@ -5989,6 +5990,9 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
                 setStatusColor(statusColor);
                 REQUEST_RENDER("propsApply  color") // TODO: only colors to be changed
             }
+            int dac = props->getIntDef(PROP_IMG_DISABLE_ALPHA_CHANNEL, false);
+            setDisAlphaChannel(dac);
+            REQUEST_RENDER("propsApply  image alpha channel disable")
         } else if (name == PROP_PAGE_MARGIN_TOP || name
                    == PROP_PAGE_MARGIN_LEFT || name == PROP_PAGE_MARGIN_RIGHT
                    || name == PROP_PAGE_MARGIN_BOTTOM) {

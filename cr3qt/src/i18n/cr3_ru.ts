@@ -2098,15 +2098,19 @@ https://github.com/buggins/coolreader
         <translation>Инлайн картинки, уменьшение</translation>
     </message>
     <message>
-        <source>Image scaling options</source>
-        <translation>Масштабирование картинок</translation>
+        <source>Image options</source>
+        <translation>Параметры изображений</translation>
+    </message>
+    <message>
+        <source>Disable alpha channel</source>
+        <translation>Отключить альфа-канал</translation>
     </message>
     <message>
         <source>Percents with decimal place:</source>
         <translation>Проценты, цифры после запятой:</translation>
     </message>
     <message>
-        <source>Page Options</source>
+        <source>Page options</source>
         <translation>Опции страницы</translation>
     </message>
     <message>

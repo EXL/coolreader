@@ -207,6 +207,9 @@ public:
     virtual void setAlpha(int alpha) { CR_UNUSED(alpha); }
     virtual lUInt32 applyAlpha(lUInt32 cl) { return cl; }
 
+    virtual void SetDisAlphaChannel(bool disable) = 0;
+    virtual bool GetDisAlphaChannel() const = 0;
+
     /// virtual destructor
     virtual ~LVDrawBuf() { }
     virtual GLDrawBuf * asGLDrawBuf() { return NULL; }
@@ -224,6 +227,7 @@ protected:
     lUInt32 _backgroundColor;
     lUInt32 _textColor;
     bool _hidePartialGlyphs;
+    bool _disImgAlphaChannel;
 public:
     virtual void setHidePartialGlyphs( bool hide ) { _hidePartialGlyphs = hide; }
     /// returns current background color
@@ -257,7 +261,10 @@ public:
     */
     /// draws formatted text
     //virtual void DrawFormattedText( formatted_text_fragment_t * text, int x, int y );
-    
+
+    void SetDisAlphaChannel(bool disable) { _disImgAlphaChannel = disable; }
+    bool GetDisAlphaChannel() const { return _disImgAlphaChannel; }
+
     LVBaseDrawBuf() : _dx(0), _dy(0), _rowsize(0), _data(NULL), _hidePartialGlyphs(true) { }
     virtual ~LVBaseDrawBuf() { }
 };

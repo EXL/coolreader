@@ -57,7 +57,6 @@
 
 #define PROP_FILE_PROPS_FONT_SIZE    "cr3.file.props.font.size"
 
-
 #define PROP_CACHE_VALIDATION_ENABLED  "crengine.cache.validation.enabled"
 #define PROP_MIN_FILE_SIZE_TO_CACHE  "crengine.cache.filesize.min"
 #define PROP_FORCED_MIN_FILE_SIZE_TO_CACHE  "crengine.cache.forced.filesize.min"
@@ -78,5 +77,6 @@
 #define PROP_IMG_SCALING_ZOOMIN_BLOCK_SCALE  "crengine.image.scaling.zoomin.block.scale"
 #define PROP_IMG_SCALING_ZOOMOUT_BLOCK_MODE "crengine.image.scaling.zoomout.block.mode"
 #define PROP_IMG_SCALING_ZOOMOUT_BLOCK_SCALE "crengine.image.scaling.zoomout.block.scale"
+#define PROP_IMG_DISABLE_ALPHA_CHANNEL "crengine.image.disable.alpha.channel"
 
 #endif // LVDOCVIEWPROPS_H
