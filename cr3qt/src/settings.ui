@@ -136,9 +136,9 @@
           <layout class="QVBoxLayout" name="verLayout">
            <item>
             <widget class="QCheckBox" name="cbTurnPageMouse">
-            <property name="toolTip">
-                <string>&lt;p&gt;&lt;img src=&quot;:/icons/icons/tablet.png&quot;/&gt;&lt;/p&gt;</string>
-            </property>
+             <property name="toolTip">
+              <string>&lt;p&gt;&lt;img src=&quot;:/icons/icons/tablet.png&quot;/&gt;&lt;/p&gt;</string>
+             </property>
              <property name="text">
               <string>Tablet Mode (hover mouse to hint)</string>
              </property>
@@ -735,9 +735,22 @@
            <item row="0" column="1">
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
+              <widget class="QCheckBox" name="cbInvertSelection">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Invert</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="btnSelectionColor">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -750,7 +763,7 @@
              <item>
               <widget class="QFrame" name="frmSelectionColor">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -792,7 +805,7 @@
              <item>
               <widget class="QPushButton" name="btnCommentColor">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -805,7 +818,7 @@
              <item>
               <widget class="QFrame" name="frmCommentColor">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -847,7 +860,7 @@
              <item>
               <widget class="QPushButton" name="btnCorrectionColor">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -860,7 +873,7 @@
              <item>
               <widget class="QFrame" name="frmCorrectionColor">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -899,6 +912,12 @@
            </item>
            <item row="1" column="1">
             <widget class="QComboBox" name="cbBookmarkHighlightMode">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <item>
               <property name="text">
                <string>Disabled</string>

@@ -64,6 +64,7 @@
 #define PROP_PROGRESS_SHOW_FIRST_PAGE  "crengine.progress.show.first.page"
 #define PROP_HIGHLIGHT_COMMENT_BOOKMARKS "crengine.highlight.bookmarks"
 #define PROP_HIGHLIGHT_SELECTION_COLOR "crengine.highlight.selection.color"
+#define PROP_HIGHLIGHT_SELECTION_INVERT "crengine.highlight.selection.invert"
 #define PROP_HIGHLIGHT_BOOKMARK_COLOR_COMMENT "crengine.highlight.bookmarks.color.comment"
 #define PROP_HIGHLIGHT_BOOKMARK_COLOR_CORRECTION "crengine.highlight.bookmarks.color.correction"
 // image scaling settings

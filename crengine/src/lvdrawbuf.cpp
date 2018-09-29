@@ -1583,7 +1583,28 @@ void LVColorDrawBuf::Resize( int dx, int dy )
 }
 void LVColorDrawBuf::InvertRect(int x0, int y0, int x1, int y1)
 {
-    CR_UNUSED4(x0, y0, x1, y1);
+    if (x0<_clip.left)
+        x0 = _clip.left;
+    if (y0<_clip.top)
+        y0 = _clip.top;
+    if (x1>_clip.right)
+        x1 = _clip.right;
+    if (y1>_clip.bottom)
+        y1 = _clip.bottom;
+    if (x0>=x1 || y0>=y1)
+        return;
+
+    if (_bpp == 32) {
+        for (int y = y0; y < y1; y++) {
+            lUInt32 *line = (lUInt32 *)GetScanLine(y);
+            for (int x = x0; x < x1; x++) {
+                //CRLog::error("%d", line[x]);
+                line[x] = 0xffffffff ^ line[x];
+            }
+        }
+    } else {
+        CRLog::error("InvertRect() not implemented for non 32 bpp!");
+    }
 }
 
 /// draws bitmap (1 byte per pixel) using specified palette

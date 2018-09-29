@@ -157,12 +157,14 @@ struct text_highlight_options_t {
     lUInt32 selectionColor;    /**< selection color */
     lUInt32 commentColor;      /**< comment bookmark color */
     lUInt32 correctionColor;   /**< correction bookmark color */
+    int invertSelection;
     int bookmarkHighlightMode; /**< bookmark highlight mode: 0=no highlight, 1=solid fill, 2=underline */
     text_highlight_options_t() {
         selectionColor = 0x80AAAAAA;
         commentColor = 0xC0FFFF00;
         correctionColor = 0xC0FF8000;
         bookmarkHighlightMode = highlight_mode_solid;
+        invertSelection = 0;
     }
 };
 

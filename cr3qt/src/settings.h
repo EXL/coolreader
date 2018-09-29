@@ -268,6 +268,7 @@ private slots:
     void on_cbStaPages_stateChanged(int );
     void on_cbStaPercents_stateChanged(int );
     void on_cbStaBatt_stateChanged(int );
+    void on_cbInvertSelection_stateChanged(int );
 };
 
 #endif // SETTINGSDLG_H

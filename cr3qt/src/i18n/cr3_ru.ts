@@ -2042,6 +2042,10 @@ https://github.com/buggins/coolreader
         <translation>Цвет выделения</translation>
     </message>
     <message>
+        <source>Invert</source>
+        <translation>Инвертировать</translation>
+    </message>
+    <message>
         <source>Comment bookmark color</source>
         <translation>Цвет комментариев</translation>
     </message>

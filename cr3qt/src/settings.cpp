@@ -169,6 +169,8 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     m_ui->cbEnableEmbeddedFonts->setEnabled(m_props->getBoolDef(PROP_EMBEDDED_STYLES, true));
     optionToUi( PROP_TXT_OPTION_PREFORMATTED, m_ui->cbTxtPreFormatted );
     optionToUi( PROP_FLOATING_PUNCTUATION, m_ui->cbFloatingPunctuation );
+    optionToUi( PROP_HIGHLIGHT_SELECTION_INVERT, m_ui->cbInvertSelection );
+    m_ui->btnSelectionColor->setEnabled(!m_props->getBoolDef(PROP_HIGHLIGHT_SELECTION_INVERT, true));
     optionToUiIndex( PROP_PAGE_PERCENT_PD, m_ui->cbPercentPd );
     optionToUiIndex( PROP_IMG_SCALING_ZOOMIN_INLINE_MODE, m_ui->cbImageInlineZoominMode );
     optionToUiIndex( PROP_IMG_SCALING_ZOOMIN_INLINE_SCALE, m_ui->cbImageInlineZoominScale );
@@ -1556,4 +1558,12 @@ void SettingsDlg::on_cbStaPercents_stateChanged(int s)
 void SettingsDlg::on_cbStaBatt_stateChanged(int s)
 {
     setCheck( PROP_STA_BATT, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+}
+
+void SettingsDlg::on_cbInvertSelection_stateChanged(int s)
+{
+    setCheck( PROP_HIGHLIGHT_SELECTION_INVERT, s );
+    m_ui->btnSelectionColor->setEnabled( !s );
+    updateStyleSample();
+    m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }

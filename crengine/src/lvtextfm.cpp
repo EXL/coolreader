@@ -1223,6 +1223,7 @@ void LFormattedText::setHighlightOptions(text_highlight_options_t * v)
     m_pbuffer->highlight_options.commentColor = v->commentColor;
     m_pbuffer->highlight_options.correctionColor = v->correctionColor;
     m_pbuffer->highlight_options.bookmarkHighlightMode = v->bookmarkHighlightMode;
+    m_pbuffer->highlight_options.invertSelection = v->invertSelection;
 }
 
 
@@ -1275,6 +1276,9 @@ void DrawBookmarkTextUnderline(LVDrawBuf & drawbuf, int x0, int y0, int x1, int 
 void LFormattedText::Draw( LVDrawBuf * buf, int x, int y, ldomMarkedRangeList * marks, ldomMarkedRangeList *bookmarks )
 {
     int i, j;
+    int invert_selection = m_pbuffer->highlight_options.invertSelection;
+    // TODO: if alpha
+    int border = 2;
     formatted_line_t * frmline;
     src_text_fragment_t * srcline;
     formatted_word_t * word;
@@ -1326,14 +1330,15 @@ void LFormattedText::Draw( LVDrawBuf * buf, int x, int y, ldomMarkedRangeList * 
 
             // process marks
 #ifndef CR_USE_INVERT_FOR_SELECTION_MARKS
-            if ( marks!=NULL && marks->length()>0 ) {
+            if ( marks!=NULL && marks->length()>0 && !invert_selection ) {
                 lvRect lineRect( frmline->x, frmline->y, frmline->x + frmline->width, frmline->y + frmline->height );
                 for ( int i=0; i<marks->length(); i++ ) {
                     lvRect mark;
                     ldomMarkedRange * range = marks->get(i);
                     if ( range->intersects( lineRect, mark ) ) {
                         //
-                        buf->FillRect(mark.left + x, mark.top + y, mark.right + x, mark.bottom + y, m_pbuffer->highlight_options.selectionColor);
+                        buf->FillRect(mark.left + x - border, mark.top + y - border, mark.right + x + border, mark.bottom + y + border,
+                                      m_pbuffer->highlight_options.selectionColor);
                     }
                 }
             }
@@ -1424,19 +1429,19 @@ void LFormattedText::Draw( LVDrawBuf * buf, int x, int y, ldomMarkedRangeList * 
                 }
             }
 
-#ifdef CR_USE_INVERT_FOR_SELECTION_MARKS
+//#ifdef CR_USE_INVERT_FOR_SELECTION_MARKS
             // process marks
-            if ( marks!=NULL && marks->length()>0 ) {
+            if ( marks!=NULL && marks->length()>0 && invert_selection ) {
                 lvRect lineRect( frmline->x, frmline->y, frmline->x + frmline->width, frmline->y + frmline->height );
                 for ( int i=0; i<marks->length(); i++ ) {
                     lvRect mark;
                     ldomMarkedRange * range = marks->get(i);
                     if ( range->intersects( lineRect, mark ) ) {
-						buf->InvertRect( mark.left + x, mark.top + y, mark.right + x, mark.bottom + y);
+                        buf->InvertRect( mark.left + x, mark.top + y, mark.right + x, mark.bottom + y);
                     }
                 }
             }
-#endif
+//#endif
         }
         line_y += frmline->height;
     }
