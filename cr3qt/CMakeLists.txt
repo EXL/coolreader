@@ -238,7 +238,9 @@ INSTALL( FILES ${CR3_CHANGELOG} DESTINATION share/doc/cr3 )
 INSTALL( FILES ${QM_FILES} DESTINATION share/cr3/i18n )
 INSTALL( FILES src/desktop/cr3.desktop DESTINATION share/applications )
 INSTALL( FILES src/desktop/cr3.png DESTINATION share/pixmaps )
-INSTALL( FILES src/desktop/cr3.xpm DESTINATION share/pixmaps )
+IF(NOT APPIMAGE)
+    INSTALL( FILES src/desktop/cr3.xpm DESTINATION share/pixmaps )
+ENDIF()
 
 ELSE()
 
