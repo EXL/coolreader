@@ -137,7 +137,11 @@ int main(int argc, char *argv[])
         lString16 home = Utf8ToUnicode(lString8(( getenv("HOME") ) ));
         lString16 homecr3 = home;
         LVAppendPathDelimiter(homecr3);
+#ifdef __HAIKU__
+        homecr3 << "config/settings/cr3";
+#else
         homecr3 << ".cr3";
+#endif
         LVAppendPathDelimiter(homecr3);
         //~/.cr3/
         lString16 homefonts = homecr3;
@@ -183,7 +187,7 @@ int main(int argc, char *argv[])
             QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/../Resources/"); //QDir::separator();
             QString translations = exeDir + "i18n";
 #else
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__HAIKU__)
             QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/"); //QDir::separator();
             QString translations = exeDir + "i18n";
 #elif defined(APPIMAGE)

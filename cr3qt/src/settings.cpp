@@ -105,9 +105,12 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/.cr3/");
 #elif WIN_PORTABLE
     QString homeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/cr3/");
+#elif __HAIKU__
+    QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/config/settings/cr3/");
 #else
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/cr3/");
 #endif
+
 #if MAC==1
     QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/../Resources/"); //QDir::separator();
 #elif _LINUX
@@ -116,6 +119,8 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
 #else
     QString exeDir = QString(CR3_DATA_DIR);
 #endif
+#elif __HAIKU__
+    QString exeDir = QString(CR3_DATA_DIR);
 #else
     QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/"); //QDir::separator();
 #endif
@@ -275,6 +280,9 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
 
     const char * defFontFace = "DejaVu Sans";
     static const char * goodFonts[] = {
+#ifdef __HAIKU__
+        "Noto Sans",
+#endif
         "DejaVu Sans",
         "FreeSans",
         "Liberation Sans",

@@ -88,18 +88,24 @@ MainWindow::MainWindow(QWidget *parent)
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/.cr3/");
 #elif WIN_PORTABLE
     QString homeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/cr3/");
+#elif __HAIKU__
+    QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/config/settings/cr3/");
 #else
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/cr3/");
 #endif
+
 #ifdef _LINUX
 #if defined(APPIMAGE)
     QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/../share/cr3/");
 #else
     QString exeDir = QString(CR3_DATA_DIR);
 #endif
+#elif __HAIKU__
+    QString exeDir = QString(CR3_DATA_DIR);
 #else
     QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/"); //QDir::separator();
 #endif
+#ifndef __HAIKU__
     QString cacheDir = homeDir + "cache";
     QString bookmarksDir = homeDir + "bookmarks";
     QString histFile = exeDir + "cr3hist.bmk";
@@ -108,6 +114,16 @@ MainWindow::MainWindow(QWidget *parent)
     QString iniFile = homeDir + "cr3.ini";
     QString cssFile = homeDir + "fb2.css";
     QString cssFile2 = exeDir + "fb2.css";
+#else
+    QString cacheDir = homeDir + "cache";
+    QString bookmarksDir = homeDir + "bookmarks";
+    QString histFile = homeDir + "cr3hist.bmk";
+    QString histFile2 = histFile;
+    QString iniFile = homeDir + "cr3.ini";
+    QString iniFile2 = iniFile;
+    QString cssFile = exeDir + "fb2.css";
+    QString cssFile2 = homeDir + "fb2.css";
+#endif
     //QString translations = exeDir + "i18n";
     //CRLog::info("Translations directory: %s", LCSTR(qt2cr(translations)) );
     QString hyphDir = exeDir + "hyph" + QDir::separator();
