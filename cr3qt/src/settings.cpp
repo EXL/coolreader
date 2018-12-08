@@ -103,6 +103,8 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
 
 #ifdef _LINUX
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/.cr3/");
+#elif WIN_PORTABLE
+    QString homeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/cr3/");
 #else
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/cr3/");
 #endif
@@ -995,7 +997,11 @@ void SettingsDlg::on_btnSavePreset_clicked()
 //    m_ui->tablePresets->setItem(idx, 3, new QTableWidgetItem(font));
 //    m_ui->tablePresets->setItem(idx, 4, new QTableWidgetItem(fontSize));
 
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
     QSettings settings;
+#endif
     settings.beginGroup(QString("Preset_%1").arg(idx));
     settings.setValue("Title", title);
     settings.setValue("Font", font);
@@ -1019,7 +1025,11 @@ void SettingsDlg::on_btnClearPreset_clicked()
 {
     int idx = m_ui->cbPresets->currentIndex();
 
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
     QSettings settings;
+#endif
     settings.beginGroup(QString("Preset_%1").arg(idx));
     settings.remove("");
     settings.endGroup();
@@ -1043,7 +1053,11 @@ void SettingsDlg::on_btnLoadPreset_clicked()
     QByteArray geometryW;
     int fs = 0, ms = 0;
 
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
     QSettings settings;
+#endif
     settings.beginGroup(QString("Preset_%1").arg(idx));
     font = settings.value("Font").toString();
     fontSize = settings.value("FontSize").toString();
@@ -1134,7 +1148,11 @@ int SettingsDlg::getComboBoxElemIndexByText(const QString &text, const QComboBox
 void SettingsDlg::updateTable()
 {
     m_ui->tablePresets->clearContents();
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
     QSettings settings;
+#endif
 
     tableInit = true;
 
@@ -1522,7 +1540,11 @@ void SettingsDlg::on_tablePresets_itemChanged(QTableWidgetItem *item)
     if (!tableInit) {
         int idx = item->row();
 
+#ifdef WIN_PORTABLE
+        QSettings settings("sett.ini", QSettings::IniFormat);
+#else
         QSettings settings;
+#endif
         settings.beginGroup(QString("Preset_%1").arg(idx));
         settings.setValue("Title", item->text());
         settings.endGroup();

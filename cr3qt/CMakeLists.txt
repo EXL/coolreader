@@ -66,6 +66,7 @@ ELSE()
     message("DATA DIR: null (MS Windows/Other)")
     ADD_DEFINITIONS(-DCR3_DATA_DIR=""
           -DUSE_FONTCONFIG=0
+          -DWIN_PORTABLE=1
     )
 ENDIF(MAC)
 

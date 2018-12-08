@@ -73,7 +73,11 @@ void SearchDialog::saveHistory()
         historyValues << ui->edPattern->itemText(i);
     }
 
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
     QSettings settings;
+#endif
     settings.beginGroup("Search");
     int idx = 0;
     foreach (const QString &value, historyValues) {
@@ -88,7 +92,11 @@ void SearchDialog::readHistory()
 {
     QStringList historyValues;
 
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
     QSettings settings;
+#endif
     settings.beginGroup("Search");
     // The order is important!
     QStringList keys = settings.childKeys();
@@ -113,7 +121,11 @@ void SearchDialog::clearHistory()
 {
     ui->edPattern->clear();
 
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
     QSettings settings;
+#endif
     settings.beginGroup("Search");
     settings.remove("");
     settings.endGroup();

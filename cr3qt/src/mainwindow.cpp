@@ -86,6 +86,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 #ifdef _LINUX
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/.cr3/");
+#elif WIN_PORTABLE
+    QString homeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/cr3/");
 #else
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/cr3/");
 #endif
