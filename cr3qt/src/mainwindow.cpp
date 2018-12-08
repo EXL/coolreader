@@ -463,6 +463,9 @@ void MainWindow::onPropsChange( PropsRef props )
         if ( name == PROP_STA_BATT ) {
             ui->view->setStaBatt( v );
         }
+        if ( name == PROP_LAST_CHANGE_IS_FONT ) {
+            ui->view->getDocView()->SetFontEvent( v );
+        }
         if ( name == PROP_PAGE_PERCENT_PD ) {
             ui->view->setPercendPd( v );
         }
@@ -756,33 +759,41 @@ int MainWindow::normalizeColorHack(int abNormalColor) const
     }
 }
 
+void MainWindow::setFontEvent(bool event)
+{
+    PropsRef pr = ui->view->getOptions();
+    pr->setInt(PROP_LAST_CHANGE_IS_FONT, event);
+    ui->view->getDocView()->SetFontEvent(event);
+    ui->view->setOptions(pr);
+}
+
 void MainWindow::on_actionIncrease_Brightness_triggered()
 {
-    ui->view->getDocView()->SetFontEvent(false);
+    setFontEvent(false);
     changeBrightness(true, false);
 }
 
 void MainWindow::on_actionDecrease_Brightness_triggered()
 {
-    ui->view->getDocView()->SetFontEvent(false);
+    setFontEvent(false);
     changeBrightness(false, false);
 }
 
 void MainWindow::on_actionIncrease_Font_Brightness_triggered()
 {
-    ui->view->getDocView()->SetFontEvent(true);
+    setFontEvent(true);
     changeBrightness(false, true);
 }
 
 void MainWindow::on_actionDecrease_Font_Brightness_triggered()
 {
-    ui->view->getDocView()->SetFontEvent(true);
+    setFontEvent(true);
     changeBrightness(true, true);
 }
 
 void MainWindow::on_actionReset_Brightness_triggered()
 {
-    ui->view->getDocView()->SetFontEvent(false);
+    setFontEvent(false);
     PropsRef pr = ui->view->getOptions();
     QColor txtColor(Qt::black);
     QColor bgColor(Qt::white);
@@ -793,7 +804,7 @@ void MainWindow::on_actionReset_Brightness_triggered()
 
 void MainWindow::on_actionInvert_Brightness_triggered()
 {
-    ui->view->getDocView()->SetFontEvent(false);
+    setFontEvent(false);
     PropsRef pr = ui->view->getOptions();
     QColor bg = getColor(pr, PROP_BACKGROUND_COLOR, 0);
     if (bg.blue() < 128) {

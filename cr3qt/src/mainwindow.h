@@ -46,6 +46,7 @@ private:
     void changeColor(QColor &cl, bool increase);
     void changeBrightness(bool increase, bool font);
     int normalizeColorHack(int abNormalColor) const;
+    void setFontEvent(bool event);
 protected:
     virtual void showEvent ( QShowEvent * event );
     virtual void focusInEvent ( QFocusEvent * event );

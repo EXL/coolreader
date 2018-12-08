@@ -357,6 +357,7 @@ void CR3View::updateDefProps()
     _data->_props->setStringDef( PROP_STA_PERC, "1" );
     _data->_props->setStringDef( PROP_STA_BATT, "1" );
     _data->_props->setStringDef( PROP_APP_START_ACTION, "0" );
+    _data->_props->setIntDef( PROP_LAST_CHANGE_IS_FONT, 0 );
 
 
     QStringList styles = QStyleFactory::keys();
