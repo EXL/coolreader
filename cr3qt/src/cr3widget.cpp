@@ -464,8 +464,10 @@ bool CR3View::loadDocument( QString fileName )
 {
     CRLog::error("=====> %s", fileName.toStdString().c_str());
 #ifdef WIN_PORTABLE
-    QString appPath = QDir::toNativeSeparators(qApp->applicationDirPath());
-    QString booksPath = QDir::toNativeSeparators(appPath + "books/");
+    QString appPath = qApp->applicationDirPath() + "/";
+    CRLog::error("2 =====> %s", appPath.toStdString().c_str());
+    QString booksPath = appPath + "books/";
+    CRLog::error("3 =====> %s", booksPath.toStdString().c_str());
     if (fileName.contains(booksPath)) {
         fileName.remove(appPath);
     }
