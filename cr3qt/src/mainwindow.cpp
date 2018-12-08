@@ -710,19 +710,19 @@ void MainWindow::setColor( PropsRef props, const char * optionName, QColor cl )
 void MainWindow::changeColor(QColor &cl, bool increase)
 {
     int inc = 5;
-    int red = normalizeColorHack(cl.red());
-    int green = normalizeColorHack(cl.green());
-    int blue = normalizeColorHack(cl.blue());
+    int red = cl.red();
+    int green = cl.green();
+    int blue = cl.blue();
     if (increase) {
         red += inc; green += inc; blue += inc;
-        if (red >= 255) red = 254;
-        if (green >= 255) green = 254;
-        if (blue >= 255) blue = 254;
+        if (red > 255) red = 255;
+        if (green > 255) green = 255;
+        if (blue > 255) blue = 255;
     } else {
         red -= inc; green -= inc; blue -= inc;
-        if (red <= 0) red = 1;
-        if (green <= 0) green = 1;
-        if (blue <= 0) blue = 1;
+        if (red < 0) red = 0;
+        if (green < 0) green = 0;
+        if (blue < 0) blue = 0;
     }
     cl.setRed(red);
     cl.setGreen(green);
@@ -735,14 +735,6 @@ void MainWindow::changeBrightness(bool increase, bool font)
     QColor txtColor = getColor( pr, PROP_FONT_COLOR, 0x000000 );
     QColor bgColor = getColor( pr, PROP_BACKGROUND_COLOR, 0xFFFFFF );
     if (font) {
-        bool whiteT = (bgColor.red() <= 1 && bgColor.green() <= 1 && bgColor.blue() <= 1) &&
-                (txtColor.red() >= 254 && txtColor.green() >= 254 && txtColor.blue() >= 254);
-        bool blackT = (bgColor.red() >= 254 && bgColor.green() >= 254 && bgColor.blue() >= 254) &&
-                (txtColor.red() <= 1 && txtColor.green() <= 1 && txtColor.blue() <= 1);
-        // CRLog::error("B: %d, W: %d, Inc: %d", blackT, whiteT, increase);
-        if ((blackT && increase) || (whiteT && !increase)) {
-            return;
-        }
         changeColor(txtColor, !increase);
         setColor(pr, PROP_FONT_COLOR, txtColor);
     } else {
@@ -766,26 +758,31 @@ int MainWindow::normalizeColorHack(int abNormalColor) const
 
 void MainWindow::on_actionIncrease_Brightness_triggered()
 {
+    ui->view->getDocView()->SetFontEvent(false);
     changeBrightness(true, false);
 }
 
 void MainWindow::on_actionDecrease_Brightness_triggered()
 {
+    ui->view->getDocView()->SetFontEvent(false);
     changeBrightness(false, false);
 }
 
 void MainWindow::on_actionIncrease_Font_Brightness_triggered()
 {
+    ui->view->getDocView()->SetFontEvent(true);
     changeBrightness(false, true);
 }
 
 void MainWindow::on_actionDecrease_Font_Brightness_triggered()
 {
+    ui->view->getDocView()->SetFontEvent(true);
     changeBrightness(true, true);
 }
 
 void MainWindow::on_actionReset_Brightness_triggered()
 {
+    ui->view->getDocView()->SetFontEvent(false);
     PropsRef pr = ui->view->getOptions();
     QColor txtColor(Qt::black);
     QColor bgColor(Qt::white);
@@ -796,6 +793,7 @@ void MainWindow::on_actionReset_Brightness_triggered()
 
 void MainWindow::on_actionInvert_Brightness_triggered()
 {
+    ui->view->getDocView()->SetFontEvent(false);
     PropsRef pr = ui->view->getOptions();
     QColor bg = getColor(pr, PROP_BACKGROUND_COLOR, 0);
     if (bg.blue() < 128) {

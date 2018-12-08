@@ -1258,6 +1258,15 @@ int  LVColorDrawBuf::GetBitsPerPixel()
     return _bpp;
 }
 
+static inline lUInt32 GetPaletteColor(lUInt32 fontColor, lUInt32 bkgColor, bool fontEvent)
+{
+    return (!fontEvent) ?
+                0xFFFFFFFF :
+                (bkgColor < 0x007F7F7F) ?
+                    ((0x00 + ((fontColor >> 16) & 0xFF)) << 24) | 0x000000 /*(fontColor & 0xFFFFFF)*/:
+                    ((0xFF - ((fontColor >> 16) & 0xFF)) << 24) | 0xFFFFFF /*(fontColor & 0xFFFFFF)*/;
+}
+
 void LVColorDrawBuf::Draw( LVImageSourceRef img, int x, int y, int width, int height, bool dither )
 {
     // Disable Images Alpha Channel Hack
@@ -1270,12 +1279,13 @@ void LVColorDrawBuf::Draw( LVImageSourceRef img, int x, int y, int width, int he
     img->Decode( &drawcb );
 
     // hex(((0x112233) >> 16) << 24)
-    // CRLog::error("%#010x", GetTextColor());
-    lUInt32 color = GetTextColor();
-    bool bounds = ((color >> 16) == 0xFF) || ((color >> 16) == 0x00);
-    if (!bounds && GetImageColorFont()) {
-        // FillRect(x, y, x+width, y+height, color | ~((color >> 16) << 24));
-        FillRect(x, y, x+width, y+height, color | 0x3F000000);
+    if (GetImageColorFont()) {
+        /*
+        CRLog::error("===> %#010x | %#010x | %#010x | %d <===", GetTextColor(),
+                     GetBackgroundColor(),
+                     GetPaletteColor(GetTextColor(), GetBackgroundColor(), IsFontChangeEvent()), IsFontChangeEvent());
+        */
+        FillRect(x, y, x+width, y+height, GetPaletteColor(GetTextColor(), GetBackgroundColor(), IsFontChangeEvent()));
     }
 }
 

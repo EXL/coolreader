@@ -262,6 +262,7 @@ private:
     int m_def_interline_space;
     LVArray<int> m_font_sizes;
     bool m_font_sizes_cyclic;
+    bool m_fontEvent;
     bool m_is_rendered;
 
     LVDocViewMode m_view_mode; // DVM_SCROLL, DVM_PAGES
@@ -532,6 +533,7 @@ public:
     /// update selection -- command handler
     int onSelectionCommand( int cmd, int param );
 
+    void SetFontEvent(bool fontEvent) { m_fontEvent = fontEvent; }
 
     /// navigation history
     ldomNavigationHistory & getNavigationHistory() { return _navigationHistory; }

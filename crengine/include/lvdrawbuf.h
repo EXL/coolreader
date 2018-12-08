@@ -77,6 +77,9 @@ public:
         rc.bottom = GetHeight();
     }
 
+    virtual void SetFontChangeEvent(bool event) = 0;
+    virtual bool IsFontChangeEvent() = 0;
+
     /// rotates buffer contents by specified angle
     virtual void Rotate( cr_rotate_angle_t angle ) = 0;
     /// returns white pixel value
@@ -232,7 +235,10 @@ protected:
     bool _hidePartialGlyphs;
     bool _disImgAlphaChannel;
     bool _ImgColorFont;
+    bool _isBrightnesFontChangeEventNotBackground;
 public:
+    virtual void SetFontChangeEvent(bool event) { _isBrightnesFontChangeEventNotBackground = event; }
+    virtual bool IsFontChangeEvent() { return _isBrightnesFontChangeEventNotBackground; }
     virtual void setHidePartialGlyphs( bool hide ) { _hidePartialGlyphs = hide; }
     /// returns current background color
     virtual lUInt32 GetBackgroundColor() { return _backgroundColor; }
@@ -272,7 +278,8 @@ public:
     virtual void SetImageColorFont(bool enable) { _ImgColorFont = enable; }
     virtual bool GetImageColorFont() const { return _ImgColorFont; }
 
-    LVBaseDrawBuf() : _dx(0), _dy(0), _rowsize(0), _data(NULL), _hidePartialGlyphs(true) { }
+    LVBaseDrawBuf() : _dx(0), _dy(0), _rowsize(0), _data(NULL),
+        _hidePartialGlyphs(true), _isBrightnesFontChangeEventNotBackground(false) { }
     virtual ~LVBaseDrawBuf() { }
 };
 
