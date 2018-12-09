@@ -462,17 +462,13 @@ bool CR3View::loadLastDocument()
 
 bool CR3View::loadDocument( QString fileName )
 {
-    CRLog::error("=====> %s", fileName.toStdString().c_str());
 #ifdef WIN_PORTABLE
     QString appPath = qApp->applicationDirPath() + "/";
-    CRLog::error("2 =====> %s", appPath.toStdString().c_str());
     QString booksPath = appPath + "books/";
-    CRLog::error("3 =====> %s", booksPath.toStdString().c_str());
     if (fileName.contains(booksPath)) {
         fileName.remove(appPath);
     }
 #endif
-    CRLog::error("=====> %s", fileName.toStdString().c_str());
     _docview->savePosition();
     clearSelection();
     bool res = _docview->LoadDocument( qt2cr(fileName).c_str() );
