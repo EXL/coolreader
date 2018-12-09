@@ -1,8 +1,22 @@
 if( ${GUI} STREQUAL QT )
   FIND_PACKAGE( Qt4 REQUIRED )
   INCLUDE(${QT_USE_FILE})
+  string(CONCAT QT_TRANSLATIONS_RU_FILE ${QT_TRANSLATIONS_DIR} "/qt_ru.qm")
+  file( TO_CMAKE_PATH "${QT_TRANSLATIONS_RU_FILE}" QT_TRANSLATIONS_RU_FILE)
+  message("Found Russian Location for Qt 4: " ${QT_TRANSLATIONS_RU_FILE})
 else()
   FIND_PACKAGE( Qt5 REQUIRED COMPONENTS Core Widgets LinguistTools)
+  # See: https://github.com/pbek/QOwnNotes/blob/14a685708e16d4fcbae558b541091eb318fa8af2/src/CMakeLists.txt#L316-L327
+  # If this directory is missing, we are in a Qt5 environment.
+  # Extract the qmake executable location
+  get_target_property(QT5_QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
+  # Ask Qt5 where to put the translations
+  execute_process( COMMAND ${QT5_QMAKE_EXECUTABLE} -query QT_INSTALL_TRANSLATIONS
+    OUTPUT_VARIABLE qt_translations_dir OUTPUT_STRIP_TRAILING_WHITESPACE )
+  # make sure we have / and not \ as qmake gives on windows
+  string(CONCAT QT_TRANSLATIONS_RU_FILE ${qt_translations_dir} "/qtbase_ru.qm")
+  file( TO_CMAKE_PATH "${QT_TRANSLATIONS_RU_FILE}" QT_TRANSLATIONS_RU_FILE)
+  message("Found Russian Location for Qt 5: " ${QT_TRANSLATIONS_RU_FILE})
 endif()
 
 SET(CR3_UIS
@@ -217,6 +231,7 @@ INSTALL( DIRECTORY data/textures DESTINATION Contents/Resources )
 INSTALL( DIRECTORY data/backgrounds DESTINATION Contents/Resources )
 #INSTALL( FILES ${CR3_MAN_PAGES} DESTINATION share/doc/cr3 )
 INSTALL( FILES ${QM_FILES} DESTINATION Contents/Resources/i18n )
+INSTALL( FILES ${QT_TRANSLATIONS_RU_FILE} DESTINATION Contents/Resources/i18n )
 #INSTALL( DIRECTORY ${QT_INCLUDE_DIR}/../src/gui/mac/qt_menu.nib DESTINATION Contents/Resources )
 INSTALL( FILES src/desktop/Info.plist DESTINATION Contents )
 INSTALL( FILES src/desktop/PkgInfo DESTINATION Contents )
@@ -243,6 +258,7 @@ INSTALL( DIRECTORY data/backgrounds DESTINATION share/cr3 )
 #INSTALL( FILES ${CR3_MAN_PAGES} DESTINATION share/doc/cr3 )
 INSTALL( FILES ${CR3_CHANGELOG} DESTINATION share/doc/cr3 )
 INSTALL( FILES ${QM_FILES} DESTINATION share/cr3/i18n )
+INSTALL( FILES ${QT_TRANSLATIONS_RU_FILE} DESTINATION share/cr3/i18n )
 INSTALL( FILES src/desktop/cr3.desktop DESTINATION share/applications )
 INSTALL( FILES src/desktop/cr3.png DESTINATION share/pixmaps )
 IF(NOT APPIMAGE)
@@ -262,6 +278,7 @@ INSTALL( DIRECTORY data/textures DESTINATION data )
 INSTALL( DIRECTORY data/backgrounds DESTINATION data )
 INSTALL( FILES ${CR3_CHANGELOG} DESTINATION data )
 INSTALL( FILES ${QM_FILES} DESTINATION i18n )
+INSTALL( FILES ${QT_TRANSLATIONS_RU_FILE} DESTINATION i18n )
 
 ELSE()
 
@@ -274,6 +291,7 @@ INSTALL( DIRECTORY data/hyph DESTINATION .
    FILES_MATCHING PATTERN "*.pattern" )
 #INSTALL( DIRECTORY data/skins DESTINATION . )
 INSTALL( FILES ${QM_FILES} DESTINATION i18n )
+INSTALL( FILES ${QT_TRANSLATIONS_RU_FILE} DESTINATION i18n )
 INSTALL( DIRECTORY data/textures DESTINATION . )
 INSTALL( DIRECTORY data/backgrounds DESTINATION . )
 
