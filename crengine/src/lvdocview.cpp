@@ -89,11 +89,11 @@ const char
 					"body[name=\"notes\"]  section[id] empty-line { display: inline }\n"
 					"code, pre { display: block; white-space: pre; font-family: \"Courier New\", monospace }\n";
 #ifndef __HAIKU__
-static const char * DEFAULT_FONT_NAME = "Arial, DejaVu Sans"; //Times New Roman";
-static const char * DEFAULT_STATUS_FONT_NAME = "Arial, DejaVu Sans"; //Times New Roman";
+static const char * DEFAULT_FONT_NAME = "Arial, DejaVu Serif"; //Times New Roman";
+static const char * DEFAULT_STATUS_FONT_NAME = "Arial Narrow, Arial, DejaVu Serif"; //Times New Roman";
 #else
-static const char * DEFAULT_FONT_NAME = "Arial, Noto Sans, DejaVu Sans"; //Times New Roman";
-static const char * DEFAULT_STATUS_FONT_NAME = "Arial, Noto Sans, DejaVu Sans"; //Times New Roman";
+static const char * DEFAULT_FONT_NAME = "Arial, Noto Sans, DejaVu Serif"; //Times New Roman";
+static const char * DEFAULT_STATUS_FONT_NAME = "Arial Narrow, Arial, Noto Sans, DejaVu Serif"; //Times New Roman";
 #endif
 static css_font_family_t DEFAULT_FONT_FAMILY = css_ff_sans_serif;
 //    css_ff_serif,
@@ -5730,10 +5730,10 @@ void LVDocView::propsUpdateDefaults(CRPropRef props) {
 
 	lString8 defFontFace;
 #ifndef __HAIKU__
-	static const char * goodFonts[] = { "DejaVu Sans", "FreeSans",
+	static const char * goodFonts[] = { "DejaVu Serif", "FreeSans",
 			"Liberation Sans", "Arial", "Verdana", NULL };
 #else
-	static const char * goodFonts[] = { "Noto Sans", "DejaVu Sans", "FreeSans",
+	static const char * goodFonts[] = { "Noto Sans", "DejaVu Serif", "FreeSans",
 			"Liberation Sans", "Arial", "Verdana", NULL };
 #endif
 	for (int i = 0; goodFonts[i]; i++) {
