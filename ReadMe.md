@@ -8,7 +8,7 @@ This is the [EXL](https://github.com/EXL)'s fork of the [Cool Reader](https://gi
 
 ## Download
 
-You can download binary builds for various operating systems from the [https://github.com/EXLMOTODEV/coolreader/releases](releases) section.
+You can download binary builds for various operating systems from the [releases](https://github.com/EXLMOTODEV/coolreader/releases) section.
 
 ## Build instructions
 
