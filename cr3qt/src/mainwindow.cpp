@@ -84,24 +84,24 @@ MainWindow::MainWindow(QWidget *parent)
     addAction(ui->actionInvert_Brightness);
     addAction(ui->actionReset_Brightness);
 
-#ifdef _LINUX
-    QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/.cr3/");
+#ifdef __HAIKU__
+    QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/config/settings/cr3/");
 #elif WIN_PORTABLE
     QString homeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/cr3/");
-#elif __HAIKU__
-    QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/config/settings/cr3/");
+#elif _LINUX
+    QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/.cr3/");
 #else
     QString homeDir = QDir::toNativeSeparators(QDir::homePath() + "/cr3/");
 #endif
 
-#ifdef _LINUX
+#ifdef __HAIKU__
+    QString exeDir = QString(CR3_DATA_DIR);
+#elif _LINUX
 #if defined(APPIMAGE)
     QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/../share/cr3/");
 #else
     QString exeDir = QString(CR3_DATA_DIR);
 #endif
-#elif __HAIKU__
-    QString exeDir = QString(CR3_DATA_DIR);
 #else
     QString exeDir = QDir::toNativeSeparators(qApp->applicationDirPath() + "/"); //QDir::separator();
 #endif
