@@ -78,6 +78,5 @@
 #define PROP_IMG_SCALING_ZOOMOUT_BLOCK_MODE "crengine.image.scaling.zoomout.block.mode"
 #define PROP_IMG_SCALING_ZOOMOUT_BLOCK_SCALE "crengine.image.scaling.zoomout.block.scale"
 #define PROP_IMG_DISABLE_ALPHA_CHANNEL "crengine.image.disable.alpha.channel"
-#define PROP_IMG_COLOR_FONT "crengine.image.color.font"
 
 #endif // LVDOCVIEWPROPS_H

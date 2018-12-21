@@ -77,9 +77,6 @@ public:
         rc.bottom = GetHeight();
     }
 
-    virtual void SetFontChangeEvent(bool event) = 0;
-    virtual bool IsFontChangeEvent() = 0;
-
     /// rotates buffer contents by specified angle
     virtual void Rotate( cr_rotate_angle_t angle ) = 0;
     /// returns white pixel value
@@ -213,9 +210,6 @@ public:
     virtual void SetDisAlphaChannel(bool disable) = 0;
     virtual bool GetDisAlphaChannel() const = 0;
 
-    virtual void SetImageColorFont(bool enable) = 0;
-    virtual bool GetImageColorFont() const = 0;
-
     /// virtual destructor
     virtual ~LVDrawBuf() { }
     virtual GLDrawBuf * asGLDrawBuf() { return NULL; }
@@ -234,11 +228,7 @@ protected:
     lUInt32 _textColor;
     bool _hidePartialGlyphs;
     bool _disImgAlphaChannel;
-    bool _ImgColorFont;
-    bool _isBrightnesFontChangeEventNotBackground;
 public:
-    virtual void SetFontChangeEvent(bool event) { _isBrightnesFontChangeEventNotBackground = event; }
-    virtual bool IsFontChangeEvent() { return _isBrightnesFontChangeEventNotBackground; }
     virtual void setHidePartialGlyphs( bool hide ) { _hidePartialGlyphs = hide; }
     /// returns current background color
     virtual lUInt32 GetBackgroundColor() { return _backgroundColor; }
@@ -275,11 +265,7 @@ public:
     void SetDisAlphaChannel(bool disable) { _disImgAlphaChannel = disable; }
     bool GetDisAlphaChannel() const { return _disImgAlphaChannel; }
 
-    virtual void SetImageColorFont(bool enable) { _ImgColorFont = enable; }
-    virtual bool GetImageColorFont() const { return _ImgColorFont; }
-
-    LVBaseDrawBuf() : _dx(0), _dy(0), _rowsize(0), _data(NULL),
-        _hidePartialGlyphs(true), _isBrightnesFontChangeEventNotBackground(false) { }
+    LVBaseDrawBuf() : _dx(0), _dy(0), _rowsize(0), _data(NULL), _hidePartialGlyphs(true) { }
     virtual ~LVBaseDrawBuf() { }
 };
 

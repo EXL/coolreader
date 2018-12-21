@@ -974,13 +974,6 @@
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QCheckBox" name="cbImageColorFont">
-             <property name="text">
-              <string>Use font color</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
          <item row="1" column="0">

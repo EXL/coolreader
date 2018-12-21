@@ -43,7 +43,6 @@ namespace Ui {
 #define PROP_STA_TITL                "statusbar.option.titl"
 #define PROP_STA_CHAP                "statusbar.option.chap"
 #define PROP_APP_START_ACTION        "cr3.app.start.action"
-#define PROP_LAST_CHANGE_IS_FONT     "font.event"
 
 #define DECL_DEF_CR_FONT_SIZES static int cr_font_sizes[] = { \
   8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, \
@@ -273,7 +272,6 @@ private slots:
     void on_cbStaBatt_stateChanged(int );
     void on_cbInvertSelection_stateChanged(int );
     void on_cbImageDisableAlpha_stateChanged(int );
-    void on_cbImageColorFont_stateChanged(int );
     void on_cbDisableCache_stateChanged(int );
 };
 

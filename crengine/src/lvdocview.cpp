@@ -146,7 +146,6 @@ LVDocView::LVDocView(int bitsPerPixel) :
 			m_def_interline_space(100),
 			m_font_sizes(def_font_sizes, sizeof(def_font_sizes) / sizeof(int)),
 			m_font_sizes_cyclic(false),
-			m_fontEvent(false),
 			m_is_rendered(false),
 			m_view_mode(1 ? DVM_PAGES : DVM_SCROLL) // choose 0/1
 			/*
@@ -2288,9 +2287,7 @@ void LVDocView::Draw(LVDrawBuf & drawbuf, int position, int page, bool rotate, b
 		drawbuf.Resize(m_dx, m_dy);
 	drawbuf.SetBackgroundColor(m_backgroundColor);
 	drawbuf.SetTextColor(m_textColor);
-	drawbuf.SetFontChangeEvent(m_fontEvent);
 	drawbuf.SetDisAlphaChannel(m_disAlphaChannel);
-	drawbuf.SetImageColorFont(m_imgColorFont);
 	//CRLog::trace("Draw() : calling clear()", m_dx, m_dy);
 
 	if (!m_is_rendered)
@@ -5848,7 +5845,6 @@ void LVDocView::propsUpdateDefaults(CRPropRef props) {
     props->setIntDef(PROP_IMG_SCALING_ZOOMIN_BLOCK_MODE, defImgScaling.mode);
     props->setIntDef(PROP_IMG_SCALING_ZOOMIN_INLINE_MODE, defImgScaling.mode);
     props->setIntDef(PROP_IMG_DISABLE_ALPHA_CHANNEL, 0);
-    props->setIntDef(PROP_IMG_COLOR_FONT, 0);
 
     int p = props->getIntDef(PROP_FORMAT_MIN_SPACE_CONDENSING_PERCENT, DEF_MIN_SPACE_CONDENSING_PERCENT);
     if (p<25)
@@ -6115,16 +6111,10 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
         } else if (name == PROP_PAGE_VIEW_MODE) {
             bool value = props->getBoolDef(PROP_CACHE_VALIDATION_ENABLED, true);
             enableCacheFileContentsValidation(value);
-        } else if (name == PROP_IMG_DISABLE_ALPHA_CHANNEL || name == PROP_IMG_COLOR_FONT) {
-            if (name == PROP_IMG_DISABLE_ALPHA_CHANNEL) {
-                int dac = props->getIntDef(PROP_IMG_DISABLE_ALPHA_CHANNEL, 0);
-                setDisAlphaChannel(dac);
-            }
-            if (name == PROP_IMG_COLOR_FONT) {
-                int cf = props->getIntDef(PROP_IMG_COLOR_FONT, 0);
-                setImgColorFont(cf);
-            }
-            REQUEST_RENDER("propsApply  PROP_IMG_DISABLE_ALPHA_CHANNEL || PROP_IMG_COLOR_FONT")
+        } else if (name == PROP_IMG_DISABLE_ALPHA_CHANNEL) {
+            int dac = props->getIntDef(PROP_IMG_DISABLE_ALPHA_CHANNEL, 0);
+            setDisAlphaChannel(dac);
+            REQUEST_RENDER("propsApply  PROP_IMG_DISABLE_ALPHA_CHANNEL")
         } else {
 
             // unknown property, adding to list of unknown properties
