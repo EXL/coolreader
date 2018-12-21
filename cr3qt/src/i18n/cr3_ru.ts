@@ -738,6 +738,10 @@ https://github.com/buggins/coolreader
         <translation>Экспортировать в WOL формат</translation>
     </message>
     <message>
+        <source>Brightness</source>
+        <translation>Яркость</translation>
+    </message>
+    <message>
         <source>All supported formats</source>
         <translation>Все форматы</translation>
     </message>
@@ -1153,6 +1157,10 @@ https://github.com/buggins/coolreader
         <translation>Предыдущая страница</translation>
     </message>
     <message>
+        <source>Brightness</source>
+        <translation>Яркость</translation>
+    </message>
+    <message>
         <source>Move window to 0,0</source>
         <translation>Переместить окно в 0,0</translation>
     </message>
@@ -1171,6 +1179,14 @@ https://github.com/buggins/coolreader
     <message>
         <source>Decrease Font Brightness</source>
         <translation>Уменьшить яркость шрифта</translation>
+    </message>
+    <message>
+        <source>Increase Image Brightness</source>
+        <translation>Увеличить яркость изображений</translation>
+    </message>
+    <message>
+        <source>Decrease Image Brightness</source>
+        <translation>Уменьшить яркость изображений</translation>
     </message>
     <message>
         <source>Invert Brightness</source>

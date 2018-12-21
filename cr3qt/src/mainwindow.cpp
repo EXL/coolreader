@@ -557,7 +557,8 @@ void MainWindow::fontSizeAdapter(bool inc)
 
 void MainWindow::contextMenu( QPoint pos )
 {
-    MainContextMenu *menu = new MainContextMenu(this);
+    ContextMenu *menu = new ContextMenu(this, this, "");
+    ContextMenu *brightnessMenu = new ContextMenu(menu, this, tr("Brightness"));
     menu->addAction(ui->actionNextPage);
     menu->addAction(ui->actionPrevPage);
     menu->addSeparator();
@@ -570,12 +571,15 @@ void MainWindow::contextMenu( QPoint pos )
         menu->addAction(ui->actionCopy);
     menu->addAction(ui->actionAddBookmark);
     menu->addSeparator();
-    menu->addAction(ui->actionIncrease_Brightness);
-    menu->addAction(ui->actionDecrease_Brightness);
-    menu->addAction(ui->actionIncrease_Font_Brightness);
-    menu->addAction(ui->actionDecrease_Font_Brightness);
-    menu->addAction(ui->actionInvert_Brightness);
-    menu->addAction(ui->actionReset_Brightness);
+    brightnessMenu->addAction(ui->actionIncrease_Brightness);
+    brightnessMenu->addAction(ui->actionDecrease_Brightness);
+    brightnessMenu->addAction(ui->actionIncrease_Font_Brightness);
+    brightnessMenu->addAction(ui->actionDecrease_Font_Brightness);
+    brightnessMenu->addAction(ui->actionIncrease_Image_Brightness);
+    brightnessMenu->addAction(ui->actionDecrease_Image_Brightness);
+    brightnessMenu->addAction(ui->actionInvert_Brightness);
+    brightnessMenu->addAction(ui->actionReset_Brightness);
+    menu->addMenu(brightnessMenu);
     menu->addSeparator();
     menu->addAction(ui->actionClose);
     menu->exec(ui->view->mapToGlobal(pos));
@@ -781,6 +785,16 @@ void MainWindow::on_actionIncrease_Font_Brightness_triggered()
 void MainWindow::on_actionDecrease_Font_Brightness_triggered()
 {
     changeBrightness(true, true);
+}
+
+void MainWindow::on_actionIncrease_Image_Brightness_triggered()
+{
+
+}
+
+void MainWindow::on_actionDecrease_Image_Brightness_triggered()
+{
+
 }
 
 void MainWindow::on_actionReset_Brightness_triggered()

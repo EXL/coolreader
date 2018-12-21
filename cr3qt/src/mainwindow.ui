@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -71,7 +71,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>800</width>
      <height>25</height>
     </rect>
    </property>
@@ -92,6 +92,19 @@
     <property name="title">
      <string>View</string>
     </property>
+    <widget class="QMenu" name="menuBrightness">
+     <property name="title">
+      <string>Brightness</string>
+     </property>
+     <addaction name="actionIncrease_Brightness"/>
+     <addaction name="actionDecrease_Brightness"/>
+     <addaction name="actionIncrease_Font_Brightness"/>
+     <addaction name="actionDecrease_Font_Brightness"/>
+     <addaction name="actionIncrease_Image_Brightness"/>
+     <addaction name="actionDecrease_Image_Brightness"/>
+     <addaction name="actionInvert_Brightness"/>
+     <addaction name="actionReset_Brightness"/>
+    </widget>
     <addaction name="actionFindText"/>
     <addaction name="actionToggle_Pages_Scroll"/>
     <addaction name="actionMinimize"/>
@@ -101,12 +114,7 @@
     <addaction name="actionRotate"/>
     <addaction name="actionMove_Window_to_0_0"/>
     <addaction name="separator"/>
-    <addaction name="actionIncrease_Brightness"/>
-    <addaction name="actionDecrease_Brightness"/>
-    <addaction name="actionIncrease_Font_Brightness"/>
-    <addaction name="actionDecrease_Font_Brightness"/>
-    <addaction name="actionInvert_Brightness"/>
-    <addaction name="actionReset_Brightness"/>
+    <addaction name="menuBrightness"/>
     <addaction name="separator"/>
     <addaction name="actionTOC"/>
     <addaction name="actionShowBookmarksList"/>
@@ -705,6 +713,28 @@
    </property>
    <property name="shortcut">
     <string>Shift+Space</string>
+   </property>
+  </action>
+  <action name="actionIncrease_Image_Brightness">
+   <property name="text">
+    <string>Increase Image Brightness</string>
+   </property>
+   <property name="toolTip">
+    <string>Increase Image Brightness</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+*</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Image_Brightness">
+   <property name="text">
+    <string>Decrease Image Brightness</string>
+   </property>
+   <property name="toolTip">
+    <string>Decrease Image Brightness</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+/</string>
    </property>
   </action>
  </widget>

@@ -101,12 +101,14 @@ private slots:
     void on_actionDecrease_Brightness_triggered();
     void on_actionIncrease_Font_Brightness_triggered();
     void on_actionDecrease_Font_Brightness_triggered();
+    void on_actionIncrease_Image_Brightness_triggered();
+    void on_actionDecrease_Image_Brightness_triggered();
     void on_actionReset_Brightness_triggered();
     void on_actionInvert_Brightness_triggered();
     void enableCr3Widget();
 };
 
-class MainContextMenu : public QMenu {
+class ContextMenu : public QMenu {
     Q_OBJECT
 
     MainWindow *mainWindow;
@@ -121,7 +123,7 @@ protected:
     }
 
 public:
-    MainContextMenu(MainWindow *mainWindow) : QMenu(mainWindow) {
+    ContextMenu(QWidget *parent, MainWindow *mainWindow, const QString &title) : QMenu(title, parent) {
         this->mainWindow = mainWindow;
     }
 };
