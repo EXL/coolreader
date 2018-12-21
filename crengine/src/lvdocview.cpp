@@ -1046,6 +1046,7 @@ void LVDocView::drawCoverTo(LVDrawBuf * drawBuf, lvRect & rc) {
 		//CRLog::trace("drawCoverTo() - drawing image");
         LVColorDrawBuf buf2(src_dx, src_dy, 32);
         buf2.Draw(imgsrc, 0, 0, src_dx, src_dy, true);
+        buf2.FillRect(0, 0, src_dx, src_dy, drawBuf->GetImageBrightness());
         drawBuf->DrawRescaled(&buf2, imgrc.left + (imgrc.width() - dst_dx) / 2,
                 imgrc.top + (imgrc.height() - dst_dy) / 2, dst_dx, dst_dy, 0);
 	} else if (!defcover.isNull()) {

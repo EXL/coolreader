@@ -270,7 +270,8 @@ public:
     void SetImageBrightness(lUInt32 cl) { _imageBrightness = cl; }
     lUInt32 GetImageBrightness() const { return  _imageBrightness; }
 
-    LVBaseDrawBuf() : _dx(0), _dy(0), _rowsize(0), _data(NULL), _hidePartialGlyphs(true) { }
+    LVBaseDrawBuf() : _dx(0), _dy(0), _rowsize(0), _data(NULL),
+                      _imageBrightness(0xFFFFFFFF), _hidePartialGlyphs(true), _disImgAlphaChannel(false) { }
     virtual ~LVBaseDrawBuf() { }
 };
 
