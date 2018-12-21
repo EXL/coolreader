@@ -329,11 +329,22 @@
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="cbWindowFullscreen">
-         <property name="text">
-          <string>Fullscreen display</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_202">
+         <item>
+          <widget class="QCheckBox" name="cbWindowFullscreen">
+           <property name="text">
+            <string>Fullscreen display</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbDisableCache">
+           <property name="text">
+            <string>Disable cache (experimental)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -505,11 +516,15 @@
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="cbShowPageHeader">
-         <property name="text">
-          <string>Show page header</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_200">
+         <item>
+          <widget class="QCheckBox" name="cbShowPageHeader">
+           <property name="text">
+            <string>Show page header</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">

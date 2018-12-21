@@ -148,6 +148,7 @@ enum CacheFileBlockType {
 // define to store new text nodes as persistent text, instead of mutable
 #define USE_PERSISTENT_TEXT 1
 
+bool ldomDocCache::_disabled = false;
 
 static bool _enableCacheFileContentsValidation = (bool)ENABLE_CACHE_FILE_CONTENTS_VALIDATION;
 void enableCacheFileContentsValidation(bool enable) {
@@ -1569,7 +1570,9 @@ bool tinyNodeCollection::createCacheFile()
     lUInt32 crc = getProps()->getIntDef(DOC_PROP_FILE_CRC32, 0);
 
     if ( !ldomDocCache::enabled() ) {
-        CRLog::error("Cannot swap: cache dir is not initialized");
+        if ( !ldomDocCache::isDisabled() ) {
+            CRLog::error("Cannot swap: cache dir is not initialized");
+        }
         return false;
     }
 
@@ -8727,6 +8730,9 @@ public:
 
     bool writeIndex()
     {
+        if (_disabled) {
+            return false;
+        }
         lString16 filename = _cacheDir + "cr3cache.inx";
         if (_oldStreamSize == 0)
         {
@@ -8772,6 +8778,9 @@ public:
 
     bool readIndex(  )
     {
+        if (_disabled) {
+            return false;
+        }
         lString16 filename = _cacheDir + "cr3cache.inx";
         // read index
         lUInt32 totalSize = 0;
@@ -9086,6 +9095,16 @@ bool ldomDocCache::clear()
 bool ldomDocCache::enabled()
 {
     return _cacheInstance!=NULL;
+}
+
+void ldomDocCache::disableCache(bool disable)
+{
+    _disabled = disable;
+}
+
+bool ldomDocCache::isDisabled()
+{
+    return _disabled;
 }
 
 //void calcStyleHash( ldomNode * node, lUInt32 & value )

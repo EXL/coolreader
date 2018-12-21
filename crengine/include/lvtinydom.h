@@ -2373,6 +2373,9 @@ ldomDocument * LVParseHTMLStream( LVStreamRef stream,
 /// document cache
 class ldomDocCache
 {
+protected:
+    static bool _disabled;
+
 public:
     /// open existing cache file stream
     static LVStreamRef openExisting( lString16 filename, lUInt32 crc, lUInt32 docFlags );
@@ -2386,6 +2389,9 @@ public:
     static bool clear();
     /// returns true if cache is enabled (successfully initialized)
     static bool enabled();
+
+    static void disableCache(bool disable);
+    static bool isDisabled();
 };
 
 

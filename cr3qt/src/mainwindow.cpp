@@ -130,6 +130,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->view->setHyphDir(hyphDir);
     ui->view->setHyphDir(homeDir + "hyph" + QDir::separator(), false);
 
+    ldomDocCache::disableCache(SettingsDlg::cacheIsDisabled());
     ldomDocCache::init( qt2cr( cacheDir ), DOC_CACHE_SIZE );
     ui->view->setPropsChangeCallback( this );
     bool settingsExists = false;

@@ -135,6 +135,8 @@ public:
     virtual ~SettingsDlg();
 
     static bool showDlg(QWidget * parent, CR3View * docView , QByteArray t, QByteArray g, QPoint p, QSize s);
+    static void disableCache(bool disable);
+    static bool cacheIsDisabled();
 protected:
     explicit SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByteArray g, QPoint p, QSize ss );
     virtual void changeEvent(QEvent *e);
@@ -272,6 +274,7 @@ private slots:
     void on_cbInvertSelection_stateChanged(int );
     void on_cbImageDisableAlpha_stateChanged(int );
     void on_cbImageColorFont_stateChanged(int );
+    void on_cbDisableCache_stateChanged(int );
 };
 
 #endif // SETTINGSDLG_H

@@ -179,6 +179,7 @@ SettingsDlg::SettingsDlg(QWidget *parent, CR3View * docView, QByteArray t, QByte
     optionToUi( PROP_HIGHLIGHT_SELECTION_INVERT, m_ui->cbInvertSelection );
     m_ui->btnSelectionColor->setEnabled(!m_props->getBoolDef(PROP_HIGHLIGHT_SELECTION_INVERT, true));
     optionToUi( PROP_IMG_DISABLE_ALPHA_CHANNEL, m_ui->cbImageDisableAlpha );
+    m_ui->cbDisableCache->setChecked(cacheIsDisabled());
     optionToUi( PROP_IMG_COLOR_FONT, m_ui->cbImageColorFont );
     optionToUiIndex( PROP_PAGE_PERCENT_PD, m_ui->cbPercentPd );
     optionToUiIndex( PROP_IMG_SCALING_ZOOMIN_INLINE_MODE, m_ui->cbImageInlineZoominMode );
@@ -376,6 +377,33 @@ bool SettingsDlg::showDlg(  QWidget * parent, CR3View * docView, QByteArray t, Q
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->show();
     return true;
+}
+
+void SettingsDlg::disableCache(bool disable)
+{
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
+    QSettings settings;
+#endif
+    settings.beginGroup("Cache");
+    settings.setValue("Disabled", disable);
+    settings.endGroup();
+
+    ldomDocCache::disableCache(disable);
+}
+
+bool SettingsDlg::cacheIsDisabled()
+{
+#ifdef WIN_PORTABLE
+    QSettings settings("sett.ini", QSettings::IniFormat);
+#else
+    QSettings settings;
+#endif
+    settings.beginGroup("Cache");
+    bool disable = settings.value("Disabled", 0).toBool();
+    settings.endGroup();
+    return disable;
 }
 
 void SettingsDlg::changeEvent(QEvent *e)
@@ -1615,4 +1643,9 @@ void SettingsDlg::on_cbImageDisableAlpha_stateChanged(int s)
 void SettingsDlg::on_cbImageColorFont_stateChanged(int s)
 {
     setCheck( PROP_IMG_COLOR_FONT, s ); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+}
+
+void SettingsDlg::on_cbDisableCache_stateChanged(int s)
+{
+    disableCache(s); m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }

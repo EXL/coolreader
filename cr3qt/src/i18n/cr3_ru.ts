@@ -1394,6 +1394,10 @@ https://github.com/buggins/coolreader
         <translation>Полно-экранный режим</translation>
     </message>
     <message>
+        <source>Disable cache (experimental)</source>
+        <translation>Отключить кэш (эксп.)</translation>
+    </message>
+    <message>
         <source>Page</source>
         <translation>Страница</translation>
     </message>
