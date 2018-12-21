@@ -42,9 +42,12 @@ private:
     void toggleProperty( const char * name );
 
     QColor getColor( PropsRef props, const char * optionName, unsigned def );
+    QColor getColorAlpha( PropsRef props, const char * optionName, unsigned def );
     void setColor( PropsRef props, const char * optionName, QColor cl );
-    void changeColor(QColor &cl, bool increase);
+    void setColorAlpha( PropsRef props, const char * optionName, QColor cl );
+    void changeColor(QColor &cl, bool increase, bool hasAlpha = false);
     void changeBrightness(bool increase, bool font);
+    void changeImageBrightness(bool increase);
 protected:
     virtual void showEvent ( QShowEvent * event );
     virtual void focusInEvent ( QFocusEvent * event );

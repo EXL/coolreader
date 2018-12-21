@@ -278,6 +278,7 @@ private:
     lUInt32 m_backgroundColor;
     lUInt32 m_textColor;
     lUInt32 m_statusColor;
+    lUInt32 m_imageBrightness;
     bool m_disAlphaChannel;
     font_ref_t     m_font;
     font_ref_t     m_infoFont;
@@ -718,6 +719,12 @@ public:
     void setStatusColor( lUInt32 cl )
     {
         m_statusColor = cl;
+        clearImageCache();
+    }
+
+    void setImageBrightness( lUInt32 cl )
+    {
+        m_imageBrightness = cl;
         clearImageCache();
     }
 

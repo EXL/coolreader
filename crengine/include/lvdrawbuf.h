@@ -209,6 +209,8 @@ public:
 
     virtual void SetDisAlphaChannel(bool disable) = 0;
     virtual bool GetDisAlphaChannel() const = 0;
+    virtual void SetImageBrightness(lUInt32 cl) = 0;
+    virtual lUInt32 GetImageBrightness() const = 0;
 
     /// virtual destructor
     virtual ~LVDrawBuf() { }
@@ -226,6 +228,7 @@ protected:
     unsigned char * _data;
     lUInt32 _backgroundColor;
     lUInt32 _textColor;
+    lUInt32 _imageBrightness;
     bool _hidePartialGlyphs;
     bool _disImgAlphaChannel;
 public:
@@ -264,6 +267,8 @@ public:
 
     void SetDisAlphaChannel(bool disable) { _disImgAlphaChannel = disable; }
     bool GetDisAlphaChannel() const { return _disImgAlphaChannel; }
+    void SetImageBrightness(lUInt32 cl) { _imageBrightness = cl; }
+    lUInt32 GetImageBrightness() const { return  _imageBrightness; }
 
     LVBaseDrawBuf() : _dx(0), _dy(0), _rowsize(0), _data(NULL), _hidePartialGlyphs(true) { }
     virtual ~LVBaseDrawBuf() { }

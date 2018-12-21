@@ -7,6 +7,7 @@
 #define PROP_FONT_ANTIALIASING       "font.antialiasing.mode"
 #define PROP_FONT_HINTING            "font.hinting.mode"
 #define PROP_FONT_COLOR              "font.color.default"
+#define PROP_IMAGE_BRIGHTNESS        "image.color.brightness"
 #define PROP_FONT_FACE               "font.face.default"
 #define PROP_FONT_WEIGHT_EMBOLDEN    "font.face.weight.embolden"
 #define PROP_BACKGROUND_COLOR        "background.color.default"

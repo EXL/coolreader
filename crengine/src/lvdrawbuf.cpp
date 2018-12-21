@@ -1278,15 +1278,13 @@ void LVColorDrawBuf::Draw( LVImageSourceRef img, int x, int y, int width, int he
     LVImageScaledDrawCallback drawcb( this, img, x, y, width, height, dither );
     img->Decode( &drawcb );
 
-    // hex(((0x112233) >> 16) << 24)
+    // Image Brightness
+    FillRect(x, y, x+width, y+height, GetImageBrightness());
+
     /*
+    // hex(((0x112233) >> 16) << 24)
     if (GetImageColorFont()) {
-        /*
-        CRLog::error("===> %#010x | %#010x | %#010x | %d <===", GetTextColor(),
-                     GetBackgroundColor(),
-                     GetPaletteColor(GetTextColor(), GetBackgroundColor(), IsFontChangeEvent()), IsFontChangeEvent());
-        */
-        /*FillRect(x, y, x+width, y+height, GetPaletteColor(GetTextColor(), GetBackgroundColor(), IsFontChangeEvent()));
+        FillRect(x, y, x+width, y+height, GetPaletteColor(GetTextColor(), GetBackgroundColor(), IsFontChangeEvent()));
     }*/
 }
 

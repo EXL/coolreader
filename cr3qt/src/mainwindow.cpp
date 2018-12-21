@@ -725,31 +725,51 @@ QColor MainWindow::getColor( PropsRef props, const char * optionName, unsigned d
     return QColor( cr.r(), cr.g(), cr.b() );
 }
 
+QColor MainWindow::getColorAlpha(PropsRef props, const char *optionName, unsigned def)
+{
+    lvColor cr( props->getColorDef( optionName, def ) );
+    return QColor( cr.r(), cr.g(), cr.b(), cr.a() );
+}
+
 void MainWindow::setColor( PropsRef props, const char * optionName, QColor cl )
 {
     props->setHex( optionName, lvColor( cl.red(), cl.green(), cl.blue() ).get() );
 }
 
-void MainWindow::changeColor(QColor &cl, bool increase)
+void MainWindow::setColorAlpha( PropsRef props, const char *optionName, QColor cl )
 {
+    props->setHex( optionName, lvColor( cl.red(), cl.green(), cl.blue(), cl.alpha() ).get() );
+}
+
+void MainWindow::changeColor(QColor &cl, bool increase, bool hasAlpha)
+{
+    int alpha = 255;
     int inc = 5;
     int red = cl.red();
     int green = cl.green();
     int blue = cl.blue();
+    if (hasAlpha)
+        alpha = cl.alpha();
     if (increase) {
         red += inc; green += inc; blue += inc;
+        if (hasAlpha) alpha += inc;
         if (red > 255) red = 255;
         if (green > 255) green = 255;
         if (blue > 255) blue = 255;
+        if (alpha > 255) alpha = 255;
     } else {
         red -= inc; green -= inc; blue -= inc;
+        if (hasAlpha) alpha -= inc;
         if (red < 0) red = 0;
         if (green < 0) green = 0;
         if (blue < 0) blue = 0;
+        if (alpha < 0) alpha = 0;
     }
     cl.setRed(red);
     cl.setGreen(green);
     cl.setBlue(blue);
+    if (hasAlpha)
+        cl.setAlpha(alpha);
 }
 
 void MainWindow::changeBrightness(bool increase, bool font)
@@ -764,6 +784,15 @@ void MainWindow::changeBrightness(bool increase, bool font)
         changeColor(bgColor, increase);
         setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
     }
+    ui->view->setOptions(pr);
+}
+
+void MainWindow::changeImageBrightness(bool increase)
+{
+    PropsRef pr = ui->view->getOptions();
+    QColor imageBrightness = getColorAlpha(pr, PROP_IMAGE_BRIGHTNESS, 0xFFFFFFFF );
+    changeColor(imageBrightness, increase, true);
+    setColorAlpha(pr, PROP_IMAGE_BRIGHTNESS, imageBrightness);
     ui->view->setOptions(pr);
 }
 
@@ -789,12 +818,12 @@ void MainWindow::on_actionDecrease_Font_Brightness_triggered()
 
 void MainWindow::on_actionIncrease_Image_Brightness_triggered()
 {
-
+    changeImageBrightness(true);
 }
 
 void MainWindow::on_actionDecrease_Image_Brightness_triggered()
 {
-
+    changeImageBrightness(false);
 }
 
 void MainWindow::on_actionReset_Brightness_triggered()
@@ -804,6 +833,7 @@ void MainWindow::on_actionReset_Brightness_triggered()
     QColor bgColor(Qt::white);
     setColor(pr, PROP_BACKGROUND_COLOR, bgColor);
     setColor(pr, PROP_FONT_COLOR, txtColor);
+    setColorAlpha(pr, PROP_IMAGE_BRIGHTNESS, bgColor);
     ui->view->setOptions(pr);
 }
 

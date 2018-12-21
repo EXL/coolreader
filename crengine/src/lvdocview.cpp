@@ -186,6 +186,7 @@ LVDocView::LVDocView(int bitsPerPixel) :
 #endif
 #endif
 	m_statusColor = 0xFF000000;
+	m_imageBrightness = 0xFFFFFFFF;
 	m_defaultFontFace = lString8(DEFAULT_FONT_NAME);
 	m_statusFontFace = lString8(DEFAULT_STATUS_FONT_NAME);
 	m_props = LVCreatePropsContainer();
@@ -2288,6 +2289,7 @@ void LVDocView::Draw(LVDrawBuf & drawbuf, int position, int page, bool rotate, b
 	drawbuf.SetBackgroundColor(m_backgroundColor);
 	drawbuf.SetTextColor(m_textColor);
 	drawbuf.SetDisAlphaChannel(m_disAlphaChannel);
+    drawbuf.SetImageBrightness(m_imageBrightness);
 	//CRLog::trace("Draw() : calling clear()", m_dx, m_dy);
 
 	if (!m_is_rendered)
@@ -5724,6 +5726,7 @@ void LVDocView::propsUpdateDefaults(CRPropRef props) {
 	props->setIntDef(PROP_AUTOSAVE_BOOKMARKS, 1);
 	props->setIntDef(PROP_DISPLAY_FULL_UPDATE_INTERVAL, 1);
 	props->setIntDef(PROP_DISPLAY_TURBO_UPDATE_MODE, 0);
+	props->setHexDef(PROP_IMAGE_BRIGHTNESS, 0xFFFFFFFF);
 
 	lString8 defFontFace;
 #ifndef __HAIKU__
@@ -5967,7 +5970,7 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
             m_props->setString(name.c_str(), value);
             REQUEST_RENDER("propsApply -img scale")
         } else if (name == PROP_FONT_COLOR || name == PROP_BACKGROUND_COLOR
-                   || name == PROP_DISPLAY_INVERSE || name==PROP_STATUS_FONT_COLOR) {
+                   || name == PROP_DISPLAY_INVERSE || name == PROP_STATUS_FONT_COLOR || name == PROP_IMAGE_BRIGHTNESS) {
             // update current value in properties
             m_props->setString(name.c_str(), value);
             lUInt32 textColor = props->getColorDef(PROP_FONT_COLOR, m_props->getColorDef(PROP_FONT_COLOR, 0x000000));
@@ -5977,6 +5980,7 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
             lUInt32 statusColor = props->getColorDef(PROP_STATUS_FONT_COLOR,
                                                      m_props->getColorDef(PROP_STATUS_FONT_COLOR,
                                                                           0xFF000000));
+            lUInt32 imageBrightness = props->getColorDef(PROP_IMAGE_BRIGHTNESS, m_props->getColorDef(PROP_IMAGE_BRIGHTNESS, 0xFFFFFFFF));
             bool inverse = props->getBoolDef(PROP_DISPLAY_INVERSE, m_props->getBoolDef(PROP_DISPLAY_INVERSE, false));
             if (inverse) {
                 CRLog::trace("Setting inverse colors");
@@ -5986,7 +5990,6 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
                 setTextColor(backColor);
                 //if (name == PROP_BACKGROUND_COLOR)
                 setStatusColor(backColor);
-                REQUEST_RENDER("propsApply  color") // TODO: only colors to be changed
             } else {
                 CRLog::trace("Setting normal colors");
                 //if (name == PROP_BACKGROUND_COLOR)
@@ -5995,8 +5998,9 @@ CRPropRef LVDocView::propsApply(CRPropRef props) {
                 setTextColor(textColor);
                 //if (name == PROP_STATUS_FONT_COLOR)
                 setStatusColor(statusColor);
-                REQUEST_RENDER("propsApply  color") // TODO: only colors to be changed
             }
+            setImageBrightness(imageBrightness);
+            REQUEST_RENDER("propsApply  color") // TODO: only colors to be changed
         } else if (name == PROP_PAGE_MARGIN_TOP || name
                    == PROP_PAGE_MARGIN_LEFT || name == PROP_PAGE_MARGIN_RIGHT
                    || name == PROP_PAGE_MARGIN_BOTTOM) {
