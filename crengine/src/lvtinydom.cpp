@@ -156,6 +156,10 @@ void enableCacheFileContentsValidation(bool enable) {
 }
 
 static int _nextDocumentIndex = 0;
+
+bool cover_duplicates_protect_hack = false;
+doc_format_t format_doc = doc_format_fb2;
+
 ldomDocument * ldomNode::_documentInstances[MAX_DOCUMENT_INSTANCE_COUNT] = {NULL,};
 
 /// adds document to list, returns ID of allocated document, -1 if no space in instance array
@@ -2803,8 +2807,20 @@ lxmlDocBase::~lxmlDocBase()
 {
 }
 
-void lxmlDocBase::onAttributeSet( lUInt16 attrId, lUInt16 valueId, ldomNode * node )
+void lxmlDocBase::onAttributeSet(lUInt16 attrId, lUInt16 valueId, ldomNode * node , const lChar16 *value)
 {
+    if (value != NULL) {
+        lString16 value_str(value);
+        value_str = value_str.lowercase();
+        if (value_str.startsWith("cover.") && (format_doc == doc_format_fb2)) {
+            if (cover_duplicates_protect_hack) {
+                CRLog::error("Dublicate cover found, apply workaround.");
+                return;
+            }
+            cover_duplicates_protect_hack = true;
+        }
+    }
+
     if ( _idAttrId==0 )
         _idAttrId = _attrNameTable.idByName("id");
     if ( _nameAttrId==0 )
@@ -9824,7 +9840,7 @@ void ldomNode::setAttributeValue( lUInt16 nsid, lUInt16 id, const lChar16 * valu
     tinyElement * me = NPELEM;
     me->_attrs.set(nsid, id, valueIndex);
     if (nsid == LXML_NS_NONE)
-        getDocument()->onAttributeSet( id, valueIndex, this );
+        getDocument()->onAttributeSet( id, valueIndex, this, value );
 }
 
 /// returns element type structure pointer if it was set in document for this element name

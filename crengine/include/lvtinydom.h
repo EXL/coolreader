@@ -95,6 +95,9 @@
 
 #define DEF_MIN_SPACE_CONDENSING_PERCENT 50
 
+extern bool cover_duplicates_protect_hack;
+extern doc_format_t format_doc;
+
 //#if BUILD_LITE!=1
 /// final block cache
 typedef LVRef<LFormattedText> LFormattedTextRef;
@@ -1045,7 +1048,7 @@ public:
     }
 #endif
 
-    void onAttributeSet( lUInt16 attrId, lUInt16 valueId, ldomNode * node );
+    void onAttributeSet( lUInt16 attrId, lUInt16 valueId, ldomNode * node, const lChar16 * value);
 
     /// get element by id attribute value code
     inline ldomNode * getNodeById( lUInt16 attrValueId )

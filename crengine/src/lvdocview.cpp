@@ -3854,6 +3854,7 @@ bool LVDocView::LoadDocument(LVStreamRef stream) {
 
 
 	m_swapDone = false;
+	cover_duplicates_protect_hack = false;
 
 	setRenderProps(0, 0); // to allow apply styles and rend method while loading
 
@@ -4194,6 +4195,7 @@ const lChar16 * getDocFormatName(doc_format_t fmt) {
 
 /// sets current document format
 void LVDocView::setDocFormat(doc_format_t fmt) {
+    format_doc = fmt;
     m_doc_format = fmt;
     lString16 desc(getDocFormatName(fmt));
 	m_doc_props->setString(DOC_PROP_FILE_FORMAT, desc);
