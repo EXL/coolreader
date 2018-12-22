@@ -1,4 +1,4 @@
-Cool Reader v3.2.2-4m
+Cool Reader v3.2.2-5m
 
 === EXL's fork:
 Article: https://exlmoto.ru/cool-reader-system-fonts
