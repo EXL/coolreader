@@ -579,6 +579,14 @@ https://github.com/buggins/coolreader
         <translation>Текущая страница</translation>
     </message>
     <message>
+        <source>No battery</source>
+        <translation>Отсутствует</translation>
+    </message>
+    <message>
+        <source>Charging</source>
+        <translation>Зарядка</translation>
+    </message>
+    <message>
         <source>Total pages</source>
         <translation>Всего страниц</translation>
     </message>
