@@ -5,6 +5,6 @@ environment:
 
 build_script:
   - C:\msys64\usr\bin\pacman --noconfirm --ask 20 --sync --refresh --refresh --sysupgrade --sysupgrade
-  - C:\msys64\usr\bin\env MSYSTEM=MINGW64 C:\msys64\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/appveyor.sh"
+  - C:\msys64\usr\bin\env MSYSTEM=MINGW64 C:\msys64\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/ci/appveyor.sh"
 
 deploy: off

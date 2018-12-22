@@ -26,7 +26,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then mv qt_ru.qm qtbase_ru.qm CoolReader3.app/Contents/Resources/i18n/ ; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then PATH="$(brew --prefix qt)/bin:$PATH" macdeployqt CoolReader3.app -always-overwrite -dmg ; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then curl --upload-file ./CoolReader3.dmg https://transfer.sh/CoolReader3.dmg ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker build . ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker build -f ci/Dockerfile . ; fi
 
 before_install:
   - eval "${MATRIX_EVAL}"
